@@ -37,7 +37,16 @@ public class WebSecurityConfig {
 
     @Bean
     protected SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.csrf().disable().securityMatcher("/**").authorizeHttpRequests(authorize -> authorize.anyRequest().permitAll()).httpBasic(Customizer.withDefaults());
+        http.csrf().disable().exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
+                .authorizeHttpRequests((authz) -> authz
+                        .requestMatchers("/auth/**","/register").permitAll()
+                        .requestMatchers(HttpMethod.GET,"/**").hasRole("USER")
+                        .anyRequest().authenticated()
+                );
+
+                //.(HttpMethod.GET,"/patient").permitAll();
+               // .securityMatcher("/auth/**").authorizeHttpRequests(authorize -> authorize.anyRequest().)
+              //  .httpBasic(Customizer.withDefaults());
         http.addFilterBefore(tokenFilter, UsernamePasswordAuthenticationFilter.class);
         log.info("security filter chain set");
         return http.build();
