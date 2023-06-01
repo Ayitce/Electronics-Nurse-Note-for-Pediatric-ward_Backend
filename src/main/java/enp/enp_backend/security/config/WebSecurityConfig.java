@@ -39,8 +39,9 @@ public class WebSecurityConfig {
     protected SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf().disable().exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
                 .authorizeHttpRequests((authz) -> authz
-                        .requestMatchers("/auth/**","/register","/**").permitAll()
-                  //      .requestMatchers(HttpMethod.GET,"/**").hasRole("USER")
+                        .requestMatchers("/auth/**","/register","/registerDoctor","/registerNurse").permitAll()
+                        .requestMatchers(HttpMethod.GET,"/**").hasRole("NURSE")
+                        .requestMatchers(HttpMethod.GET,"/**").hasRole("DOCTOR")
                         .anyRequest().authenticated()
                 );
         http.addFilterBefore(tokenFilter, UsernamePasswordAuthenticationFilter.class);

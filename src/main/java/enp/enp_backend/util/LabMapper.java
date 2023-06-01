@@ -31,4 +31,8 @@ public interface LabMapper {
     NurseAuthDTO getNurseAuthDTO(Nurse nurse);
 
 
+    @Mapping(target = "authorities", expression = "java(doctor.getUser().getAuthorities().stream().map(auth -> auth.getName().name()).collect(Collectors.toList()))")
+    DoctorAuthDTO getDoctorAuthDTO(Doctor doctor);
+
+
 }

@@ -1,7 +1,9 @@
 package enp.enp_backend.security.controller;
 
 
+import enp.enp_backend.entity.Doctor;
 import enp.enp_backend.entity.Nurse;
+import enp.enp_backend.repository.DoctorRepository;
 import enp.enp_backend.repository.NurseRepository;
 import enp.enp_backend.security.entity.Authority;
 import enp.enp_backend.security.entity.AuthorityName;
@@ -41,29 +43,24 @@ import java.util.Map;
 @CrossOrigin
 public class AuthenticationRestController {
 
-    @Value("${jwt.header}")
-    private String tokenHeader;
-
-    @Autowired
-    private AuthenticationManager authenticationManager;
-
-    @Autowired
-    private JwtTokenUtil jwtTokenUtil;
-
-    @Autowired
-    private UserDetailsService userDetailsService;
-
     @Autowired
     UserRepository userRepository;
-
     @Autowired
     UserService userService;
-
     @Autowired
     AuthorityRepository authorityRepository;
-
     @Autowired
     NurseRepository nurseRepository;
+    @Autowired
+    DoctorRepository doctorRepository;
+    @Value("${jwt.header}")
+    private String tokenHeader;
+    @Autowired
+    private AuthenticationManager authenticationManager;
+    @Autowired
+    private JwtTokenUtil jwtTokenUtil;
+    @Autowired
+    private UserDetailsService userDetailsService;
 
     @PostMapping("${jwt.route.authentication.path}")
     public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtAuthenticationRequest authenticationRequest) throws AuthenticationException {
@@ -83,8 +80,10 @@ public class AuthenticationRestController {
         Map result = new HashMap();
         result.put("token", token);
         User user = userRepository.findById(((JwtUser) userDetails).getId()).orElse(null);
-        if (user.getNurse() != null){
-            result.put("user", LabMapper.INSTANCE.getNurseAuthDTO( user.getNurse()));
+        if (user.getNurse() != null) {
+            result.put("user", LabMapper.INSTANCE.getNurseAuthDTO(user.getNurse()));
+        } else if (user.getDoctor() != null) {
+            result.put("user", LabMapper.INSTANCE.getDoctorAuthDTO(user.getDoctor()));
         } else {
             result.put("user", LabMapper.INSTANCE.getUserAuthDTO(user));
         }
@@ -94,7 +93,7 @@ public class AuthenticationRestController {
 
 
     @PostMapping("/register")
-    public ResponseEntity<?> registerUser(@RequestBody User user) throws  AuthenticationException{
+    public ResponseEntity<?> registerUser(@RequestBody User user) throws AuthenticationException {
         PasswordEncoder encoder = new BCryptPasswordEncoder();
         Authority authUser = Authority.builder().name(AuthorityName.ROLE_USER).build();
         authorityRepository.save(authUser);
@@ -105,8 +104,8 @@ public class AuthenticationRestController {
                 .lastname(user.getLastname())
                 .username(user.getUsername())
                 .password(encoder.encode(user.getPassword()))
-                .lastPasswordResetDate(Date.from(LocalDate.of(2021,01,01)
-                       .atStartOfDay(ZoneId.systemDefault()).toInstant()))
+                .lastPasswordResetDate(Date.from(LocalDate.of(2021, 01, 01)
+                        .atStartOfDay(ZoneId.systemDefault()).toInstant()))
                 .build();
 
         regUser.getAuthorities().add(authUser);
@@ -118,7 +117,7 @@ public class AuthenticationRestController {
 
 
     @PostMapping("/registerNurse")
-    public ResponseEntity<?> registerNurse(@RequestBody User user) throws  AuthenticationException{
+    public ResponseEntity<?> registerNurse(@RequestBody User user) throws AuthenticationException {
         PasswordEncoder encoder = new BCryptPasswordEncoder();
         Authority authNurse = Authority.builder().name(AuthorityName.ROLE_NURSE).build();
         authorityRepository.save(authNurse);
@@ -130,7 +129,7 @@ public class AuthenticationRestController {
                 .username(user.getUsername())
                 .phoneNumber(user.getPhoneNumber())
                 .password(encoder.encode(user.getPassword()))
-                .lastPasswordResetDate(Date.from(LocalDate.of(2021,01,01)
+                .lastPasswordResetDate(Date.from(LocalDate.of(2021, 01, 01)
                         .atStartOfDay(ZoneId.systemDefault()).toInstant()))
                 .build();
 
@@ -149,8 +148,48 @@ public class AuthenticationRestController {
 
         regUser.setNurse(regNurse);
         regNurse.setUser(regUser);
-        
+
         nurseRepository.save(regNurse);
+        userRepository.save(regUser);
+
+        return ResponseEntity.ok(LabMapper.INSTANCE.getUserDTO(regUser));
+    }
+
+
+    @PostMapping("/registerDoctor")
+    public ResponseEntity<?> registerDoctor(@RequestBody User user) throws AuthenticationException {
+        PasswordEncoder encoder = new BCryptPasswordEncoder();
+        Authority authDoctor = Authority.builder().name(AuthorityName.ROLE_DOCTOR).build();
+        authorityRepository.save(authDoctor);
+        User regUser = User.builder()
+                .enabled(true)
+                .email(user.getEmail())
+                .firstname(user.getFirstname())
+                .lastname(user.getLastname())
+                .username(user.getUsername())
+                .phoneNumber(user.getPhoneNumber())
+                .password(encoder.encode(user.getPassword()))
+                .lastPasswordResetDate(Date.from(LocalDate.of(2021, 01, 01)
+                        .atStartOfDay(ZoneId.systemDefault()).toInstant()))
+                .build();
+
+        regUser.getAuthorities().add(authDoctor);
+
+        Doctor regDoctor = Doctor.builder()
+                .name(user.getFirstname())
+                .surname(user.getLastname())
+                .email(user.getEmail())
+                .phoneNumber(user.getPhoneNumber())
+                .build();
+
+        doctorRepository.save(regDoctor);
+        userRepository.save(regUser);
+        userService.save(regUser);
+
+        regUser.setDoctor(regDoctor);
+        regDoctor.setUser(regUser);
+
+        doctorRepository.save(regDoctor);
         userRepository.save(regUser);
 
         return ResponseEntity.ok(LabMapper.INSTANCE.getUserDTO(regUser));
@@ -180,21 +219,19 @@ public class AuthenticationRestController {
         HttpHeaders responseHeader = new HttpHeaders();
 
         responseHeader.set("x-total-count", String.valueOf(pageOutput.getTotalElements()));
-        return new ResponseEntity<>(LabMapper.INSTANCE.getUserDTO(pageOutput.getContent()), responseHeader , HttpStatus.OK);
+        return new ResponseEntity<>(LabMapper.INSTANCE.getUserDTO(pageOutput.getContent()), responseHeader, HttpStatus.OK);
     }
 
 
     @GetMapping("user/{id}")
     public ResponseEntity<?> getUser(@PathVariable("id") Long id) {
         User output = userService.getUser(id);
-        if(output != null){
+        if (output != null) {
             return ResponseEntity.ok(LabMapper.INSTANCE.getUserDTO(output));
         } else {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"The given id is not found");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "The given id is not found");
         }
     }
-
-
 
 
 }
