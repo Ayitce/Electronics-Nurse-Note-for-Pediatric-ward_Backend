@@ -1,6 +1,8 @@
 package enp.enp_backend.config;
 
+import enp.enp_backend.entity.Nurse;
 import enp.enp_backend.entity.Patient;
+import enp.enp_backend.repository.NurseRepository;
 import enp.enp_backend.repository.PatientRepository;
 import enp.enp_backend.security.entity.Authority;
 import enp.enp_backend.security.entity.AuthorityName;
@@ -30,6 +32,9 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
 
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    NurseRepository nurseRepository;
 
     @Override
     public void onApplicationEvent(ApplicationReadyEvent applicationReadyEvent) {
@@ -73,7 +78,19 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
                 .build();
 
         patientRepository.save(patient2);
+
+        Nurse nurse = Nurse.builder()
+                .name("Fah")
+                .surname("Suaymak")
+                .email("email")
+                .phoneNumber("0801561664")
+                .build();
+        nurseRepository.save(nurse);
         addUser();
+        nurse.setUser(user1);
+        nurseRepository.save(nurse);
+        user1.setNurse(nurse);
+        userRepository.save(user1);
     }
 
     User user1;

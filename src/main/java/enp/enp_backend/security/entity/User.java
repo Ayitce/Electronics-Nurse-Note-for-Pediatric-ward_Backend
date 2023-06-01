@@ -2,6 +2,7 @@ package enp.enp_backend.security.entity;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import enp.enp_backend.entity.Nurse;
 import jakarta.persistence.*;
 import org.jetbrains.annotations.NotNull;
 import lombok.AllArgsConstructor;
@@ -70,4 +71,9 @@ public class User {
     public Long getId() {
         return id;
     }
+
+    @OneToOne
+    Nurse nurse;
+
+    String phoneNumber;
 }

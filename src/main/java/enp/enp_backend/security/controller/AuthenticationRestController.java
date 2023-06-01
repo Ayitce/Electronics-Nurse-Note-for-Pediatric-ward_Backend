@@ -1,6 +1,8 @@
 package enp.enp_backend.security.controller;
 
 
+import enp.enp_backend.entity.Nurse;
+import enp.enp_backend.repository.NurseRepository;
 import enp.enp_backend.security.entity.Authority;
 import enp.enp_backend.security.entity.AuthorityName;
 import enp.enp_backend.security.entity.JwtUser;
@@ -60,6 +62,9 @@ public class AuthenticationRestController {
     @Autowired
     AuthorityRepository authorityRepository;
 
+    @Autowired
+    NurseRepository nurseRepository;
+
     @PostMapping("${jwt.route.authentication.path}")
     public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtAuthenticationRequest authenticationRequest) throws AuthenticationException {
 
@@ -78,16 +83,12 @@ public class AuthenticationRestController {
         Map result = new HashMap();
         result.put("token", token);
         User user = userRepository.findById(((JwtUser) userDetails).getId()).orElse(null);
-      /*  if (user.getPeople() != null){
-            result.put("user", LabMapper.INSTANCE.getPeopleAuthDTO( user.getPeople()));
-        } else if(user.getDoctor() != null) {
-            result.put("user", LabMapper.INSTANCE.getDoctorAuthDTO(user.getDoctor()));
-        }else if(user.getAdmin() != null){
-            result.put("user", LabMapper.INSTANCE.getAdminAuthDTO(user.getAdmin()));
+        if (user.getNurse() != null){
+            result.put("user", LabMapper.INSTANCE.getNurseAuthDTO( user.getNurse()));
         } else {
             result.put("user", LabMapper.INSTANCE.getUserAuthDTO(user));
-        }*/
-        result.put("user", LabMapper.INSTANCE.getUserAuthDTO(user));
+        }
+
         return ResponseEntity.ok(result);
     }
 
@@ -115,6 +116,45 @@ public class AuthenticationRestController {
         return ResponseEntity.ok(LabMapper.INSTANCE.getUserDTO(regUser));
     }
 
+
+    @PostMapping("/registerNurse")
+    public ResponseEntity<?> registerNurse(@RequestBody User user) throws  AuthenticationException{
+        PasswordEncoder encoder = new BCryptPasswordEncoder();
+        Authority authNurse = Authority.builder().name(AuthorityName.ROLE_NURSE).build();
+        authorityRepository.save(authNurse);
+        User regUser = User.builder()
+                .enabled(true)
+                .email(user.getEmail())
+                .firstname(user.getFirstname())
+                .lastname(user.getLastname())
+                .username(user.getUsername())
+                .phoneNumber(user.getPhoneNumber())
+                .password(encoder.encode(user.getPassword()))
+                .lastPasswordResetDate(Date.from(LocalDate.of(2021,01,01)
+                        .atStartOfDay(ZoneId.systemDefault()).toInstant()))
+                .build();
+
+        regUser.getAuthorities().add(authNurse);
+
+        Nurse regNurse = Nurse.builder()
+                .name(user.getFirstname())
+                .surname(user.getLastname())
+                .email(user.getEmail())
+                .phoneNumber(user.getPhoneNumber())
+                .build();
+
+        nurseRepository.save(regNurse);
+        userRepository.save(regUser);
+        userService.save(regUser);
+
+        regUser.setNurse(regNurse);
+        regNurse.setUser(regUser);
+        
+        nurseRepository.save(regNurse);
+        userRepository.save(regUser);
+
+        return ResponseEntity.ok(LabMapper.INSTANCE.getUserDTO(regUser));
+    }
 
     @GetMapping(value = "${jwt.route.authentication.refresh}")
     public ResponseEntity<?> refreshAndGetAuthenticationToken(HttpServletRequest request) {

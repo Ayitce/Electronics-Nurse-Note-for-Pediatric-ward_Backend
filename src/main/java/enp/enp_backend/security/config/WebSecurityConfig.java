@@ -39,36 +39,13 @@ public class WebSecurityConfig {
     protected SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf().disable().exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
                 .authorizeHttpRequests((authz) -> authz
-                        .requestMatchers("/auth/**","/register").permitAll()
-                        .requestMatchers(HttpMethod.GET,"/**").hasRole("USER")
+                        .requestMatchers("/auth/**","/register","/**").permitAll()
+                  //      .requestMatchers(HttpMethod.GET,"/**").hasRole("USER")
                         .anyRequest().authenticated()
                 );
-
-                //.(HttpMethod.GET,"/patient").permitAll();
-               // .securityMatcher("/auth/**").authorizeHttpRequests(authorize -> authorize.anyRequest().)
-              //  .httpBasic(Customizer.withDefaults());
         http.addFilterBefore(tokenFilter, UsernamePasswordAuthenticationFilter.class);
         log.info("security filter chain set");
         return http.build();
-
-      /*  http.cors().and().csrf().disable()
-                .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
-                .authorizeRequests()
-                .antMatchers("/auth/**",  "/refresh", "/register","/uploadFile").permitAll()
-                .antMatchers(HttpMethod.GET,"/login","/peopleAll","/doctorAll").permitAll()
-                .antMatchers(HttpMethod.GET,"/people/**").permitAll()
-                .antMatchers(HttpMethod.GET,"/register").permitAll()
-                .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                .antMatchers(HttpMethod.POST,"/applyPeople","/applyDoctor","/vaccines").hasRole("ADMIN")
-                .antMatchers(HttpMethod.GET,"/user","/user/**").hasRole("ADMIN")
-                .antMatchers(HttpMethod.POST,"/comment/**").hasRole("DOCTOR")
-
-
-                .anyRequest()
-                .authenticated();
-        http.addFilterBefore(tokenFilter, UsernamePasswordAuthenticationFilter.class);
-        log.info("security filter chain set");
-        return http.build();*/
     }
 
 

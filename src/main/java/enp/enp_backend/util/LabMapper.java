@@ -1,7 +1,6 @@
 package enp.enp_backend.util;
 
-import enp.enp_backend.entity.Patient;
-import enp.enp_backend.entity.PatientDTO;
+import enp.enp_backend.entity.*;
 import enp.enp_backend.security.entity.User;
 import enp.enp_backend.security.entity.UserAuthDTO;
 import enp.enp_backend.security.entity.UserDTO;
@@ -27,5 +26,9 @@ public interface LabMapper {
 
     @Mapping(target = "authorities", expression = "java(user.getAuthorities().stream().map(auth -> auth.getName().name()).collect(Collectors.toList()))")
     UserAuthDTO getUserAuthDTO(User user);
+
+    @Mapping(target = "authorities", expression = "java(nurse.getUser().getAuthorities().stream().map(auth -> auth.getName().name()).collect(Collectors.toList()))")
+    NurseAuthDTO getNurseAuthDTO(Nurse nurse);
+
 
 }
