@@ -23,7 +23,6 @@ public class Nurse {
 
     String name;
     String surname;
-    String email;
     String phoneNumber;
 
     @OneToOne

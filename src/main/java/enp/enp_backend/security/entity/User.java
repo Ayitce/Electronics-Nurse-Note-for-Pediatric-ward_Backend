@@ -39,14 +39,14 @@ public class User {
     @Column(name = "PASSWORD", length = 100)
     @NotNull
     private String password;
-
+/*
     @Column(name = "FIRSTNAME", length = 50)
     @NotNull
     private String firstname;
 
     @Column(name = "LASTNAME", length = 50)
     @NotNull
-    private String lastname;
+    private String lastname;*/
 
     @Column(name = "EMAIL", length = 50)
     @NotNull
@@ -79,5 +79,5 @@ public class User {
     @OneToOne
     Doctor doctor;
 
-    String phoneNumber;
+   // String phoneNumber;
 }

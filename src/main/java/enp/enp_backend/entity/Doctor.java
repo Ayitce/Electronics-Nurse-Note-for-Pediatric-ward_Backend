@@ -23,7 +23,6 @@ public class Doctor {
 
     String name;
     String surname;
-    String email;
     String phoneNumber;
 
     @OneToOne

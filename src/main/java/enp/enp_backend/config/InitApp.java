@@ -82,7 +82,6 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
         Nurse nurse = Nurse.builder()
                 .name("Fah")
                 .surname("Suaymak")
-                .email("email")
                 .phoneNumber("0801561664")
                 .build();
         nurseRepository.save(nurse);
@@ -101,8 +100,6 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
         user1 = User.builder()
                 .username("admin")
                 .password(encoder.encode("admin"))
-                .firstname("admin")
-                .lastname("admin")
                 .email("admin@admin.com")
                 .enabled(true)
                 .lastPasswordResetDate(Date.from(LocalDate.of(2021,01,22).atStartOfDay(ZoneId.systemDefault()).toInstant()))

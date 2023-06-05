@@ -1,6 +1,7 @@
 package enp.enp_backend.security.controller;
 
 
+import com.fasterxml.jackson.databind.util.JSONPObject;
 import enp.enp_backend.entity.Doctor;
 import enp.enp_backend.entity.Nurse;
 import enp.enp_backend.repository.DoctorRepository;
@@ -16,6 +17,8 @@ import enp.enp_backend.security.util.JwtTokenUtil;
 import enp.enp_backend.util.LabMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.configurationprocessor.json.JSONException;
+import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -100,8 +103,6 @@ public class AuthenticationRestController {
         User regUser = User.builder()
                 .enabled(true)
                 .email(user.getEmail())
-                .firstname(user.getFirstname())
-                .lastname(user.getLastname())
                 .username(user.getUsername())
                 .password(encoder.encode(user.getPassword()))
                 .lastPasswordResetDate(Date.from(LocalDate.of(2021, 01, 01)
@@ -117,18 +118,16 @@ public class AuthenticationRestController {
 
 
     @PostMapping("/registerNurse")
-    public ResponseEntity<?> registerNurse(@RequestBody User user) throws AuthenticationException {
+    public ResponseEntity<?> registerNurse(@RequestBody String json) throws AuthenticationException, JSONException {
         PasswordEncoder encoder = new BCryptPasswordEncoder();
         Authority authNurse = Authority.builder().name(AuthorityName.ROLE_NURSE).build();
         authorityRepository.save(authNurse);
+        JSONObject jsonObject = new JSONObject(json);
         User regUser = User.builder()
                 .enabled(true)
-                .email(user.getEmail())
-                .firstname(user.getFirstname())
-                .lastname(user.getLastname())
-                .username(user.getUsername())
-                .phoneNumber(user.getPhoneNumber())
-                .password(encoder.encode(user.getPassword()))
+                .email(jsonObject.get("email").toString())
+                .username(jsonObject.get("username").toString())
+                .password(encoder.encode(jsonObject.get("password").toString()))
                 .lastPasswordResetDate(Date.from(LocalDate.of(2021, 01, 01)
                         .atStartOfDay(ZoneId.systemDefault()).toInstant()))
                 .build();
@@ -136,10 +135,9 @@ public class AuthenticationRestController {
         regUser.getAuthorities().add(authNurse);
 
         Nurse regNurse = Nurse.builder()
-                .name(user.getFirstname())
-                .surname(user.getLastname())
-                .email(user.getEmail())
-                .phoneNumber(user.getPhoneNumber())
+                .name(jsonObject.get("firstname").toString())
+                .surname(jsonObject.get("lastname").toString())
+                .phoneNumber(jsonObject.get("phoneNumber").toString())
                 .build();
 
         nurseRepository.save(regNurse);
@@ -157,18 +155,16 @@ public class AuthenticationRestController {
 
 
     @PostMapping("/registerDoctor")
-    public ResponseEntity<?> registerDoctor(@RequestBody User user) throws AuthenticationException {
+    public ResponseEntity<?> registerDoctor(@RequestBody String json) throws AuthenticationException, JSONException {
         PasswordEncoder encoder = new BCryptPasswordEncoder();
         Authority authDoctor = Authority.builder().name(AuthorityName.ROLE_DOCTOR).build();
         authorityRepository.save(authDoctor);
+        JSONObject jsonObject = new JSONObject(json);
         User regUser = User.builder()
                 .enabled(true)
-                .email(user.getEmail())
-                .firstname(user.getFirstname())
-                .lastname(user.getLastname())
-                .username(user.getUsername())
-                .phoneNumber(user.getPhoneNumber())
-                .password(encoder.encode(user.getPassword()))
+                .email(jsonObject.get("email").toString())
+                .username(jsonObject.get("username").toString())
+                .password(encoder.encode(jsonObject.get("password").toString()))
                 .lastPasswordResetDate(Date.from(LocalDate.of(2021, 01, 01)
                         .atStartOfDay(ZoneId.systemDefault()).toInstant()))
                 .build();
@@ -176,10 +172,9 @@ public class AuthenticationRestController {
         regUser.getAuthorities().add(authDoctor);
 
         Doctor regDoctor = Doctor.builder()
-                .name(user.getFirstname())
-                .surname(user.getLastname())
-                .email(user.getEmail())
-                .phoneNumber(user.getPhoneNumber())
+                .name(jsonObject.get("firstname").toString())
+                .surname(jsonObject.get("lastname").toString())
+                .phoneNumber(jsonObject.get("phoneNumber").toString())
                 .build();
 
         doctorRepository.save(regDoctor);
