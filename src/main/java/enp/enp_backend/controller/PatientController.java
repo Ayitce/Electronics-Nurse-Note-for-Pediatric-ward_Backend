@@ -22,12 +22,12 @@ public class PatientController {
     @Autowired
     PatientService patientService;
 
-    @GetMapping("patientAll")
+    @GetMapping("patients")
     public ResponseEntity<?> getPatientLists() {
         return ResponseEntity.ok(LabMapper.INSTANCE.getPatientDTO(patientService.getAllpatient()));
     }
 
-    @GetMapping("patient/{id}")
+    @GetMapping("patients/{id}")
     public ResponseEntity<?> getPatient(@PathVariable("id") Long id){
         Patient output = patientService.getPatient(id);
         if(output != null){
@@ -37,7 +37,7 @@ public class PatientController {
         }
     }
 
-    @PostMapping("/patient")
+    @PostMapping("/patients")
     public ResponseEntity<?> addPatient(@RequestBody Patient patient) {
 
         Date date = new Date();
@@ -48,7 +48,7 @@ public class PatientController {
         return ResponseEntity.ok(LabMapper.INSTANCE.getPatientDTO(output));
     }
 
-    @PostMapping("/dischargePatient")
+    @PostMapping("/patients/discharge")
     public ResponseEntity<?> dischargePatient(@RequestBody Patient patient) {
         Patient tempPatient = patientService.getPatient(patient.getId());
         tempPatient.setAdmitted(false);

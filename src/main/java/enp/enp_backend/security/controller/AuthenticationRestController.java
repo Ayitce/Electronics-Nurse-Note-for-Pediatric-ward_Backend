@@ -117,7 +117,7 @@ public class AuthenticationRestController {
     }
 
 
-    @PostMapping("/registerNurse")
+    @PostMapping("/register/nurse")
     public ResponseEntity<?> registerNurse(@RequestBody String json) throws AuthenticationException, JSONException {
         PasswordEncoder encoder = new BCryptPasswordEncoder();
         Authority authNurse = Authority.builder().name(AuthorityName.ROLE_NURSE).build();
@@ -154,7 +154,7 @@ public class AuthenticationRestController {
     }
 
 
-    @PostMapping("/registerDoctor")
+    @PostMapping("/register/doctor")
     public ResponseEntity<?> registerDoctor(@RequestBody String json) throws AuthenticationException, JSONException {
         PasswordEncoder encoder = new BCryptPasswordEncoder();
         Authority authDoctor = Authority.builder().name(AuthorityName.ROLE_DOCTOR).build();
