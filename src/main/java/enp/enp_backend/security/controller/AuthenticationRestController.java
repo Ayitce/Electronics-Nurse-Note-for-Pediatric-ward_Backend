@@ -14,6 +14,8 @@ import enp.enp_backend.security.repository.AuthorityRepository;
 import enp.enp_backend.security.repository.UserRepository;
 import enp.enp_backend.security.service.UserService;
 import enp.enp_backend.security.util.JwtTokenUtil;
+import enp.enp_backend.service.DoctorService;
+import enp.enp_backend.service.NurseService;
 import enp.enp_backend.util.LabMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -53,9 +55,9 @@ public class AuthenticationRestController {
     @Autowired
     AuthorityRepository authorityRepository;
     @Autowired
-    NurseRepository nurseRepository;
+    NurseService nurseService;
     @Autowired
-    DoctorRepository doctorRepository;
+    DoctorService doctorService;
     @Value("${jwt.header}")
     private String tokenHeader;
     @Autowired
@@ -110,7 +112,7 @@ public class AuthenticationRestController {
                 .build();
 
         regUser.getAuthorities().add(authUser);
-        userRepository.save(regUser);
+        //userRepository.save(regUser);
 
         userService.save(regUser);
         return ResponseEntity.ok(LabMapper.INSTANCE.getUserDTO(regUser));
@@ -140,15 +142,15 @@ public class AuthenticationRestController {
                 .phoneNumber(jsonObject.get("phoneNumber").toString())
                 .build();
 
-        nurseRepository.save(regNurse);
-        userRepository.save(regUser);
+        nurseService.save(regNurse);
+        //userRepository.save(regUser);
         userService.save(regUser);
 
         regUser.setNurse(regNurse);
         regNurse.setUser(regUser);
 
-        nurseRepository.save(regNurse);
-        userRepository.save(regUser);
+        nurseService.save(regNurse);
+        userService.save(regUser);
 
         return ResponseEntity.ok(LabMapper.INSTANCE.getUserDTO(regUser));
     }
@@ -177,15 +179,17 @@ public class AuthenticationRestController {
                 .phoneNumber(jsonObject.get("phoneNumber").toString())
                 .build();
 
-        doctorRepository.save(regDoctor);
-        userRepository.save(regUser);
+        doctorService.save(regDoctor);
+        //userRepository.save(regUser);
         userService.save(regUser);
 
         regUser.setDoctor(regDoctor);
         regDoctor.setUser(regUser);
 
-        doctorRepository.save(regDoctor);
-        userRepository.save(regUser);
+        doctorService.save(regDoctor);
+        //userRepository.save(regUser);
+        userService.save(regUser);
+
 
         return ResponseEntity.ok(LabMapper.INSTANCE.getUserDTO(regUser));
     }
