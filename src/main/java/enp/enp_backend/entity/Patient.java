@@ -27,14 +27,17 @@ public class Patient {
     String dateOfBirth;
     String address;
     String phoneNumber;
-    String email;
+    String nationalID;
     Boolean admitted;
     String admitDate;
     String dischargeDate;
     String medicalHistory;
-    String allergies;
+    String bloodType;
     String AN;
     String imageUrls;
+    String parentName;
+    String height;
+    String weight;
 
     public void setId(Long id) {
         this.id = id;

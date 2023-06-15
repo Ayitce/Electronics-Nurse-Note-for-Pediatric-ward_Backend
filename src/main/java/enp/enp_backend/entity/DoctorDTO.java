@@ -14,4 +14,8 @@ public class DoctorDTO {
     Long id;
     String name;
     String surname;
+    String doctorID;
+    String gender;
+    String dateOfBirth;
+
 }

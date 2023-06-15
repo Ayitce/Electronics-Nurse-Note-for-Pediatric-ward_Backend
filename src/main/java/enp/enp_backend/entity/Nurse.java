@@ -24,6 +24,10 @@ public class Nurse {
     String name;
     String surname;
     String phoneNumber;
+    String nurseID;
+    String gender;
+    String dateOfBirth;
+
 
     @OneToOne
     User user;

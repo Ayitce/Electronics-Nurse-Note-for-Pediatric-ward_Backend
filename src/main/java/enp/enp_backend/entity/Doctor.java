@@ -24,6 +24,9 @@ public class Doctor {
     String name;
     String surname;
     String phoneNumber;
+    String doctorID;
+    String gender;
+    String dateOfBirth;
 
     @OneToOne
     User user;

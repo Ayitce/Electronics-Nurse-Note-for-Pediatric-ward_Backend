@@ -104,7 +104,7 @@ public class AuthenticationRestController {
         authorityRepository.save(authUser);
         User regUser = User.builder()
                 .enabled(true)
-                .email(user.getEmail())
+                //.email(user.getEmail())
                 .username(user.getUsername())
                 .password(encoder.encode(user.getPassword()))
                 .lastPasswordResetDate(Date.from(LocalDate.of(2021, 01, 01)
@@ -127,8 +127,8 @@ public class AuthenticationRestController {
         JSONObject jsonObject = new JSONObject(json);
         User regUser = User.builder()
                 .enabled(true)
-                .email(jsonObject.get("email").toString())
-                .username(jsonObject.get("username").toString())
+               // .email(jsonObject.get("email").toString())
+                .username(jsonObject.get("email").toString())
                 .password(encoder.encode(jsonObject.get("password").toString()))
                 .lastPasswordResetDate(Date.from(LocalDate.of(2021, 01, 01)
                         .atStartOfDay(ZoneId.systemDefault()).toInstant()))
@@ -137,9 +137,12 @@ public class AuthenticationRestController {
         regUser.getAuthorities().add(authNurse);
 
         Nurse regNurse = Nurse.builder()
-                .name(jsonObject.get("firstname").toString())
-                .surname(jsonObject.get("lastname").toString())
+                .name(jsonObject.get("name").toString())
+                .surname(jsonObject.get("surname").toString())
                 .phoneNumber(jsonObject.get("phoneNumber").toString())
+                .nurseID(jsonObject.get("medicalID").toString())
+                .gender(jsonObject.get("gender").toString())
+                .dateOfBirth(jsonObject.get("dateOfBirth").toString())
                 .build();
 
         nurseService.save(regNurse);
@@ -164,8 +167,8 @@ public class AuthenticationRestController {
         JSONObject jsonObject = new JSONObject(json);
         User regUser = User.builder()
                 .enabled(true)
-                .email(jsonObject.get("email").toString())
-                .username(jsonObject.get("username").toString())
+               // .email(jsonObject.get("email").toString())
+                .username(jsonObject.get("email").toString())
                 .password(encoder.encode(jsonObject.get("password").toString()))
                 .lastPasswordResetDate(Date.from(LocalDate.of(2021, 01, 01)
                         .atStartOfDay(ZoneId.systemDefault()).toInstant()))
@@ -174,9 +177,12 @@ public class AuthenticationRestController {
         regUser.getAuthorities().add(authDoctor);
 
         Doctor regDoctor = Doctor.builder()
-                .name(jsonObject.get("firstname").toString())
-                .surname(jsonObject.get("lastname").toString())
+                .name(jsonObject.get("name").toString())
+                .surname(jsonObject.get("surname").toString())
                 .phoneNumber(jsonObject.get("phoneNumber").toString())
+                .doctorID(jsonObject.get("medicalID").toString())
+                .gender(jsonObject.get("gender").toString())
+                .dateOfBirth(jsonObject.get("dateOfBirth").toString())
                 .build();
 
         doctorService.save(regDoctor);
