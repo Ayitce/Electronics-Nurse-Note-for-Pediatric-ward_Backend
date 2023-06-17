@@ -17,6 +17,9 @@ import enp.enp_backend.security.util.JwtTokenUtil;
 import enp.enp_backend.service.DoctorService;
 import enp.enp_backend.service.NurseService;
 import enp.enp_backend.util.LabMapper;
+import jakarta.servlet.http.HttpServletRequest;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.configurationprocessor.json.JSONException;
@@ -37,7 +40,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
-import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
@@ -47,6 +49,7 @@ import java.util.Map;
 @RestController
 @CrossOrigin
 public class AuthenticationRestController {
+    private final Log logger = LogFactory.getLog(this.getClass());
 
     @Autowired
     UserRepository userRepository;
@@ -200,18 +203,43 @@ public class AuthenticationRestController {
         return ResponseEntity.ok(LabMapper.INSTANCE.getUserDTO(regUser));
     }
 
-    @GetMapping(value = "${jwt.route.authentication.refresh}")
+    @GetMapping("/auth/refresh")
     public ResponseEntity<?> refreshAndGetAuthenticationToken(HttpServletRequest request) {
         String token = request.getHeader(tokenHeader);
-        String username = jwtTokenUtil.getUsernameFromToken(token);
+        logger.info("token :" +token);
+        String[] parts = token.split(" ");
+        //logger.info("parts :" + parts[1]);
+        String finalToken = parts[1];
+        logger.info("finalToken :" + finalToken);
+        String username = jwtTokenUtil.getUsernameFromToken(finalToken);
+
+        logger.info("user :" + username);
+
         JwtUser user = (JwtUser) userDetailsService.loadUserByUsername(username);
 
-        if (jwtTokenUtil.canTokenBeRefreshed(token, user.getLastPasswordResetDate())) {
-            String refreshedToken = jwtTokenUtil.refreshToken(token);
+        if (jwtTokenUtil.canTokenBeRefreshed(finalToken, user.getLastPasswordResetDate())) {
+            String refreshedToken = jwtTokenUtil.refreshToken(finalToken);
             return ResponseEntity.ok(new JwtAuthenticationResponse(refreshedToken));
         } else {
             return ResponseEntity.badRequest().body(null);
         }
+    }
+
+    @GetMapping("currentUser")
+    public ResponseEntity<?> getCurrentUser(HttpServletRequest request) {
+        String token = request.getHeader(tokenHeader);
+        String[] parts = token.split(" ");
+        //logger.info("parts :" + parts[1]);
+        String finalToken = parts[1];
+        logger.info("token :" +finalToken);
+        String username = jwtTokenUtil.getUsernameFromToken(finalToken);
+        logger.info("user :" + username);
+        JwtUser user = (JwtUser) userDetailsService.loadUserByUsername(username);
+
+        User user2 = userRepository.findById((user).getId()).orElse(null);
+
+
+        return ResponseEntity.ok(LabMapper.INSTANCE.getUserDTO(user2));
     }
 
     @GetMapping("user")
