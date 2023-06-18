@@ -1,35 +1,36 @@
-package enp.enp_backend.controller;
+package enp.enp_backend.domain.nurse.controller;
 
+import enp.enp_backend.domain.nurse.service.NurseService;
 import enp.enp_backend.entity.Patient;
-import enp.enp_backend.service.PatientService;
+import enp.enp_backend.util.CloudStorageHelper;
 import enp.enp_backend.util.LabMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
+import javax.servlet.ServletException;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Controller
-public class PatientController {
+public class NurseController {
 
     @Autowired
-    PatientService patientService;
+    NurseService nurseService;
 
-    @GetMapping("patients")
+    @GetMapping("nurse/patients")
     public ResponseEntity<?> getPatientLists() {
-        return ResponseEntity.ok(LabMapper.INSTANCE.getPatientDTO(patientService.getAllpatient()));
+        return ResponseEntity.ok(LabMapper.INSTANCE.getPatientDTO(nurseService.getAllpatient()));
     }
 
-    @GetMapping("patients/{id}")
+    @GetMapping("nurse/patients/{id}")
     public ResponseEntity<?> getPatient(@PathVariable("id") Long id){
-        Patient output = patientService.getPatient(id);
+        Patient output = nurseService.getPatient(id);
         if(output != null){
             return ResponseEntity.ok(LabMapper.INSTANCE.getPatientDTO(output));
         } else {
@@ -37,26 +38,35 @@ public class PatientController {
         }
     }
 
-    @PostMapping("/patients")
+    @PostMapping("/nurse/patients")
     public ResponseEntity<?> addPatient(@RequestBody Patient patient) {
 
         Date date = new Date();
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
         patient.setAdmitDate(formatter.format(date));
         patient.setAdmitted(true);
-        Patient output = patientService.save(patient);
+        Patient output = nurseService.save(patient);
         return ResponseEntity.ok(LabMapper.INSTANCE.getPatientDTO(output));
     }
 
-    @PostMapping("/patients/discharge")
+    @PostMapping("/nurse/patients/discharge")
     public ResponseEntity<?> dischargePatient(@RequestBody Patient patient) {
-        Patient tempPatient = patientService.getPatient(patient.getId());
+        Patient tempPatient = nurseService.getPatient(patient.getId());
         tempPatient.setAdmitted(false);
 
         Date date = new Date();
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
         tempPatient.setDischargeDate(formatter.format(date));
-        patientService.save(tempPatient);
+        nurseService.save(tempPatient);
         return ResponseEntity.ok(LabMapper.INSTANCE.getPatientDTO(tempPatient));
+    }
+
+    //---------------------------
+    @Autowired
+    CloudStorageHelper cloudStorageHelper;
+
+    @PostMapping("/nurse/uploadFile")
+    public ResponseEntity<?> uploadFile(@RequestPart(value = "file") MultipartFile file) throws IOException, ServletException {
+        return ResponseEntity.ok(this.cloudStorageHelper.getImageUrl(file,"patientimage-53dc6.appspot.com"));
     }
 }

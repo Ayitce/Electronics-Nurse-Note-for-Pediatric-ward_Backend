@@ -40,9 +40,12 @@ public class WebSecurityConfig {
         http.csrf().disable().exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
                 .authorizeHttpRequests((authz) -> authz
                         .requestMatchers("/auth/**","/register","/registerDoctor","/registerNurse").permitAll()
-                        .requestMatchers(HttpMethod.GET,"/auth/refresh").hasRole("NURSE")
-                        .requestMatchers(HttpMethod.GET,"/currentUser").hasRole("NURSE")
-                      //  .requestMatchers(HttpMethod.GET,"/**").hasRole("DOCTOR")
+                        .requestMatchers(HttpMethod.GET,"/auth/refresh","/nurse/**","/currentUser").hasRole("NURSE")
+                        .requestMatchers(HttpMethod.GET,"/auth/refresh","/doctor/**","/currentUser").hasRole("DOCTOR")
+                        .requestMatchers("/nurse/**").hasRole("NURSE")
+                        .requestMatchers("/doctor/**").hasRole("DOCTOR")
+
+                        //  .requestMatchers(HttpMethod.GET,"/**").hasRole("DOCTOR")
                         .anyRequest().authenticated()
                 );
         http.addFilterBefore(tokenFilter, UsernamePasswordAuthenticationFilter.class);

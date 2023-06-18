@@ -2,10 +2,10 @@ package enp.enp_backend.security.controller;
 
 
 import com.fasterxml.jackson.databind.util.JSONPObject;
+import enp.enp_backend.domain.doctor.service.DoctorService;
+import enp.enp_backend.domain.nurse.service.NurseService;
 import enp.enp_backend.entity.Doctor;
 import enp.enp_backend.entity.Nurse;
-import enp.enp_backend.repository.DoctorRepository;
-import enp.enp_backend.repository.NurseRepository;
 import enp.enp_backend.security.entity.Authority;
 import enp.enp_backend.security.entity.AuthorityName;
 import enp.enp_backend.security.entity.JwtUser;
@@ -14,8 +14,6 @@ import enp.enp_backend.security.repository.AuthorityRepository;
 import enp.enp_backend.security.repository.UserRepository;
 import enp.enp_backend.security.service.UserService;
 import enp.enp_backend.security.util.JwtTokenUtil;
-import enp.enp_backend.service.DoctorService;
-import enp.enp_backend.service.NurseService;
 import enp.enp_backend.util.LabMapper;
 import jakarta.servlet.http.HttpServletRequest;
 import org.apache.commons.logging.Log;

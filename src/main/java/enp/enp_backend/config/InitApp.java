@@ -1,9 +1,9 @@
 package enp.enp_backend.config;
 
+import enp.enp_backend.domain.nurse.JPArepository.NurseRepository;
+import enp.enp_backend.domain.nurse.JPArepository.Nurse_PatientRepository;
 import enp.enp_backend.entity.Nurse;
 import enp.enp_backend.entity.Patient;
-import enp.enp_backend.repository.NurseRepository;
-import enp.enp_backend.repository.PatientRepository;
 import enp.enp_backend.security.entity.Authority;
 import enp.enp_backend.security.entity.AuthorityName;
 import enp.enp_backend.security.entity.User;
@@ -25,7 +25,7 @@ import java.time.ZoneId;
 public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
 
     @Autowired
-    PatientRepository patientRepository;
+    Nurse_PatientRepository nursePatientRepository;
 
     @Autowired
     AuthorityRepository authorityRepository;
@@ -57,7 +57,7 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
                 .imageUrls("")
                 .build();
 
-        patientRepository.save(patient);
+        nursePatientRepository.save(patient);
 
         Patient patient2 = Patient.builder()
                 .name("Yit2")
@@ -77,7 +77,7 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
                 .imageUrls("")
                 .build();
 
-        patientRepository.save(patient2);
+        nursePatientRepository.save(patient2);
 
         Nurse nurse = Nurse.builder()
                 .name("Fah")

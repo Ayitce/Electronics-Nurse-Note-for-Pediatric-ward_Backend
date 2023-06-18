@@ -1,14 +1,19 @@
-package enp.enp_backend.dao;
+package enp.enp_backend.domain.nurse.dao;
 
+import enp.enp_backend.entity.Nurse;
 import enp.enp_backend.entity.Patient;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
+public interface NurseDao {
 
-public interface PatientDao {
+    Nurse save(Nurse nurse);
+    Nurse getNurse(Long id);
+
+    //-------------------------------------
+
     Integer getPatientSize();
     Page<Patient> getPatients(Integer pageSize, Integer page);
     Patient getPatient(Long id);
