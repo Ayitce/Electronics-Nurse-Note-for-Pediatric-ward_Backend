@@ -22,22 +22,23 @@ public class Patient {
 
     String name;
     String surname;
-    Integer age;
+    String age;
     String gender;
     String dateOfBirth;
     String address;
     String phoneNumber;
-    String nationalID;
+    String IDcard;
     Boolean admitted;
-    String admitDate;
+    String admitDateTime;
     String dischargeDate;
-    String medicalHistory;
+    String allergies;
     String bloodType;
     String AN;
-    String imageUrls;
+    String image;
     String parentName;
     String height;
     String weight;
+    String symptom;
 
     public void setId(Long id) {
         this.id = id;

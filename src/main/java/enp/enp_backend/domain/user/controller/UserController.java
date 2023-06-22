@@ -80,7 +80,7 @@ public class UserController {
                 .name(jsonObject.get("name").toString())
                 .surname(jsonObject.get("surname").toString())
                 .phoneNumber(jsonObject.get("phoneNumber").toString())
-                .nurseID(jsonObject.get("medicalID").toString())
+                .medicalID(jsonObject.get("medicalID").toString())
                 .gender(jsonObject.get("gender").toString())
                 .dateOfBirth(jsonObject.get("dateOfBirth").toString())
                 .build();
@@ -120,7 +120,7 @@ public class UserController {
                 .name(jsonObject.get("name").toString())
                 .surname(jsonObject.get("surname").toString())
                 .phoneNumber(jsonObject.get("phoneNumber").toString())
-                .doctorID(jsonObject.get("medicalID").toString())
+                .medicalID(jsonObject.get("medicalID").toString())
                 .gender(jsonObject.get("gender").toString())
                 .dateOfBirth(jsonObject.get("dateOfBirth").toString())
                 .build();

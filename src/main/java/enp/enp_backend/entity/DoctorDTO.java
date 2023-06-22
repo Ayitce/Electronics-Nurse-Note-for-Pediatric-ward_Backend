@@ -12,10 +12,13 @@ import lombok.NoArgsConstructor;
 public class DoctorDTO {
 
     Long id;
+
     String name;
     String surname;
-    String doctorID;
+    String phoneNumber;
+    String medicalID;
     String gender;
     String dateOfBirth;
+
 
 }

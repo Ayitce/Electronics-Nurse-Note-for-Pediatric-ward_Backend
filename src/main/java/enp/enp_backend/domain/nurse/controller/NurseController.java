@@ -43,7 +43,6 @@ public class NurseController {
 
         Date date = new Date();
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
-        patient.setAdmitDate(formatter.format(date));
         patient.setAdmitted(true);
         Patient output = nurseService.save(patient);
         return ResponseEntity.ok(LabMapper.INSTANCE.getPatientDTO(output));

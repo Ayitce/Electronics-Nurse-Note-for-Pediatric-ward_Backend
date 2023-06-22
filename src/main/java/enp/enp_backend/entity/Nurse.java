@@ -24,7 +24,7 @@ public class Nurse {
     String name;
     String surname;
     String phoneNumber;
-    String nurseID;
+    String medicalID;
     String gender;
     String dateOfBirth;
 
