@@ -61,7 +61,7 @@ public class User {
     @NotNull
     private Date lastPasswordResetDate;
 
-	@Builder.Default
+    @Builder.Default
     @ManyToMany(fetch = FetchType.EAGER)
     private List<Authority> authorities = new ArrayList<>();
 
@@ -79,5 +79,5 @@ public class User {
     @OneToOne
     Doctor doctor;
 
-   // String phoneNumber;
+    // String phoneNumber;
 }

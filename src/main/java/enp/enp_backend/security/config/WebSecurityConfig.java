@@ -39,9 +39,9 @@ public class WebSecurityConfig {
     protected SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf().disable().exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
                 .authorizeHttpRequests((authz) -> authz
-                        .requestMatchers("/auth/**","/register","/registerDoctor","/registerNurse").permitAll()
-                        .requestMatchers(HttpMethod.GET,"/auth/refresh","/nurse/**","/currentUser").hasRole("NURSE")
-                        .requestMatchers(HttpMethod.GET,"/auth/refresh","/doctor/**","/currentUser").hasRole("DOCTOR")
+                        .requestMatchers("/auth/**", "/register", "/registerDoctor", "/registerNurse").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/auth/refresh", "/nurse/**", "/currentUser").hasRole("NURSE")
+                        .requestMatchers(HttpMethod.GET, "/auth/refresh", "/doctor/**", "/currentUser").hasRole("DOCTOR")
                         .requestMatchers("/nurse/**").hasRole("NURSE")
                         .requestMatchers("/doctor/**").hasRole("DOCTOR")
 

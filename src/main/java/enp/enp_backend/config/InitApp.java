@@ -1,14 +1,14 @@
 package enp.enp_backend.config;
 
-import enp.enp_backend.domain.nurse.JPArepository.NurseRepository;
-import enp.enp_backend.domain.nurse.JPArepository.Nurse_PatientRepository;
+import enp.enp_backend.domain.nurse.repository.jpa.NurseRepository;
+import enp.enp_backend.domain.nurse.repository.jpa.Nurse_PatientRepository;
 import enp.enp_backend.entity.Nurse;
 import enp.enp_backend.entity.Patient;
 import enp.enp_backend.security.entity.Authority;
 import enp.enp_backend.security.entity.AuthorityName;
 import enp.enp_backend.security.entity.User;
 import enp.enp_backend.security.repository.AuthorityRepository;
-import enp.enp_backend.security.repository.UserRepository;
+import enp.enp_backend.domain.user.repository.jpa.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationListener;
@@ -52,7 +52,7 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
                 .admitDate("28-05-2023")
                 .dischargeDate(null)
                 .medicalHistory("brah brah")
-               // .allergies("-")
+                // .allergies("-")
                 .AN("AN12354")
                 .imageUrls("")
                 .build();
@@ -67,12 +67,12 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
                 .dateOfBirth("24-08-2001")
                 .address("brah brah brah")
                 .phoneNumber("0936728949")
-               // .email("email")
+                // .email("email")
                 .admitted(true)
                 .admitDate("28-05-2023")
                 .dischargeDate(null)
                 .medicalHistory("brah brah")
-               // .allergies("-")
+                // .allergies("-")
                 .AN("AN12354")
                 .imageUrls("")
                 .build();
@@ -102,7 +102,7 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
                 .password(encoder.encode("admin"))
                 .email("admin@admin.com")
                 .enabled(true)
-                .lastPasswordResetDate(Date.from(LocalDate.of(2021,01,22).atStartOfDay(ZoneId.systemDefault()).toInstant()))
+                .lastPasswordResetDate(Date.from(LocalDate.of(2021, 01, 22).atStartOfDay(ZoneId.systemDefault()).toInstant()))
                 .build();
 
         authorityRepository.save(authUser);

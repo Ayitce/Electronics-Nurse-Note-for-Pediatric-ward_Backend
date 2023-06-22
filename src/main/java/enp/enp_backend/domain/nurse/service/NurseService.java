@@ -10,6 +10,7 @@ public interface NurseService {
 
 
     Nurse save(Nurse nurse);
+
     Nurse getNurse(Long id);
 
     //--------------------------------
@@ -17,7 +18,9 @@ public interface NurseService {
     Integer getPatientSize();
 
     Page<Patient> getPatient(Integer pageSize, Integer page);
+
     Patient getPatient(Long id);
+
     Patient save(Patient patient);
 
     List<Patient> getAllpatient();

@@ -9,6 +9,7 @@ import java.util.List;
 public interface DoctorService {
 
     Doctor save(Doctor doctor);
+
     Doctor getDoctor(Long id);
 
     //-----------------------------
@@ -17,7 +18,9 @@ public interface DoctorService {
     Integer getPatientSize();
 
     Page<Patient> getPatient(Integer pageSize, Integer page);
+
     Patient getPatient(Long id);
+
     Patient save(Patient patient);
 
     List<Patient> getAllpatient();

@@ -1,18 +1,15 @@
-package enp.enp_backend.security.dao;
+package enp.enp_backend.domain.user.service;
 
 import enp.enp_backend.security.entity.User;
-import enp.enp_backend.security.repository.UserRepository;
+import enp.enp_backend.domain.user.repository.jpa.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Profile;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 
-import java.util.Optional;
+@Service
+public class UserServiceImpl implements UserService {
 
-@Profile("db")
-@Repository
-public class UserDaoImpl implements UserDao {
     @Autowired
     UserRepository userRepository;
 
@@ -23,17 +20,11 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public Page<User> getUsers(Integer pageSize, Integer page) {
-        return userRepository.findAll(PageRequest.of(page-1,pageSize));
-    }
-
-
-    @Override
-    public Optional<User> findByID(Long id){
-        return userRepository.findById(id);
+        return userRepository.findAll(PageRequest.of(page - 1, pageSize));
     }
 
     @Override
-    public User getUsers(Long id) {
+    public User getUser(Long id) {
         return userRepository.findById(id).orElse(null);
     }
 

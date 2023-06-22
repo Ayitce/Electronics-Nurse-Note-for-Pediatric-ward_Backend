@@ -1,45 +1,64 @@
 package enp.enp_backend.domain.nurse.service;
 
-import enp.enp_backend.domain.nurse.dao.NurseDao;
+import enp.enp_backend.domain.nurse.repository.jpa.NurseRepository;
+import enp.enp_backend.domain.nurse.repository.jpa.Nurse_PatientRepository;
 import enp.enp_backend.entity.Nurse;
 import enp.enp_backend.entity.Patient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class NurseServiceImpl implements NurseService{
+public class NurseServiceImpl implements NurseService {
     @Autowired
-    NurseDao nurseDao;
+    NurseRepository nurseRepository;
+
+    @Autowired
+    Nurse_PatientRepository nursePatientRepository;
 
     @Override
     public Nurse save(Nurse nurse) {
-        return nurseDao.save(nurse);
+        return nurseRepository.save(nurse);
     }
 
     @Override
     public Nurse getNurse(Long id) {
-        return nurseDao.getNurse(id);
+        return nurseRepository.findById(id).orElse(null);
     }
 
     //-----------------------
 
     @Override
-    public Integer getPatientSize(){ return nurseDao.getPatientSize(); }
+    public Integer getPatientSize() {
+        return Math.toIntExact(nursePatientRepository.count());
+    }
 
     @Override
-    public Page<Patient> getPatient(Integer pageSize, Integer page) { return nurseDao.getPatients(pageSize,page); }
+    public Page<Patient> getPatient(Integer pageSize, Integer page) {
+        return nursePatientRepository.findAll(PageRequest.of(page - 1, pageSize));
+    }
 
     @Override
-    public Patient getPatient(Long id){ return nurseDao.getPatient(id);}
+    public Patient getPatient(Long id) {
+        return nursePatientRepository.findById(id).orElse(null);
+    }
 
     @Override
-    public Patient save(Patient patient){ return nurseDao.save(patient);};
+    public Patient save(Patient patient) {
+        return nursePatientRepository.save(patient);
+    }
+
+    ;
 
     @Override
-    public List<Patient> getAllpatient(){ return nurseDao.getPatient(Pageable.unpaged()).getContent();};
+    public List<Patient> getAllpatient() {
+        return nursePatientRepository.findAll(Pageable.unpaged()).getContent();
+    }
+
+    ;
 
 }

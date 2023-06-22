@@ -1,4 +1,4 @@
-package enp.enp_backend.security.service;
+package enp.enp_backend.domain.user.service;
 
 import enp.enp_backend.security.entity.User;
 import org.springframework.data.domain.Page;

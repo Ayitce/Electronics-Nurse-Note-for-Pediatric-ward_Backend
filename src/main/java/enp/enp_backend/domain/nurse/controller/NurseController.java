@@ -29,12 +29,12 @@ public class NurseController {
     }
 
     @GetMapping("nurse/patients/{id}")
-    public ResponseEntity<?> getPatient(@PathVariable("id") Long id){
+    public ResponseEntity<?> getPatient(@PathVariable("id") Long id) {
         Patient output = nurseService.getPatient(id);
-        if(output != null){
+        if (output != null) {
             return ResponseEntity.ok(LabMapper.INSTANCE.getPatientDTO(output));
         } else {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"The given id is not found");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "The given id is not found");
         }
     }
 
@@ -67,6 +67,6 @@ public class NurseController {
 
     @PostMapping("/nurse/uploadFile")
     public ResponseEntity<?> uploadFile(@RequestPart(value = "file") MultipartFile file) throws IOException, ServletException {
-        return ResponseEntity.ok(this.cloudStorageHelper.getImageUrl(file,"patientimage-53dc6.appspot.com"));
+        return ResponseEntity.ok(this.cloudStorageHelper.getImageUrl(file, "patientimage-53dc6.appspot.com"));
     }
 }

@@ -1,13 +1,14 @@
 package enp.enp_backend.security.service;
 
 import enp.enp_backend.security.entity.User;
-import enp.enp_backend.security.repository.UserRepository;
+import enp.enp_backend.domain.user.repository.jpa.UserRepository;
 import enp.enp_backend.security.util.JwtUserFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+
 /**
  * Created by stephan on 20.03.16.
  */
