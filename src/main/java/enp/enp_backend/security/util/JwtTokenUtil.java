@@ -33,15 +33,15 @@ public class JwtTokenUtil implements Serializable {
 
     public String getUsernameFromToken(String token) {
         String username;
-        //try {
-        final Claims claims = getClaimsFromToken(token);
-        logger.info(claims);
-        username = claims.getSubject();
-        //logger.info("username from tokent : " + username);
-        // } catch (Exception e) {
-        //     username = null;
-        //     logger.info("username from tokent catch : " + username);
-        //  }
+        try {
+            final Claims claims = getClaimsFromToken(token);
+            logger.info(claims);
+            username = claims.getSubject();
+            logger.info("username from tokent : " + username);
+        } catch (Exception e) {
+            username = null;
+            logger.info("username from tokent catch : " + username);
+        }
         return username;
     }
 
@@ -76,6 +76,7 @@ public class JwtTokenUtil implements Serializable {
     private Claims getClaimsFromToken(String token) {
         Claims claims;
         try {
+            logger.info("access try ");
             Key key = new SecretKeySpec(secret.getBytes(), SignatureAlgorithm.HS512.getJcaName());
             claims = Jwts.parserBuilder()
                     .setSigningKey(key)
@@ -90,6 +91,7 @@ public class JwtTokenUtil implements Serializable {
         } catch (Exception e) {
             claims = null;
         }
+
         return claims;
     }
 

@@ -201,7 +201,7 @@ public class AuthenticationRestController {
         return ResponseEntity.ok(LabMapper.INSTANCE.getUserDTO(regUser));
     }
 */
-
+/*
     @GetMapping("/auth/refresh")
     public ResponseEntity<?> refreshAndGetAuthenticationToken(HttpServletRequest request) {
         String token = request.getHeader(tokenHeader);
@@ -222,7 +222,7 @@ public class AuthenticationRestController {
         } else {
             return ResponseEntity.badRequest().body(null);
         }
-    }
+    }*/
 /*
 
     @GetMapping("currentUser")
