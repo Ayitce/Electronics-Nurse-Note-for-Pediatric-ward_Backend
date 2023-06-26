@@ -1,5 +1,7 @@
 package enp.enp_backend.security.entity;
 
+import enp.enp_backend.entity.DoctorDTO;
+import enp.enp_backend.entity.NurseDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -19,4 +21,7 @@ public class UserDTO {
    // String phoneNumber;
 
     List<String> authorities;
+
+    NurseDTO nurse;
+    DoctorDTO doctor;
 }

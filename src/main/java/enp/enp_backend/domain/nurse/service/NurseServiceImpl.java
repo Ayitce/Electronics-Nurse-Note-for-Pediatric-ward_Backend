@@ -61,4 +61,13 @@ public class NurseServiceImpl implements NurseService {
 
     ;
 
+    @Override
+    public Patient getPatientByAn(String an) {
+        return nursePatientRepository.findPatientByAn(an);
+    }
+
+    @Override
+    public List<Patient> getSearchedPatient(String name,String surname, String an) {
+        return nursePatientRepository.findByNameIgnoreCaseContainingOrSurnameIgnoreCaseContainingOrAnIgnoreCaseContaining(name,surname,an);
+    }
 }

@@ -27,13 +27,13 @@ public class Patient {
     String dateOfBirth;
     String address;
     String phoneNumber;
-    String IDcard;
+    String idCard;
     Boolean admitted;
     String admitDateTime;
     String dischargeDate;
     String allergies;
     String bloodType;
-    String AN;
+    String an;
     String image;
     String parentName;
     String height;

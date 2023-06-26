@@ -24,4 +24,8 @@ public interface NurseService {
     Patient save(Patient patient);
 
     List<Patient> getAllpatient();
+
+    Patient getPatientByAn(String an);
+
+    List<Patient> getSearchedPatient(String name,String surname, String an);
 }

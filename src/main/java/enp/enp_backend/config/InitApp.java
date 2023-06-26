@@ -53,7 +53,7 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
                 .dischargeDate(null)
                 .allergies("brah brah")
                 // .allergies("-")
-                .AN("AN12354")
+                .an("AN12355")
                 .image("")
                 .build();
 
@@ -73,7 +73,7 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
                 .dischargeDate(null)
                 .allergies("brah brah")
                 // .allergies("-")
-                .AN("AN12354")
+                .an("AN12354")
                 .image("")
                 .build();
 

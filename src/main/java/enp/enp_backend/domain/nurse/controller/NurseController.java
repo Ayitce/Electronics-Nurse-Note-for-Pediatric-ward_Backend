@@ -4,7 +4,11 @@ import enp.enp_backend.domain.nurse.service.NurseService;
 import enp.enp_backend.entity.Patient;
 import enp.enp_backend.util.CloudStorageHelper;
 import enp.enp_backend.util.LabMapper;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.configurationprocessor.json.JSONException;
+import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -16,9 +20,11 @@ import javax.servlet.ServletException;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 @Controller
 public class NurseController {
+    private final Log logger = LogFactory.getLog(this.getClass());
 
     @Autowired
     NurseService nurseService;
@@ -35,6 +41,27 @@ public class NurseController {
             return ResponseEntity.ok(LabMapper.INSTANCE.getPatientDTO(output));
         } else {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "The given id is not found");
+        }
+    }
+
+    @GetMapping("nurse/patients/AN/{an}")
+    public ResponseEntity<?> getPatientByAN(@PathVariable("an") String an) {
+        Patient output = nurseService.getPatientByAn(an);
+        if (output != null) {
+            return ResponseEntity.ok(LabMapper.INSTANCE.getPatientDTO(output));
+        } else {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "The given AN is not found");
+        }
+    }
+
+    @GetMapping("nurse/patients/search")
+    public ResponseEntity<?> getSearchedPatient(@RequestParam(value = "_search", required = false) String search) throws JSONException {
+        List<Patient> output = nurseService.getSearchedPatient(search,search,search);
+        logger.info(output);
+        if (output != null) {
+            return ResponseEntity.ok(LabMapper.INSTANCE.getPatientDTO(output));
+        } else {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "The given AN is not found");
         }
     }
 
