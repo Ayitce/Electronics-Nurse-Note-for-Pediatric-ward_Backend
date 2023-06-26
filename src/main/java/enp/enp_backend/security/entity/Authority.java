@@ -1,6 +1,7 @@
 package enp.enp_backend.security.entity;
 
 
+import enp.enp_backend.entity.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

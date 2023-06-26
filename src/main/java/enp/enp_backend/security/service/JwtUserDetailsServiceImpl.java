@@ -1,6 +1,6 @@
 package enp.enp_backend.security.service;
 
-import enp.enp_backend.security.entity.User;
+import enp.enp_backend.entity.User;
 import enp.enp_backend.domain.user.repository.jpa.UserRepository;
 import enp.enp_backend.security.util.JwtUserFactory;
 import org.springframework.beans.factory.annotation.Autowired;

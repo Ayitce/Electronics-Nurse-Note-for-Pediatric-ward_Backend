@@ -1,6 +1,5 @@
 package enp.enp_backend.entity;
 
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -13,21 +12,24 @@ import org.springframework.data.annotation.Id;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-public class Doctor {
+public class Admit {
     @jakarta.persistence.Id
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Exclude
     Long id;
 
-    String name;
-    String surname;
-    String phoneNumber;
-    String medicalID;
-    String gender;
-    String dateOfBirth;
-
+    @OneToOne
+    Bed bed;
 
     @OneToOne
-    User user;
+    Room room;
+
+    @OneToOne
+    Patient patient;
+
+    String admitDateTime;
+    String dischargeDate;
+
+    String an;
 }

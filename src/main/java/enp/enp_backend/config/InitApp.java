@@ -1,12 +1,12 @@
 package enp.enp_backend.config;
 
+import enp.enp_backend.domain.nurse.repository.jpa.BedRepository;
 import enp.enp_backend.domain.nurse.repository.jpa.NurseRepository;
 import enp.enp_backend.domain.nurse.repository.jpa.Nurse_PatientRepository;
-import enp.enp_backend.entity.Nurse;
-import enp.enp_backend.entity.Patient;
+import enp.enp_backend.domain.nurse.repository.jpa.RoomRepository;
+import enp.enp_backend.entity.*;
 import enp.enp_backend.security.entity.Authority;
 import enp.enp_backend.security.entity.AuthorityName;
-import enp.enp_backend.security.entity.User;
 import enp.enp_backend.security.repository.AuthorityRepository;
 import enp.enp_backend.domain.user.repository.jpa.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +36,12 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
     @Autowired
     NurseRepository nurseRepository;
 
+    @Autowired
+    RoomRepository roomRepository;
+
+    @Autowired
+    BedRepository bedRepository;
+
     @Override
     public void onApplicationEvent(ApplicationReadyEvent applicationReadyEvent) {
 
@@ -48,12 +54,11 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
                 .address("brah brah brah")
                 .phoneNumber("0936728949")
                 //.email("email")
-                .admitted(true)
-                .admitDateTime("28-05-2023")
-                .dischargeDate(null)
+//                .admitDateTime("28-05-2023")
+                //.dischargeDate(null)
                 .allergies("brah brah")
                 // .allergies("-")
-                .an("AN12355")
+                .hn("HN12355")
                 .image("")
                 .build();
 
@@ -68,12 +73,12 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
                 .address("brah brah brah")
                 .phoneNumber("0936728949")
                 // .email("email")
-                .admitted(true)
-                .admitDateTime("28-05-2023")
-                .dischargeDate(null)
+            //    .admitted(true)
+             //   .admitDateTime("28-05-2023")
+             //   .dischargeDate(null)
                 .allergies("brah brah")
                 // .allergies("-")
-                .an("AN12354")
+                .hn("HN12354")
                 .image("")
                 .build();
 
@@ -90,6 +95,20 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
         nurseRepository.save(nurse);
         user1.setNurse(nurse);
         userRepository.save(user1);
+
+
+        Bed bed1 = Bed.builder().isAvailable(true).build();
+        Bed bed2 = Bed.builder().isAvailable(true).build();
+        bedRepository.save(bed1);
+        bedRepository.save(bed2);
+
+        Room room1 = Room.builder().build();
+        Room room2 = Room.builder().build();
+        room1.getBedList().add(bed1);
+        room1.getBedList().add(bed2);
+        roomRepository.save(room1);
+        roomRepository.save(room2);
+
     }
 
     User user1;

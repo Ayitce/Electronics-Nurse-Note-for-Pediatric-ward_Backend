@@ -1,4 +1,4 @@
-package enp.enp_backend.security.entity;
+package enp.enp_backend.entity;
 
 import enp.enp_backend.entity.DoctorDTO;
 import enp.enp_backend.entity.NurseDTO;

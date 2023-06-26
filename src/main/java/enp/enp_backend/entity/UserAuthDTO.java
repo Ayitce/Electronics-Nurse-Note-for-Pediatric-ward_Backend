@@ -1,4 +1,4 @@
-package enp.enp_backend.security.entity;
+package enp.enp_backend.entity;
 
 
 import lombok.AllArgsConstructor;

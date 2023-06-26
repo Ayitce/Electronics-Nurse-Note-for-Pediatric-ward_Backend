@@ -9,7 +9,7 @@ import enp.enp_backend.entity.Nurse;
 import enp.enp_backend.security.entity.Authority;
 import enp.enp_backend.security.entity.AuthorityName;
 import enp.enp_backend.security.entity.JwtUser;
-import enp.enp_backend.security.entity.User;
+import enp.enp_backend.entity.User;
 import enp.enp_backend.security.repository.AuthorityRepository;
 import enp.enp_backend.security.util.JwtTokenUtil;
 import enp.enp_backend.util.LabMapper;

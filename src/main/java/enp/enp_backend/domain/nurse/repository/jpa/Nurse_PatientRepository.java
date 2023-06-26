@@ -12,6 +12,6 @@ import java.util.List;
 @Repository
 public interface Nurse_PatientRepository extends JpaRepository<Patient, Long> {
     List<Patient> findAll();
-    Patient findPatientByAn(String an);
-    List<Patient> findByNameIgnoreCaseContainingOrSurnameIgnoreCaseContainingOrAnIgnoreCaseContaining(String name,String surname, String an);
+    Patient findPatientByHn(String hn);
+    List<Patient> findByNameIgnoreCaseContainingOrSurnameIgnoreCaseContainingOrHnIgnoreCaseContaining(String name,String surname, String hn);
 }

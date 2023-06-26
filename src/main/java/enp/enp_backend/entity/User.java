@@ -1,9 +1,10 @@
-package enp.enp_backend.security.entity;
+package enp.enp_backend.entity;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import enp.enp_backend.entity.Doctor;
 import enp.enp_backend.entity.Nurse;
+import enp.enp_backend.security.entity.Authority;
 import jakarta.persistence.*;
 import org.jetbrains.annotations.NotNull;
 import lombok.AllArgsConstructor;
