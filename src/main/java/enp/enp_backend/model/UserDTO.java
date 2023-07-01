@@ -1,5 +1,4 @@
-package enp.enp_backend.entity;
-
+package enp.enp_backend.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,8 +11,15 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserAuthDTO {
+public class UserDTO {
     Long id;
-    String name;
+    String username;
+   // String email;
+    String password;
+   // String phoneNumber;
+
     List<String> authorities;
+
+    NurseDTO nurse;
+    DoctorDTO doctor;
 }

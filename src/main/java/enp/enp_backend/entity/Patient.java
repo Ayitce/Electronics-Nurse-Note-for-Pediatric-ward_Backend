@@ -3,6 +3,7 @@ package enp.enp_backend.entity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
+import jakarta.persistence.ManyToOne;
 import lombok.*;
 import org.springframework.data.annotation.Id;
 
@@ -36,6 +37,9 @@ public class Patient {
     String height;
     String weight;
     String symptom;
+
+    @ManyToOne
+    Doctor doctor;
 
     public void setId(Long id) {
         this.id = id;

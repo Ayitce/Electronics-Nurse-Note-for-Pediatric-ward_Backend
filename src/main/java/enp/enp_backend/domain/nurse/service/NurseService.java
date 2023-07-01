@@ -49,4 +49,10 @@ public interface NurseService {
     Bed getBed(Long id);
     List<Bed> getAllBed();
     Bed save(Bed bed);
+
+    //--------------Doctor-------------------
+
+    Doctor getDoctor(Long id);
+    List<Doctor> getAllDoctor();
+    Doctor save(Doctor doctor);
 }

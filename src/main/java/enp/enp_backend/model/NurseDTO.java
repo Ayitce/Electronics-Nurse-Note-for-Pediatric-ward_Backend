@@ -1,4 +1,4 @@
-package enp.enp_backend.entity;
+package enp.enp_backend.model;
 
 
 import lombok.AllArgsConstructor;
@@ -6,14 +6,18 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class DoctorAuthDTO {
+public class NurseDTO {
     Long id;
     String name;
-    List<String> authorities;
+    String surname;
+    String phoneNumber;
+    String medicalID;
+    String gender;
+    String dateOfBirth;
+
+
 }

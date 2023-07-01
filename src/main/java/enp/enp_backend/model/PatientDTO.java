@@ -1,6 +1,7 @@
-package enp.enp_backend.entity;
+package enp.enp_backend.model;
 
 
+import enp.enp_backend.entity.Doctor;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -31,4 +32,6 @@ public class PatientDTO {
     String height;
     String weight;
     String symptom;
+
+    Doctor doctor;
 }

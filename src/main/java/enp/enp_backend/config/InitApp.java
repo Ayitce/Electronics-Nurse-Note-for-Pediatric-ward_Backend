@@ -1,9 +1,6 @@
 package enp.enp_backend.config;
 
-import enp.enp_backend.domain.nurse.repository.jpa.BedRepository;
-import enp.enp_backend.domain.nurse.repository.jpa.NurseRepository;
-import enp.enp_backend.domain.nurse.repository.jpa.Nurse_PatientRepository;
-import enp.enp_backend.domain.nurse.repository.jpa.RoomRepository;
+import enp.enp_backend.domain.nurse.repository.jpa.*;
 import enp.enp_backend.entity.*;
 import enp.enp_backend.security.entity.Authority;
 import enp.enp_backend.security.entity.AuthorityName;
@@ -42,6 +39,13 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
     @Autowired
     BedRepository bedRepository;
 
+    @Autowired
+    Nurse_AdmitRepository nurseAdmitRepository;
+    User user1;
+
+    @Autowired
+    Nurse_DoctorRepository nurse_doctorRepository;
+
     @Override
     public void onApplicationEvent(ApplicationReadyEvent applicationReadyEvent) {
 
@@ -62,8 +66,6 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
                 .image("")
                 .build();
 
-        nursePatientRepository.save(patient);
-
         Patient patient2 = Patient.builder()
                 .name("Yit2")
                 .surname("Narak")
@@ -73,15 +75,33 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
                 .address("brah brah brah")
                 .phoneNumber("0936728949")
                 // .email("email")
-            //    .admitted(true)
-             //   .admitDateTime("28-05-2023")
-             //   .dischargeDate(null)
+                //    .admitted(true)
+                //   .admitDateTime("28-05-2023")
+                //   .dischargeDate(null)
                 .allergies("brah brah")
                 // .allergies("-")
                 .hn("HN12354")
                 .image("")
                 .build();
 
+        Doctor doctor1 = Doctor.builder()
+                .name("Suchat")
+                .surname("eiei")
+                .medicalID("DT15408")
+                .build();
+
+        Doctor doctor2 = Doctor.builder()
+                .name("Somchai")
+                .surname("eaea")
+                .medicalID("DT14808")
+                .build();
+
+        nurse_doctorRepository.save(doctor1);
+        nurse_doctorRepository.save(doctor2);
+
+        patient.setDoctor(doctor1);
+        patient2.setDoctor(doctor1);
+        nursePatientRepository.save(patient);
         nursePatientRepository.save(patient2);
 
         Nurse nurse = Nurse.builder()
@@ -93,25 +113,51 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
         addUser();
         nurse.setUser(user1);
         nurseRepository.save(nurse);
-        user1.setNurse(nurse);
+       // user1.setNurse(nurse);
         userRepository.save(user1);
 
 
-        Bed bed1 = Bed.builder().isAvailable(true).build();
-        Bed bed2 = Bed.builder().isAvailable(true).build();
+        Bed bed1 = Bed.builder().isAvailable(false).build();
+        Bed bed2 = Bed.builder().isAvailable(false).build();
+        Bed bed3 = Bed.builder().isAvailable(true).build();
+        Bed bed4 = Bed.builder().isAvailable(true).build();
+        Bed bed5 = Bed.builder().isAvailable(true).build();
+
         bedRepository.save(bed1);
         bedRepository.save(bed2);
+        bedRepository.save(bed3);
+        bedRepository.save(bed4);
+        bedRepository.save(bed5);
+
 
         Room room1 = Room.builder().build();
         Room room2 = Room.builder().build();
         room1.getBedList().add(bed1);
         room1.getBedList().add(bed2);
+        room1.getBedList().add(bed3);
+        room2.getBedList().add(bed4);
+        room2.getBedList().add(bed5);
         roomRepository.save(room1);
         roomRepository.save(room2);
 
-    }
+        Admit admit1 = Admit.builder()
+                .room(room1)
+                .bed(room1.getBedList().get(0))
+                .patient(patient)
+                .an("AN001")
+                .admitDateTime("22-01-2535 12:03:44").build();
 
-    User user1;
+        Admit admit2 = Admit.builder()
+                .room(room1)
+                .bed(room1.getBedList().get(1))
+                .patient(patient2)
+                .an("AN002")
+                .admitDateTime("22-01-2535 12:03:44").build();
+
+        nurseAdmitRepository.save(admit1);
+        nurseAdmitRepository.save(admit2);
+
+    }
 
     private void addUser() {
         PasswordEncoder encoder = new BCryptPasswordEncoder();

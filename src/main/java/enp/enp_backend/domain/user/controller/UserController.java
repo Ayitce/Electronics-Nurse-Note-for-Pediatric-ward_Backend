@@ -86,7 +86,6 @@ public class UserController {
                 .build();
 
         nurseService.save(regNurse);
-        //userRepository.save(regUser);
         userService.save(regUser);
 
         regUser.setNurse(regNurse);

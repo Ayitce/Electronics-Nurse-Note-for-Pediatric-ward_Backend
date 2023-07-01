@@ -1,4 +1,4 @@
-package enp.enp_backend.entity;
+package enp.enp_backend.model;
 
 
 import lombok.AllArgsConstructor;

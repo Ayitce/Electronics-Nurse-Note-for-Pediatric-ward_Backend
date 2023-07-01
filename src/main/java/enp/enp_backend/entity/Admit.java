@@ -1,9 +1,6 @@
 package enp.enp_backend.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.Id;
 
@@ -19,10 +16,10 @@ public class Admit {
     @EqualsAndHashCode.Exclude
     Long id;
 
-    @OneToOne
+    @ManyToOne
     Bed bed;
 
-    @OneToOne
+    @ManyToOne
     Room room;
 
     @OneToOne

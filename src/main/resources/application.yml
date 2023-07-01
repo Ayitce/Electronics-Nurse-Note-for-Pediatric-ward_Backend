@@ -10,9 +10,22 @@ spring:
   jpa:
     hibernate:
       ddl-auto: create
+      show_sql: true
+      format_sql: true
   servlet:
     multipart:
       max-file-size: 10MB
+logging:
+  level:
+    org:
+      hibernate:
+        SQL:
+          TRACE
+        type:
+          descriptor:
+            sql:
+              BasicBinder:
+                TRACE
 jwt:
   header: Authorization
   secret: "4t7w!z%C&F)J@NcRfUjXn2r5u8x/A?D(G-KaPdSgVkYp3s6v9y$B&E)H@MbQeThW"

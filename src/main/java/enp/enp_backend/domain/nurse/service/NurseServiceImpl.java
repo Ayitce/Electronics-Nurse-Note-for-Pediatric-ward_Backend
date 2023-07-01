@@ -27,6 +27,9 @@ public class NurseServiceImpl implements NurseService {
     @Autowired
     RoomRepository roomRepository;
 
+    @Autowired
+    Nurse_DoctorRepository nurseDoctorRepository;
+
     //-----------------Nurse---------
 
     @Override
@@ -76,8 +79,8 @@ public class NurseServiceImpl implements NurseService {
     }
 
     @Override
-    public List<Patient> getSearchedPatient(String name,String surname, String hn) {
-        return nursePatientRepository.findByNameIgnoreCaseContainingOrSurnameIgnoreCaseContainingOrHnIgnoreCaseContaining(name,surname,hn);
+    public List<Patient> getSearchedPatient(String name, String surname, String hn) {
+        return nursePatientRepository.findByNameIgnoreCaseContainingOrSurnameIgnoreCaseContainingOrHnIgnoreCaseContaining(name, surname, hn);
     }
 
     //--------------Admit----------------
@@ -88,55 +91,74 @@ public class NurseServiceImpl implements NurseService {
     }
 
     @Override
-    public List<Admit> getAllAdmit(){
+    public List<Admit> getAllAdmit() {
         return nurseAdmitRepository.findAll(Pageable.unpaged()).getContent();
     }
 
     @Override
-    public Admit save(Admit admit){
+    public Admit save(Admit admit) {
         return nurseAdmitRepository.save(admit);
     }
+
     @Override
-    public Admit getAdmitByAn(String an){
+    public Admit getAdmitByAn(String an) {
         return nurseAdmitRepository.findAdmitByAn(an);
     }
 
     @Override
-    public List<Admit> getSearchedAdmit(String name,String surname, String hn, String an){
-        return nurseAdmitRepository.findByPatientNameIgnoreCaseContainingOrPatientSurnameIgnoreCaseContainingOrPatientHnIgnoreCaseContainingOrAnIgnoreCaseContaining(name,surname,hn,an);
+    public List<Admit> getSearchedAdmit(String name, String surname, String hn, String an) {
+        return nurseAdmitRepository.findByPatientNameIgnoreCaseContainingOrPatientSurnameIgnoreCaseContainingOrPatientHnIgnoreCaseContainingOrAnIgnoreCaseContaining(name, surname, hn, an);
     }
 
     //--------------Room------------------
     @Override
-    public Room getRoom(Long id){
+    public Room getRoom(Long id) {
         return roomRepository.findById(id).orElse(null);
     }
 
     @Override
-    public List<Room> getAllRoom(){
+    public List<Room> getAllRoom() {
         return roomRepository.findAll(Pageable.unpaged()).getContent();
     }
 
     @Override
-    public Room save(Room room){
+    public Room save(Room room) {
         return roomRepository.save(room);
     }
 
     //--------------Bed--------------------
 
     @Override
-    public Bed getBed(Long id){
+    public Bed getBed(Long id) {
         return bedRepository.findById(id).orElse(null);
     }
 
     @Override
-    public List<Bed> getAllBed(){
+    public List<Bed> getAllBed() {
         return bedRepository.findAll(Pageable.unpaged()).getContent();
     }
 
     @Override
-    public Bed save(Bed bed){
+    public Bed save(Bed bed) {
         return bedRepository.save(bed);
     }
+
+    //---------------Doctor---------------
+
+    @Override
+    public Doctor getDoctor(Long id) {
+        return nurseDoctorRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public List<Doctor> getAllDoctor() {
+        return nurseDoctorRepository.findAll(Pageable.unpaged()).getContent();
+    }
+
+    @Override
+    public Doctor save(Doctor doctor) {
+        return nurseDoctorRepository.save(doctor);
+    }
+
 }
 

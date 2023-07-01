@@ -1,9 +1,7 @@
 package enp.enp_backend.domain.nurse.controller;
 
 import enp.enp_backend.domain.nurse.service.NurseService;
-import enp.enp_backend.entity.Admit;
-import enp.enp_backend.entity.Bed;
-import enp.enp_backend.entity.Patient;
+import enp.enp_backend.entity.*;
 import enp.enp_backend.util.CloudStorageHelper;
 import enp.enp_backend.util.LabMapper;
 import org.apache.commons.logging.Log;
@@ -136,12 +134,16 @@ public class NurseController {
     @PostMapping("/nurse/admits")
     public ResponseEntity<?> addAdmit(@RequestBody Admit admit) {
         Patient tempPatient = admit.getPatient();
+        Doctor tempDoctor = nurseService.getDoctor(admit.getPatient().getDoctor().getId());
+        tempPatient.setDoctor(tempDoctor);
         nurseService.save(tempPatient);
 
         Long bedID = admit.getBed().getId();
         Bed bed = nurseService.getBed(bedID);
         bed.setAvailable(false);
         nurseService.save(bed);
+
+
 
         admit.setPatient(tempPatient);
         Admit output = nurseService.save(admit);
@@ -172,5 +174,28 @@ public class NurseController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "The given AN is not found");
         }
     }
+
+    //-------------Room---------------
+    @GetMapping("nurse/rooms")
+    public ResponseEntity<?> getRoomLists() {
+        return ResponseEntity.ok(LabMapper.INSTANCE.getRoomDTO(nurseService.getAllRoom()));
+    }
+
+    @GetMapping("nurse/rooms/{id}")
+    public ResponseEntity<?> getRoom(@PathVariable("id") Long id) {
+        Room output = nurseService.getRoom(id);
+        if (output != null) {
+            return ResponseEntity.ok(LabMapper.INSTANCE.getRoomDTO(output));
+        } else {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "The given id is not found");
+        }
+    }
+
+    //------------Doctor--------------
+    @GetMapping("nurse/doctors")
+    public ResponseEntity<?> getDoctorLists() {
+        return ResponseEntity.ok(LabMapper.INSTANCE.getDoctorDTO(nurseService.getAllDoctor()));
+    }
+
 
 }
