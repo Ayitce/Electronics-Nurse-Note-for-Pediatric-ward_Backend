@@ -3,16 +3,16 @@ package enp.enp_backend.security.entity;
 
 import enp.enp_backend.entity.User;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
+import lombok.*;
 import org.springframework.data.annotation.Id;
 
 
 import java.util.List;
 
 @Entity
-@Data
+@Setter
+@Getter
+@ToString
 @Builder
 @AllArgsConstructor
 public class Authority {

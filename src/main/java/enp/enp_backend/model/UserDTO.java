@@ -1,13 +1,13 @@
 package enp.enp_backend.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import jakarta.persistence.Entity;
+import lombok.*;
 
 import java.util.List;
 
-@Data
+@Setter
+@Getter
+@ToString
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor

@@ -1,5 +1,6 @@
 package enp.enp_backend.config;
 
+import enp.enp_backend.domain.doctor.repository.jpa.DoctorRepository;
 import enp.enp_backend.domain.nurse.repository.jpa.*;
 import enp.enp_backend.entity.*;
 import enp.enp_backend.security.entity.Authority;
@@ -41,10 +42,15 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
 
     @Autowired
     Nurse_AdmitRepository nurseAdmitRepository;
+
     User user1;
+    User user2;
 
     @Autowired
     Nurse_DoctorRepository nurse_doctorRepository;
+
+    @Autowired
+    DoctorRepository doctorRepository;
 
     @Override
     public void onApplicationEvent(ApplicationReadyEvent applicationReadyEvent) {
@@ -110,11 +116,25 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
                 .phoneNumber("0801561664")
                 .build();
         nurseRepository.save(nurse);
+
+        Doctor doctor = Doctor.builder()
+                .name("Yit")
+                .surname("Sudsuay")
+                .phoneNumber("0801561664")
+                .build();
+
+
         addUser();
+
         nurse.setUser(user1);
         nurseRepository.save(nurse);
-       // user1.setNurse(nurse);
+        user1.setNurse(nurse);
         userRepository.save(user1);
+
+        doctor.setUser(user2);
+        doctorRepository.save(doctor);
+        user2.setDoctor(doctor);
+        userRepository.save(user2);
 
 
         Bed bed1 = Bed.builder().isAvailable(false).build();
@@ -175,5 +195,18 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
         authorityRepository.save(authUser);
         user1.getAuthorities().add(authUser);
         userRepository.save(user1);
+
+        Authority authDoctor = Authority.builder().name(AuthorityName.ROLE_DOCTOR).build();
+        user2 = User.builder()
+                .username("doctor")
+                .password(encoder.encode("doctor"))
+                //.email("admin@admin.com")
+                .enabled(true)
+                .lastPasswordResetDate(Date.from(LocalDate.of(2021, 01, 22).atStartOfDay(ZoneId.systemDefault()).toInstant()))
+                .build();
+
+        authorityRepository.save(authDoctor);
+        user2.getAuthorities().add(authDoctor);
+        userRepository.save(user2);
     }
 }

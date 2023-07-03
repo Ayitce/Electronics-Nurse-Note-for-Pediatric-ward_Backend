@@ -6,11 +6,8 @@ import enp.enp_backend.entity.Doctor;
 import enp.enp_backend.entity.Nurse;
 import enp.enp_backend.security.entity.Authority;
 import jakarta.persistence.*;
+import lombok.*;
 import org.jetbrains.annotations.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 
 import java.util.ArrayList;
@@ -20,7 +17,8 @@ import java.util.List;
 
 @Entity
 @Builder
-@Data
+@Setter
+@Getter
 @JsonIgnoreProperties(ignoreUnknown = true)
 @AllArgsConstructor
 @NoArgsConstructor

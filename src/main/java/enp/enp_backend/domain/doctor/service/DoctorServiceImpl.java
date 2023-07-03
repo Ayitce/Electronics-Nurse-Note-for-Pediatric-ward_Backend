@@ -1,7 +1,9 @@
 package enp.enp_backend.domain.doctor.service;
 
 import enp.enp_backend.domain.doctor.repository.jpa.DoctorRepository;
+import enp.enp_backend.domain.doctor.repository.jpa.Doctor_AdmitRepository;
 import enp.enp_backend.domain.doctor.repository.jpa.Doctor_PatientRepository;
+import enp.enp_backend.entity.Admit;
 import enp.enp_backend.entity.Doctor;
 import enp.enp_backend.entity.Patient;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +23,9 @@ public class DoctorServiceImpl implements DoctorService {
     @Autowired
     Doctor_PatientRepository doctorPatientRepository;
 
+    @Autowired
+    Doctor_AdmitRepository doctor_admitRepository;
+
     @Override
     public Doctor save(Doctor doctor) {
         return doctorRepository.save(doctor);
@@ -32,36 +37,28 @@ public class DoctorServiceImpl implements DoctorService {
     }
 
 
-    //---------------------------------
+    //----------Admit------------
 
 
     @Override
-    public Integer getPatientSize() {
-        return Math.toIntExact(doctorPatientRepository.count());
+    public Admit getAdmit(Long id) {
+        return doctor_admitRepository.findById(id).orElse(null);
     }
 
     @Override
-    public Page<Patient> getPatient(Integer pageSize, Integer page) {
-        return doctorPatientRepository.findAll(PageRequest.of(page - 1, pageSize));
+    public List<Admit> getAllAdmit() {
+        return doctor_admitRepository.findAll(Pageable.unpaged()).getContent();
     }
 
     @Override
-    public Patient getPatient(Long id) {
-        return doctorPatientRepository.findById(id).orElse(null);
+    public Admit getAdmitByAn(String an) {
+        return doctor_admitRepository.findAdmitByAn(an);
     }
 
     @Override
-    public Patient save(Patient patient) {
-        return doctorPatientRepository.save(patient);
+    public List<Admit> getSearchedAdmit(String name, String surname, String hn, String an) {
+        return doctor_admitRepository.findByPatientNameIgnoreCaseContainingOrPatientSurnameIgnoreCaseContainingOrPatientHnIgnoreCaseContainingOrAnIgnoreCaseContaining(name, surname, hn, an);
     }
 
-    ;
-
-    @Override
-    public List<Patient> getAllpatient() {
-        return doctorPatientRepository.findAll(Pageable.unpaged()).getContent();
-    }
-
-    ;
 
 }

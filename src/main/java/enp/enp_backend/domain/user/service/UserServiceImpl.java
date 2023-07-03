@@ -1,11 +1,14 @@
 package enp.enp_backend.domain.user.service;
 
+import enp.enp_backend.entity.Admit;
 import enp.enp_backend.entity.User;
 import enp.enp_backend.domain.user.repository.jpa.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -27,5 +30,6 @@ public class UserServiceImpl implements UserService {
     public User getUser(Long id) {
         return userRepository.findById(id).orElse(null);
     }
+
 
 }

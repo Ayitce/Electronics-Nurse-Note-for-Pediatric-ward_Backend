@@ -36,14 +36,17 @@ import org.springframework.web.server.ResponseStatusException;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
+import java.util.Optional;
 
 @Controller
 public class UserController {
     private final Log logger = LogFactory.getLog(this.getClass());
     @Autowired
     UserRepository userRepository;
+
     @Autowired
     UserService userService;
+
     @Autowired
     AuthorityRepository authorityRepository;
     @Autowired
@@ -143,17 +146,17 @@ public class UserController {
     public ResponseEntity<?> getCurrentUser(HttpServletRequest request) {
         String token = request.getHeader(tokenHeader);
         String[] parts = token.split(" ");
-        //logger.info("parts :" + parts[1]);
+        logger.info("parts :" + parts[1]);
         String finalToken = parts[1];
         logger.info("token :" + finalToken);
         String username = jwtTokenUtil.getUsernameFromToken(finalToken);
         logger.info("user :" + username);
         JwtUser user = (JwtUser) userDetailsService.loadUserByUsername(username);
+        logger.info("jwtuser :" + user.getId());
+        User output = userService.getUser(user.getId());
+        logger.info("user 2 :" + output);
 
-        User user2 = userRepository.findById((user).getId()).orElse(null);
-
-
-        return ResponseEntity.ok(LabMapper.INSTANCE.getUserDTO(user2));
+        return ResponseEntity.ok(LabMapper.INSTANCE.getUserDTO(output));
     }
 
     @GetMapping("user")

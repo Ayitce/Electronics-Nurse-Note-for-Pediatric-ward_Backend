@@ -1,11 +1,11 @@
 package enp.enp_backend.security.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-@Data
+
+@Setter
+@Getter
+@ToString
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor

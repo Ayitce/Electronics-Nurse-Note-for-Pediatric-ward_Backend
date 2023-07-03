@@ -8,6 +8,7 @@ import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Mapper(imports = Collectors.class)
@@ -45,6 +46,5 @@ public interface LabMapper {
 
     @Mapping(target = "authorities", expression = "java(doctor.getUser().getAuthorities().stream().map(auth -> auth.getName().name()).collect(Collectors.toList()))")
     DoctorAuthDTO getDoctorAuthDTO(Doctor doctor);
-
 
 }

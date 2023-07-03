@@ -1,5 +1,6 @@
 package enp.enp_backend.domain.doctor.service;
 
+import enp.enp_backend.entity.Admit;
 import enp.enp_backend.entity.Doctor;
 import enp.enp_backend.entity.Patient;
 import org.springframework.data.domain.Page;
@@ -12,16 +13,14 @@ public interface DoctorService {
 
     Doctor getDoctor(Long id);
 
-    //-----------------------------
+    //-----------Admit------------------
 
+    Admit getAdmit(Long id);
 
-    Integer getPatientSize();
+    List<Admit> getAllAdmit();
 
-    Page<Patient> getPatient(Integer pageSize, Integer page);
+    Admit getAdmitByAn(String an);
 
-    Patient getPatient(Long id);
+    List<Admit> getSearchedAdmit(String name, String surname, String hn, String an);
 
-    Patient save(Patient patient);
-
-    List<Patient> getAllpatient();
 }
