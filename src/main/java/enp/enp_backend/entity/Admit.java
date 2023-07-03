@@ -22,7 +22,7 @@ public class Admit {
     @ManyToOne
     Room room;
 
-    @OneToOne
+    @ManyToOne
     Patient patient;
 
     String admitDateTime;
