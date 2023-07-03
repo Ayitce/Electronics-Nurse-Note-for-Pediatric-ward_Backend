@@ -22,6 +22,7 @@ public class AdmitDTO {
 
     String admitDateTime;
     String dischargeDate;
+    String age;
 
     String an;
 

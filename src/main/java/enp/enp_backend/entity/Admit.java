@@ -27,6 +27,6 @@ public class Admit {
 
     String admitDateTime;
     String dischargeDate;
-
+    String age;
     String an;
 }

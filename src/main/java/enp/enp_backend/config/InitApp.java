@@ -52,7 +52,7 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
         Patient patient = Patient.builder()
                 .name("Yit")
                 .surname("Narak")
-                .age("12")
+                //.age("12")
                 .gender("Female")
                 .dateOfBirth("24-08-2001")
                 .address("brah brah brah")
@@ -69,7 +69,7 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
         Patient patient2 = Patient.builder()
                 .name("Yit2")
                 .surname("Narak")
-                .age("12")
+             //   .age("12")
                 .gender("Female")
                 .dateOfBirth("24-08-2001")
                 .address("brah brah brah")
@@ -145,6 +145,7 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
                 .bed(room1.getBedList().get(0))
                 .patient(patient)
                 .an("AN001")
+                .age("12 ปี")
                 .admitDateTime("22-01-2535 12:03:44").build();
 
         Admit admit2 = Admit.builder()
@@ -152,6 +153,7 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
                 .bed(room1.getBedList().get(1))
                 .patient(patient2)
                 .an("AN002")
+                .age("12 ปี")
                 .admitDateTime("22-01-2535 12:03:44").build();
 
         nurseAdmitRepository.save(admit1);
