@@ -9,8 +9,9 @@ import org.springframework.data.annotation.Id;
 
 import java.util.Date;
 
-@Data
 @Builder
+@Setter
+@Getter
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor

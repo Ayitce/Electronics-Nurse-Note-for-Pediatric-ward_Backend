@@ -85,7 +85,6 @@ public class UserController {
                 .phoneNumber(jsonObject.get("phoneNumber").toString())
                 .medicalID(jsonObject.get("medicalID").toString())
                 .gender(jsonObject.get("gender").toString())
-                .dateOfBirth(jsonObject.get("dateOfBirth").toString())
                 .build();
 
         nurseService.save(regNurse);
@@ -124,7 +123,6 @@ public class UserController {
                 .phoneNumber(jsonObject.get("phoneNumber").toString())
                 .medicalID(jsonObject.get("medicalID").toString())
                 .gender(jsonObject.get("gender").toString())
-                .dateOfBirth(jsonObject.get("dateOfBirth").toString())
                 .build();
 
         doctorService.save(regDoctor);

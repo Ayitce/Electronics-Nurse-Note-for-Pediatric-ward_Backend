@@ -4,8 +4,9 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.Id;
 
-@Data
 @Builder
+@Setter
+@Getter
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
