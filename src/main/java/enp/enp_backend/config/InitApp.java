@@ -45,6 +45,7 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
 
     User user1;
     User user2;
+    User user3;
 
     @Autowired
     Nurse_DoctorRepository nurse_doctorRepository;
@@ -185,8 +186,8 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
         PasswordEncoder encoder = new BCryptPasswordEncoder();
         Authority authUser = Authority.builder().name(AuthorityName.ROLE_NURSE).build();
         user1 = User.builder()
-                .username("admin")
-                .password(encoder.encode("admin"))
+                .username("nurse")
+                .password(encoder.encode("nurse"))
                 //.email("admin@admin.com")
                 .enabled(true)
                 .lastPasswordResetDate(Date.from(LocalDate.of(2021, 01, 22).atStartOfDay(ZoneId.systemDefault()).toInstant()))
@@ -208,5 +209,18 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
         authorityRepository.save(authDoctor);
         user2.getAuthorities().add(authDoctor);
         userRepository.save(user2);
+
+        Authority authAdmin = Authority.builder().name(AuthorityName.ROLE_ADMIN).build();
+        user3 = User.builder()
+                .username("admin")
+                .password(encoder.encode("admin"))
+                //.email("admin@admin.com")
+                .enabled(true)
+                .lastPasswordResetDate(Date.from(LocalDate.of(2021, 01, 22).atStartOfDay(ZoneId.systemDefault()).toInstant()))
+                .build();
+
+        authorityRepository.save(authAdmin);
+        user3.getAuthorities().add(authAdmin);
+        userRepository.save(user3);
     }
 }

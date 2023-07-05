@@ -17,6 +17,7 @@ public class UserDTO {
    // String email;
     String password;
    // String phoneNumber;
+    Boolean enabled;
 
     List<String> authorities;
 

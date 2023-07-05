@@ -42,8 +42,10 @@ public class WebSecurityConfig {
                         .requestMatchers("/auth/**", "/register", "/register/doctor", "/register/nurse", "/user/**","/currentUser").permitAll()
                         .requestMatchers(HttpMethod.GET, "/auth/refresh", "/nurse/**", "/currentUser").hasRole("NURSE")
                         .requestMatchers(HttpMethod.GET, "/auth/refresh", "/doctor/**", "/currentUser").hasRole("DOCTOR")
+                        .requestMatchers(HttpMethod.GET, "/auth/refresh", "/admin/**", "/currentUser").hasRole("ADMIN")
                         .requestMatchers("/nurse/**").hasRole("NURSE")
                         .requestMatchers("/doctor/**").hasRole("DOCTOR")
+                        .requestMatchers("/admin/**").hasRole("ADMIN")
 
                         //  .requestMatchers(HttpMethod.GET,"/**").hasRole("DOCTOR")
                         .anyRequest().authenticated()
