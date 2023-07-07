@@ -64,6 +64,7 @@ public class AdminController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "The given AN is not found");
         }
     }
+/*
 
     @GetMapping("admin/users/doctors")
     public ResponseEntity<?> getDoctorUserLists() {
@@ -74,6 +75,7 @@ public class AdminController {
     public ResponseEntity<?> getNurseUserLists() {
         return ResponseEntity.ok(LabMapper.INSTANCE.getUserDTO(adminService.getNurseUser()));
     }
+*/
 
     @PostMapping("/admin/register/nurse")
     public ResponseEntity<?> registerNurse(@RequestBody String json) throws AuthenticationException, JSONException {

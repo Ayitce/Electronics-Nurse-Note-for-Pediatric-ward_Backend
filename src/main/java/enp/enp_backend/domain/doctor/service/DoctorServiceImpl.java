@@ -31,19 +31,7 @@ public class DoctorServiceImpl implements DoctorService {
         return doctorRepository.save(doctor);
     }
 
-    @Override
-    public Doctor getDoctor(Long id) {
-        return doctorRepository.findById(id).orElse(null);
-    }
-
-
     //----------Admit------------
-
-
-    @Override
-    public Admit getAdmit(Long id) {
-        return doctor_admitRepository.findById(id).orElse(null);
-    }
 
     @Override
     public List<Admit> getAllAdmit() {

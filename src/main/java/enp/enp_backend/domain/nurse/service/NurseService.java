@@ -10,23 +10,18 @@ public interface NurseService {
     //-----------Nurse---------
     Nurse save(Nurse nurse);
 
-    Nurse getNurse(Long id);
-
     //---------------Patient----------------
 
-    Integer getPatientSize();
 
-    Page<Patient> getPatient(Integer pageSize, Integer page);
-
-    Patient getPatient(Long id);
+    /*Patient getPatient(Long id);*/
 
     Patient save(Patient patient);
 
     List<Patient> getAllpatient();
 
-    Patient getPatientByHn(String hn);
-
-    List<Patient> getSearchedPatient(String name,String surname, String hn);
+//    Patient getPatientByHn(String hn);
+//
+//    List<Patient> getSearchedPatient(String name,String surname, String hn);
 
     //--------------Admit------------------
 
@@ -47,7 +42,6 @@ public interface NurseService {
 
     //--------------Bed--------------------
     Bed getBed(Long id);
-    List<Bed> getAllBed();
     Bed save(Bed bed);
 
     //--------------Doctor-------------------

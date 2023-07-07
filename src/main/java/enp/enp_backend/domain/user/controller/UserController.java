@@ -170,7 +170,7 @@ public class UserController {
         return new ResponseEntity<>(LabMapper.INSTANCE.getUserDTO(pageOutput.getContent()), responseHeader, HttpStatus.OK);
     }
 
-
+/*
     @GetMapping("user/{id}")
     public ResponseEntity<?> getUser(@PathVariable("id") Long id) {
         User output = userService.getUser(id);
@@ -179,6 +179,6 @@ public class UserController {
         } else {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "The given id is not found");
         }
-    }
+    }*/
 
 }

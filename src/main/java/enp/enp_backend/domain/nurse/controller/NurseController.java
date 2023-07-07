@@ -29,14 +29,11 @@ public class NurseController {
     @Autowired
     NurseService nurseService;
     //------------Image---------------
-    @Autowired
-    CloudStorageHelper cloudStorageHelper;
-
     @GetMapping("nurse/patients")
     public ResponseEntity<?> getPatientLists() {
         return ResponseEntity.ok(LabMapper.INSTANCE.getPatientDTO(nurseService.getAllpatient()));
     }
-
+/*
     @GetMapping("nurse/patients/{id}")
     public ResponseEntity<?> getPatient(@PathVariable("id") Long id) {
         Patient output = nurseService.getPatient(id);
@@ -45,8 +42,8 @@ public class NurseController {
         } else {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "The given id is not found");
         }
-    }
-
+    }*/
+/*
     @GetMapping("nurse/patients/HN/{hn}")
     public ResponseEntity<?> getPatientByHN(@PathVariable("hn") String hn) {
         Patient output = nurseService.getPatientByHn(hn);
@@ -55,7 +52,7 @@ public class NurseController {
         } else {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "The given AN is not found");
         }
-    }
+    }*/
 /*
 
     @PostMapping("/nurse/patients")
@@ -80,7 +77,7 @@ public class NurseController {
         return ResponseEntity.ok(LabMapper.INSTANCE.getPatientDTO(tempPatient));
     }
 */
-
+/*
     @GetMapping("nurse/patients/search")
     public ResponseEntity<?> getSearchedPatient(@RequestParam(value = "_search", required = false) String search) throws JSONException {
         List<Patient> output = nurseService.getSearchedPatient(search, search, search);
@@ -90,20 +87,23 @@ public class NurseController {
         } else {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "The given AN is not found");
         }
-    }
+    }*/
 
     //-----------Image------------
+/*
 
     @PostMapping("/nurse/uploadFile")
     public ResponseEntity<?> uploadFile(@RequestPart(value = "file") MultipartFile file) throws IOException, ServletException {
         return ResponseEntity.ok(this.cloudStorageHelper.getImageUrl(file, "patientimage-53dc6.appspot.com"));
     }
+*/
 
     //--------------Admit-----------------
     @GetMapping("nurse/admits")
     public ResponseEntity<?> getAdmitLists() {
         return ResponseEntity.ok(LabMapper.INSTANCE.getAdmitDTO(nurseService.getAllAdmit()));
     }
+/*
 
     @GetMapping("nurse/admits/{id}")
     public ResponseEntity<?> getAdmit(@PathVariable("id") Long id) {
@@ -114,6 +114,7 @@ public class NurseController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "The given id is not found");
         }
     }
+*/
 
     @PostMapping("/nurse/admits/discharge")
     public ResponseEntity<?> dischargeAdmit(@RequestBody Admit admit) {

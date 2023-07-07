@@ -11,11 +11,7 @@ public interface DoctorService {
 
     Doctor save(Doctor doctor);
 
-    Doctor getDoctor(Long id);
-
     //-----------Admit------------------
-
-    Admit getAdmit(Long id);
 
     List<Admit> getAllAdmit();
 

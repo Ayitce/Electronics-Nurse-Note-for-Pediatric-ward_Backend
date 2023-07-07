@@ -12,9 +12,11 @@ public interface AdminService {
     List<User> getAllUser();
     Doctor save(Doctor doctor);
     Nurse save(Nurse nurse);
+/*
 
     List<User> getNurseUser();
     List<User> getDoctorUser();
+*/
 
     User getUser(Long id);
     List<User> getSearchedUser(String search);

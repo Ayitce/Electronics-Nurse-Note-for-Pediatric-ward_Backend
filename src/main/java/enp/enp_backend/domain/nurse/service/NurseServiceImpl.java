@@ -37,28 +37,12 @@ public class NurseServiceImpl implements NurseService {
         return nurseRepository.save(nurse);
     }
 
-    @Override
-    public Nurse getNurse(Long id) {
-        return nurseRepository.findById(id).orElse(null);
-    }
-
     //------------Patient-----------
-
-    @Override
-    public Integer getPatientSize() {
-        return Math.toIntExact(nursePatientRepository.count());
-    }
-
-    @Override
-    public Page<Patient> getPatient(Integer pageSize, Integer page) {
-        return nursePatientRepository.findAll(PageRequest.of(page - 1, pageSize));
-    }
-
-    @Override
+   /* @Override
     public Patient getPatient(Long id) {
         return nursePatientRepository.findById(id).orElse(null);
     }
-
+*/
     @Override
     public Patient save(Patient patient) {
         return nursePatientRepository.save(patient);
@@ -73,15 +57,15 @@ public class NurseServiceImpl implements NurseService {
 
     ;
 
-    @Override
+    /*@Override
     public Patient getPatientByHn(String hn) {
         return nursePatientRepository.findPatientByHn(hn);
     }
-
-    @Override
+*/
+    /*@Override
     public List<Patient> getSearchedPatient(String name, String surname, String hn) {
         return nursePatientRepository.findByNameIgnoreCaseContainingOrSurnameIgnoreCaseContainingOrHnIgnoreCaseContaining(name, surname, hn);
-    }
+    }*/
 
     //--------------Admit----------------
 
@@ -131,11 +115,6 @@ public class NurseServiceImpl implements NurseService {
     @Override
     public Bed getBed(Long id) {
         return bedRepository.findById(id).orElse(null);
-    }
-
-    @Override
-    public List<Bed> getAllBed() {
-        return bedRepository.findAll(Pageable.unpaged()).getContent();
     }
 
     @Override
