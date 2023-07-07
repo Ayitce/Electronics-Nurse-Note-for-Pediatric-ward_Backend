@@ -121,6 +121,77 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
                 .hn("HN12344")
                 .image("sharp-fade-with-straight-fringe-for-boys.jpg")
                 .build();
+
+
+        Patient patient4 = Patient.builder()
+                .name("Suchat")
+                .surname("Dsadwqi")
+                //.age("12")
+                .gender("Female")
+                .dateOfBirth("24-08-2001")
+                .address("24 Soi Lasalle 18, Bangna, Bangna")
+                .phoneNumber("0936728949")
+                //.email("email")
+//                .admitDateTime("28-05-2023")
+                //.dischargeDate(null)
+                .allergies("none")
+                .bloodType("B")
+                .height("125")
+                .weight("30")
+                .idCard("132548743")
+                .parentName("Mary Duangjai")
+                .symptom("fever")
+                .hn("HN12378")
+                .image("sharp-fade-with-straight-fringe-for-boys.jpg")
+                .build();
+
+        Patient patient5 = Patient.builder()
+                .name("Suha")
+                .surname("Dngjai")
+                //.age("12")
+                .gender("Female")
+                .dateOfBirth("24-08-2001")
+                .address("24 Soi Lasalle 18, Bangna, Bangna")
+                .phoneNumber("0936728949")
+                //.email("email")
+//                .admitDateTime("28-05-2023")
+                //.dischargeDate(null)
+                .allergies("none")
+                .bloodType("B")
+                .height("125")
+                .weight("30")
+                .idCard("132548743")
+                .parentName("Mary Duangjai")
+                .symptom("fever")
+                .hn("HN12844")
+                .image("sharp-fade-with-straight-fringe-for-boys.jpg")
+                .build();
+
+
+        Patient patient6 = Patient.builder()
+                .name("Uchat")
+                .surname("Duangjai")
+                //.age("12")
+                .gender("Female")
+                .dateOfBirth("24-08-2001")
+                .address("24 Soi Lasalle 18, Bangna, Bangna")
+                .phoneNumber("0936728949")
+                //.email("email")
+//                .admitDateTime("28-05-2023")
+                //.dischargeDate(null)
+                .allergies("none")
+                .bloodType("B")
+                .height("125")
+                .weight("30")
+                .idCard("132548743")
+                .parentName("Mary Duangjai")
+                .symptom("fever")
+                .hn("HN12474")
+                .image("sharp-fade-with-straight-fringe-for-boys.jpg")
+                .build();
+
+
+
         Doctor doctor1 = Doctor.builder()
                 .name("Suchat")
                 .surname("eiei")
@@ -139,9 +210,16 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
         patient.setDoctor(doctor1);
         patient2.setDoctor(doctor1);
         patient3.setDoctor(doctor2);
+        patient4.setDoctor(doctor2);
+        patient5.setDoctor(doctor2);
+        patient6.setDoctor(doctor2);
         nursePatientRepository.save(patient);
         nursePatientRepository.save(patient2);
         nursePatientRepository.save(patient3);
+        nursePatientRepository.save(patient4);
+        nursePatientRepository.save(patient5);
+        nursePatientRepository.save(patient6);
+
 
         Nurse nurse = Nurse.builder()
                 .name("Fah")
@@ -176,15 +254,21 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
 
         Bed bed1 = Bed.builder().isAvailable(false).build();
         Bed bed2 = Bed.builder().isAvailable(false).build();
-        Bed bed3 = Bed.builder().isAvailable(true).build();
-        Bed bed4 = Bed.builder().isAvailable(true).build();
-        Bed bed5 = Bed.builder().isAvailable(true).build();
+        Bed bed3 = Bed.builder().isAvailable(false).build();
+        Bed bed4 = Bed.builder().isAvailable(false).build();
+        Bed bed5 = Bed.builder().isAvailable(false).build();
+        Bed bed6 = Bed.builder().isAvailable(true).build();
+        Bed bed7 = Bed.builder().isAvailable(true).build();
+        Bed bed8 = Bed.builder().isAvailable(true).build();
 
         bedRepository.save(bed1);
         bedRepository.save(bed2);
         bedRepository.save(bed3);
         bedRepository.save(bed4);
         bedRepository.save(bed5);
+        bedRepository.save(bed6);
+        bedRepository.save(bed7);
+        bedRepository.save(bed8);
 
 
         Room room1 = Room.builder().build();
@@ -192,8 +276,11 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
         room1.getBedList().add(bed1);
         room1.getBedList().add(bed2);
         room1.getBedList().add(bed3);
+        room1.getBedList().add(bed6);
+        room1.getBedList().add(bed7);
         room2.getBedList().add(bed4);
         room2.getBedList().add(bed5);
+        room2.getBedList().add(bed8);
         roomRepository.save(room1);
         roomRepository.save(room2);
 
@@ -216,16 +303,44 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
 
         Admit admit3 = Admit.builder()
                 .room(room1)
-                .bed(room1.getBedList().get(1))
-                .patient(patient2)
+                .bed(room1.getBedList().get(2))
+                .patient(patient3)
                 .an("AN006")
                 .age("12 ปี")
                 .admitDateTime("22-01-2535 12:03:44")
                 .dischargeDate("23-01-2535 12:03:44").build();
 
+        Admit admit4 = Admit.builder()
+                .room(room1)
+                .bed(room1.getBedList().get(3))
+                .patient(patient4)
+                .an("AN046")
+                .age("12 ปี")
+                .admitDateTime("22-01-2535 12:03:44").build();
+
+        Admit admit5 = Admit.builder()
+                .room(room2)
+                .bed(room1.getBedList().get(0))
+                .patient(patient5)
+                .an("AN806")
+                .age("12 ปี")
+                .admitDateTime("22-01-2535 12:03:44").build();
+
+        Admit admit6 = Admit.builder()
+                .room(room2)
+                .bed(room1.getBedList().get(1))
+                .patient(patient6)
+                .an("AN096")
+                .age("0 ปี 3 เดือน")
+                .admitDateTime("22-01-2535 12:03:44").build();
+
         nurseAdmitRepository.save(admit1);
         nurseAdmitRepository.save(admit2);
         nurseAdmitRepository.save(admit3);
+        nurseAdmitRepository.save(admit4);
+        nurseAdmitRepository.save(admit5);
+        nurseAdmitRepository.save(admit6);
+
 
     }
 
