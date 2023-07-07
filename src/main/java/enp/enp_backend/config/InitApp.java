@@ -57,40 +57,70 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
     public void onApplicationEvent(ApplicationReadyEvent applicationReadyEvent) {
 
         Patient patient = Patient.builder()
-                .name("Yit")
-                .surname("Narak")
+                .name("Somchai")
+                .surname("Duangjai")
                 //.age("12")
-                .gender("Female")
+                .gender("Male")
                 .dateOfBirth("24-08-2001")
-                .address("brah brah brah")
+                .address("24 Soi Lasalle 18, Bangna, Bangna")
                 .phoneNumber("0936728949")
                 //.email("email")
 //                .admitDateTime("28-05-2023")
                 //.dischargeDate(null)
-                .allergies("brah brah")
-                // .allergies("-")
+                .allergies("none")
+                .bloodType("B")
+                .height("125")
+                .weight("30")
+                .idCard("132548743")
+                .parentName("Mary Duangjai")
+                .symptom("fever")
                 .hn("HN12355")
-                .image("")
+                .image("sharp-fade-with-straight-fringe-for-boys.jpg")
                 .build();
 
         Patient patient2 = Patient.builder()
-                .name("Yit2")
-                .surname("Narak")
-             //   .age("12")
+                .name("SomYing")
+                .surname("Duangjai")
+                //.age("12")
                 .gender("Female")
                 .dateOfBirth("24-08-2001")
-                .address("brah brah brah")
+                .address("24 Soi Lasalle 18, Bangna, Bangna")
                 .phoneNumber("0936728949")
-                // .email("email")
-                //    .admitted(true)
-                //   .admitDateTime("28-05-2023")
-                //   .dischargeDate(null)
-                .allergies("brah brah")
-                // .allergies("-")
+                //.email("email")
+//                .admitDateTime("28-05-2023")
+                //.dischargeDate(null)
+                .allergies("none")
+                .bloodType("B")
+                .height("125")
+                .weight("30")
+                .idCard("132548743")
+                .parentName("Mary Duangjai")
+                .symptom("fever")
                 .hn("HN12354")
-                .image("")
+                .image("sharp-fade-with-straight-fringe-for-boys.jpg")
                 .build();
 
+        Patient patient3 = Patient.builder()
+                .name("Suchat")
+                .surname("Duangjai")
+                //.age("12")
+                .gender("Female")
+                .dateOfBirth("24-08-2001")
+                .address("24 Soi Lasalle 18, Bangna, Bangna")
+                .phoneNumber("0936728949")
+                //.email("email")
+//                .admitDateTime("28-05-2023")
+                //.dischargeDate(null)
+                .allergies("none")
+                .bloodType("B")
+                .height("125")
+                .weight("30")
+                .idCard("132548743")
+                .parentName("Mary Duangjai")
+                .symptom("fever")
+                .hn("HN12344")
+                .image("sharp-fade-with-straight-fringe-for-boys.jpg")
+                .build();
         Doctor doctor1 = Doctor.builder()
                 .name("Suchat")
                 .surname("eiei")
@@ -108,13 +138,17 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
 
         patient.setDoctor(doctor1);
         patient2.setDoctor(doctor1);
+        patient3.setDoctor(doctor2);
         nursePatientRepository.save(patient);
         nursePatientRepository.save(patient2);
+        nursePatientRepository.save(patient3);
 
         Nurse nurse = Nurse.builder()
                 .name("Fah")
                 .surname("Suaymak")
                 .phoneNumber("0801561664")
+                .medicalID("215499")
+                .gender("Male")
                 .build();
         nurseRepository.save(nurse);
 
@@ -122,6 +156,8 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
                 .name("Yit")
                 .surname("Sudsuay")
                 .phoneNumber("0801561664")
+                .medicalID("215489")
+                .gender("Female")
                 .build();
 
 
@@ -177,8 +213,19 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
                 .age("12 ปี")
                 .admitDateTime("22-01-2535 12:03:44").build();
 
+
+        Admit admit3 = Admit.builder()
+                .room(room1)
+                .bed(room1.getBedList().get(1))
+                .patient(patient2)
+                .an("AN006")
+                .age("12 ปี")
+                .admitDateTime("22-01-2535 12:03:44")
+                .dischargeDate("23-01-2535 12:03:44").build();
+
         nurseAdmitRepository.save(admit1);
         nurseAdmitRepository.save(admit2);
+        nurseAdmitRepository.save(admit3);
 
     }
 
@@ -186,7 +233,7 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
         PasswordEncoder encoder = new BCryptPasswordEncoder();
         Authority authUser = Authority.builder().name(AuthorityName.ROLE_NURSE).build();
         user1 = User.builder()
-                .username("nurse")
+                .username("nurse@gmail.com")
                 .password(encoder.encode("nurse"))
                 //.email("admin@admin.com")
                 .enabled(true)
@@ -199,7 +246,7 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
 
         Authority authDoctor = Authority.builder().name(AuthorityName.ROLE_DOCTOR).build();
         user2 = User.builder()
-                .username("doctor")
+                .username("doctor@gmail.com")
                 .password(encoder.encode("doctor"))
                 //.email("admin@admin.com")
                 .enabled(true)
