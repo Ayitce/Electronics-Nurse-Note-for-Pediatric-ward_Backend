@@ -156,6 +156,7 @@ public class UserController {
 
         return ResponseEntity.ok(LabMapper.INSTANCE.getUserDTO(output));
     }
+/*
 
     @GetMapping("user")
     public ResponseEntity<?> getUserLists(@RequestParam(value = "_limit", required = false) Integer perPage
@@ -169,6 +170,7 @@ public class UserController {
         responseHeader.set("x-total-count", String.valueOf(pageOutput.getTotalElements()));
         return new ResponseEntity<>(LabMapper.INSTANCE.getUserDTO(pageOutput.getContent()), responseHeader, HttpStatus.OK);
     }
+*/
 
 /*
     @GetMapping("user/{id}")

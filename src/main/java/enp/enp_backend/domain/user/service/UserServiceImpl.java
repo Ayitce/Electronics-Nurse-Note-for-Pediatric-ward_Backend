@@ -20,11 +20,13 @@ public class UserServiceImpl implements UserService {
     public User save(User user) {
         return userRepository.save(user);
     }
+/*
 
     @Override
     public Page<User> getUsers(Integer pageSize, Integer page) {
         return userRepository.findAll(PageRequest.of(page - 1, pageSize));
     }
+*/
 
     @Override
     public User getUser(Long id) {

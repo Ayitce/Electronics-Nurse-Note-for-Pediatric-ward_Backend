@@ -8,7 +8,7 @@ import java.util.Optional;
 public interface UserService {
     User save(User user);
 
-    Page<User> getUsers(Integer pageSize, Integer page);
+   // Page<User> getUsers(Integer pageSize, Integer page);
 
     User getUser(Long id);
 }
