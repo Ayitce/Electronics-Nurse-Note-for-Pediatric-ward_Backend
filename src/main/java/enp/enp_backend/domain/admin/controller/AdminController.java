@@ -44,7 +44,7 @@ public class AdminController {
     }
 
     @PostMapping("admin/users/disable/{id}")
-    public ResponseEntity<?> getUser(@PathVariable("id") Long id) {
+    public ResponseEntity<?> disableUser(@PathVariable("id") Long id) {
         User output = adminService.getUser(id);
         output.setEnabled(false);
         adminService.save(output);
