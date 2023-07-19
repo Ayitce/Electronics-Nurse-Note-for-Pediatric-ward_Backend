@@ -40,9 +40,7 @@ public class MPEWBean implements IMPEWS {
     public MPEWBean(VitalSign vitalSign) {
         this.vitalSign = vitalSign;
     }
-
-    @Override
-    public int getHeartRateScore() {
+    public int getMonthsFromBirthday() {
         Date birth = vitalSign.getDateOfBirth();
         Date today = new Date();
 
@@ -53,6 +51,11 @@ public class MPEWBean implements IMPEWS {
 
         int diffYear = endCalendar.get(Calendar.YEAR) - startCalendar.get(Calendar.YEAR);
         int ageMonth = diffYear * 12 + endCalendar.get(Calendar.MONTH) - startCalendar.get(Calendar.MONTH);
+        return ageMonth;
+    }
+    @Override
+    public int getHeartRateScore() {
+        int ageMonth = this.getMonthsFromBirthday();
 
         if (ageMonth <= 3) {
             return heartRate[0][Math.round(vitalSign.getHeartRate() / 10)];
@@ -70,16 +73,7 @@ public class MPEWBean implements IMPEWS {
 
     @Override
     public int getRespiratoryRateScore() {
-        Date birth = vitalSign.getDateOfBirth();
-        Date today = new Date();
-
-        Calendar startCalendar = new GregorianCalendar();
-        startCalendar.setTime(birth);
-        Calendar endCalendar = new GregorianCalendar();
-        endCalendar.setTime(today);
-
-        int diffYear = endCalendar.get(Calendar.YEAR) - startCalendar.get(Calendar.YEAR);
-        int ageMonth = diffYear * 12 + endCalendar.get(Calendar.MONTH) - startCalendar.get(Calendar.MONTH);
+        int ageMonth = this.getMonthsFromBirthday();
 
         if (vitalSign.getRespiratoryRate() < 30) {
             if (ageMonth <= 3) {
