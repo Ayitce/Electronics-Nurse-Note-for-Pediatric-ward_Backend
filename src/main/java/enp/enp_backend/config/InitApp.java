@@ -1,12 +1,18 @@
 package enp.enp_backend.config;
 
+import enp.enp_backend.MedCalculator.IMedCalculator;
 import enp.enp_backend.domain.doctor.repository.jpa.DoctorRepository;
 import enp.enp_backend.domain.nurse.repository.jpa.*;
 import enp.enp_backend.entity.*;
+import enp.enp_backend.mpew.IMPEWS;
+import enp.enp_backend.mpew.MPEWBean;
 import enp.enp_backend.security.entity.Authority;
 import enp.enp_backend.security.entity.AuthorityName;
 import enp.enp_backend.security.repository.AuthorityRepository;
 import enp.enp_backend.domain.user.repository.jpa.UserRepository;
+import lombok.SneakyThrows;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationListener;
@@ -15,12 +21,16 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.sql.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.Locale;
 
 
 @Component
 public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
+    private final Log logger = LogFactory.getLog(this.getClass());
 
     @Autowired
     Nurse_PatientRepository nursePatientRepository;
@@ -53,6 +63,9 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
     @Autowired
     DoctorRepository doctorRepository;
 
+    IMedCalculator iMedCalculator;
+
+    @SneakyThrows
     @Override
     public void onApplicationEvent(ApplicationReadyEvent applicationReadyEvent) {
 
@@ -329,7 +342,23 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
         nurseAdmitRepository.save(admit5);
         nurseAdmitRepository.save(admit6);
 */
-
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH);
+        VitalSign vitalSign = VitalSign.builder()
+                .dateOfBirth(formatter.parse("18-06-2023"))
+                .heartRate(85)
+                .respiratoryRate(26)
+                .temperature(36.5)
+                .oxygenSaturation(88)
+                .oxygenTherapy(3)
+                .consciousness(Consciousness.A).build();
+        MPEWBean mpew = new MPEWBean(vitalSign);
+        logger.info("heart rate : " + mpew.getHeartRateScore());
+        logger.info("res : " + mpew.getRespiratoryRateScore());
+        logger.info("temp : " + mpew.getTemperatureScore());
+        logger.info("oxySar : " + mpew.getOxygenSaturationScore());
+        logger.info("oxyTher : " + mpew.getOxygenTherapyScore());
+        logger.info("con : " + mpew.getConsciousnessScore());
+        logger.info("total : " + mpew.getTotalScore());
     }
 
     private void addUser() {
