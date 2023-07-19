@@ -91,6 +91,7 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
                 .hn("HN12354")
                 .image("sharp-fade-with-straight-fringe-for-boys.jpg")
                 .build();
+/*
 
         Patient patient3 = Patient.builder()
                 .name("Suchat")
@@ -166,6 +167,7 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
                 .image("sharp-fade-with-straight-fringe-for-boys.jpg")
                 .build();
 
+*/
 
 
         Doctor doctor1 = Doctor.builder()
@@ -188,18 +190,18 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
         nurse_doctorRepository.save(doctor2);
 
         patient.setDoctor(doctor1);
-        patient2.setDoctor(doctor1);
+        patient2.setDoctor(doctor1);/*
         patient3.setDoctor(doctor2);
         patient4.setDoctor(doctor2);
         patient5.setDoctor(doctor2);
-        patient6.setDoctor(doctor2);
+        patient6.setDoctor(doctor2);*/
         nursePatientRepository.save(patient);
         nursePatientRepository.save(patient2);
-        nursePatientRepository.save(patient3);
+       /* nursePatientRepository.save(patient3);
         nursePatientRepository.save(patient4);
         nursePatientRepository.save(patient5);
         nursePatientRepository.save(patient6);
-
+*/
 
         Nurse nurse = Nurse.builder()
                 .name("John")
@@ -234,9 +236,13 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
 
         Bed bed1 = Bed.builder().isAvailable(false).build();
         Bed bed2 = Bed.builder().isAvailable(false).build();
-        Bed bed3 = Bed.builder().isAvailable(false).build();
+        //------------------------------------------------------
+        Bed bed3 = Bed.builder().isAvailable(true).build();
+        Bed bed4 = Bed.builder().isAvailable(true).build();
+        Bed bed5 = Bed.builder().isAvailable(true).build();
+        /*Bed bed3 = Bed.builder().isAvailable(false).build();
         Bed bed4 = Bed.builder().isAvailable(false).build();
-        Bed bed5 = Bed.builder().isAvailable(false).build();
+        Bed bed5 = Bed.builder().isAvailable(false).build();*/
         Bed bed6 = Bed.builder().isAvailable(true).build();
         Bed bed7 = Bed.builder().isAvailable(true).build();
         Bed bed8 = Bed.builder().isAvailable(true).build();
@@ -280,6 +286,7 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
                 .age("12 ปี")
                 .admitDateTime("22-01-2535 12:03:44").build();
 
+/*
 
         Admit admit3 = Admit.builder()
                 .room(room1)
@@ -313,14 +320,15 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
                 .an("AN096")
                 .age("0 ปี 3 เดือน")
                 .admitDateTime("22-01-2535 12:03:44").build();
+*/
 
         nurseAdmitRepository.save(admit1);
         nurseAdmitRepository.save(admit2);
-        nurseAdmitRepository.save(admit3);
+       /* nurseAdmitRepository.save(admit3);
         nurseAdmitRepository.save(admit4);
         nurseAdmitRepository.save(admit5);
         nurseAdmitRepository.save(admit6);
-
+*/
 
     }
 

@@ -34,14 +34,6 @@ public class AuthenticationRestController {
 
     @Autowired
     UserRepository userRepository;
-    @Autowired
-    UserService userService;
-    @Autowired
-    AuthorityRepository authorityRepository;
-    @Autowired
-    NurseService nurseService;
-    @Autowired
-    DoctorService doctorService;
     @Value("${jwt.header}")
     private String tokenHeader;
     @Autowired

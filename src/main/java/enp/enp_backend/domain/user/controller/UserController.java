@@ -41,22 +41,11 @@ import java.util.Optional;
 @Controller
 public class UserController {
     private final Log logger = LogFactory.getLog(this.getClass());
-    @Autowired
-    UserRepository userRepository;
 
     @Autowired
     UserService userService;
-
-    @Autowired
-    AuthorityRepository authorityRepository;
-    @Autowired
-    NurseService nurseService;
-    @Autowired
-    DoctorService doctorService;
     @Value("${jwt.header}")
     private String tokenHeader;
-    @Autowired
-    private AuthenticationManager authenticationManager;
     @Autowired
     private JwtTokenUtil jwtTokenUtil;
     @Autowired
