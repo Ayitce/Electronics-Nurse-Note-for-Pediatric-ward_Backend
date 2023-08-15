@@ -47,7 +47,7 @@ public class Shock implements IShock {
         int ageMonth = this.getMonthsFromBirthday();
         String abnormalText = "";
         for (int i = 0; i < vitalSign.length; i++) {
-            if (ageMonth > vitalSign[i][0] && ageMonth < vitalSign[i][1]) {
+            if (ageMonth >= vitalSign[i][0] && ageMonth < vitalSign[i][1]) {
                 Boolean isAbnormalBP = false;
                 if (i >= 3 && i <= 6) {
                     if (triage.getVitalSign().getSystolic_blood_pressure() < vitalSign[i][4] + (ageMonth / 12) * 2)

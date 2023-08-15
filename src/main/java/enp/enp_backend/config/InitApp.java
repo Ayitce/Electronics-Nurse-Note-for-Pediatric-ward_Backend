@@ -1,12 +1,10 @@
 package enp.enp_backend.config;
 
 import enp.enp_backend.MedCalculator.IMedCalculator;
-import enp.enp_backend.MedUtils.Sepsis;
-import enp.enp_backend.MedUtils.Shock;
+import enp.enp_backend.MedUtils.*;
 import enp.enp_backend.domain.doctor.repository.jpa.DoctorRepository;
 import enp.enp_backend.domain.nurse.repository.jpa.*;
 import enp.enp_backend.entity.*;
-import enp.enp_backend.MedUtils.MPEWBean;
 import enp.enp_backend.security.entity.Authority;
 import enp.enp_backend.security.entity.AuthorityName;
 import enp.enp_backend.security.repository.AuthorityRepository;
@@ -1418,6 +1416,9 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
                 .weak_pulse(false)
                 .cap_refill(false)
                 .flash_cap(false)
+                .airEntry(0)
+                .wheezing(1)
+                .consciousness(Consciousness.P)
                 .build();
         RiskFactor riskFactor = RiskFactor.builder()
                 .organtranplantation(false)
@@ -1428,13 +1429,26 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
                 .center_iv_catheter(false)
                 .suspected_infection(true)
                 .build();
+        ADD add = ADD.builder()
+                .poor_feeding(false)
+                .comoatose_stage_seizure(false)
+                .generalize_seizure(false)
+                .history_of_seizure(true)
+                .GCS(4)
+                .build();
         InitialImpression initialImpression = InitialImpression.builder()
+                .nasal_flaring(true)
+                .scalene_muscle(false)
+                .subcostral_retraction(false)
+                .supersternal_retraction(false)
+                .dehedration(false)
                 .motting_skin(false)
                 .petichea(false)
                 .irritable(true)
                 .stupor_drownsiness(true)
                 .build();
         triage.setAdmit(admit1);
+        triage.setAdd(add);
         triage.setInitialImpression(initialImpression);
         triage.setRiskFactor(riskFactor);
         triage.setPhysicalExam(physicalExam);
@@ -1442,6 +1456,8 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
         MPEWBean mpew = new MPEWBean(triage);
         Sepsis sepsis = new Sepsis(triage);
         Shock shock = new Shock(triage);
+        Press press = new Press(triage);
+        Seizure seizure = new Seizure(triage);
         logger.info("heart rate : " + mpew.getHeartRateScore());
         logger.info("res : " + mpew.getRespiratoryRateScore());
         logger.info("temp : " + mpew.getTemperatureScore());
@@ -1452,7 +1468,8 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
         logger.info("abnormal vitalsign : " + sepsis.getAbnormalVitalSign());
         logger.info("sepsis result: " + sepsis.getSepsisResult());
         logger.info("shock result: " + shock.getShockResult());
-
+        logger.info("press result: " + press.getPressResult());
+        logger.info("seizure result: " + seizure.getSeizureResult());
     }
 
     private void addUser() {

@@ -24,4 +24,6 @@ public class PhysicalExam {
     Boolean cap_refill;
     Boolean flash_cap;
     Consciousness consciousness;
+    int airEntry;
+    int wheezing;
 }

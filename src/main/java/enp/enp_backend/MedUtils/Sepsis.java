@@ -48,7 +48,7 @@ public class Sepsis implements ISepsis {
         int ageMonth = this.getMonthsFromBirthday();
         String abnormalText = "";
         for (int i = 0; i < vitalSign.length; i++) {
-            if (ageMonth > vitalSign[i][0] && ageMonth < vitalSign[i][1]) {
+            if (ageMonth >= vitalSign[i][0] && ageMonth < vitalSign[i][1]) {
                 if (triage.getVitalSign().getHeartRate() > vitalSign[i][2])
                     abnormalText += "ABNORMAL Heart Rate = " + triage.getVitalSign().getHeartRate() + "\n";
                 if (triage.getVitalSign().getRespiratoryRate() > vitalSign[i][3])
