@@ -27,5 +27,7 @@ public class VitalSign {
     double temperature;
     int oxygenSaturation;
     int oxygenTherapy;
+    int systolic_blood_pressure;
+    int diastolic_blood_pressure;
 
 }

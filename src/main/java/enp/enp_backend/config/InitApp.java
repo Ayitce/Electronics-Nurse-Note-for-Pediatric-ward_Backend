@@ -1,11 +1,12 @@
 package enp.enp_backend.config;
 
 import enp.enp_backend.MedCalculator.IMedCalculator;
+import enp.enp_backend.MedUtils.Sepsis;
+import enp.enp_backend.MedUtils.Shock;
 import enp.enp_backend.domain.doctor.repository.jpa.DoctorRepository;
 import enp.enp_backend.domain.nurse.repository.jpa.*;
 import enp.enp_backend.entity.*;
-import enp.enp_backend.mpew.IMPEWS;
-import enp.enp_backend.mpew.MPEWBean;
+import enp.enp_backend.MedUtils.MPEWBean;
 import enp.enp_backend.security.entity.Authority;
 import enp.enp_backend.security.entity.AuthorityName;
 import enp.enp_backend.security.repository.AuthorityRepository;
@@ -21,7 +22,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.sql.Date;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -1337,7 +1337,6 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
                 .admitDateTime("22-01-2535 12:03:44").build();
 
 
-
         nurseAdmitRepository.save(admit1);
         nurseAdmitRepository.save(admit2);
         nurseAdmitRepository.save(admit3);
@@ -1403,19 +1402,46 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
 
         VitalSign vitalSign = VitalSign.builder()
                 //.dateOfBirth(formatter.parse("18-06-2023"))
-                .heartRate(85)
-                .respiratoryRate(26)
+                .heartRate(80)
+                .respiratoryRate(20)
                 .temperature(36.5)
                 .oxygenSaturation(88)
                 .oxygenTherapy(3)
-              //  .consciousness(Consciousness.A)
+                .systolic_blood_pressure(100)
+                .diastolic_blood_pressure(70)
+                //  .consciousness(Consciousness.A)
                 .build();
         Triage triage = Triage.builder().build();
-        PhysicalExam physicalExam = PhysicalExam.builder().consciousness(Consciousness.A).build();
+        PhysicalExam physicalExam = PhysicalExam.builder()
+                .consciousness(Consciousness.A)
+                .bounding_pulse(false)
+                .weak_pulse(false)
+                .cap_refill(false)
+                .flash_cap(false)
+                .build();
+        RiskFactor riskFactor = RiskFactor.builder()
+                .organtranplantation(false)
+                .primary_immune_defencing(false)
+                .postSplenectomy_asplenia(false)
+                .malignancy(false)
+                .bedRidden_cerebralPulsy(false)
+                .center_iv_catheter(false)
+                .suspected_infection(true)
+                .build();
+        InitialImpression initialImpression = InitialImpression.builder()
+                .motting_skin(false)
+                .petichea(false)
+                .irritable(true)
+                .stupor_drownsiness(true)
+                .build();
         triage.setAdmit(admit1);
+        triage.setInitialImpression(initialImpression);
+        triage.setRiskFactor(riskFactor);
         triage.setPhysicalExam(physicalExam);
         triage.setVitalSign(vitalSign);
         MPEWBean mpew = new MPEWBean(triage);
+        Sepsis sepsis = new Sepsis(triage);
+        Shock shock = new Shock(triage);
         logger.info("heart rate : " + mpew.getHeartRateScore());
         logger.info("res : " + mpew.getRespiratoryRateScore());
         logger.info("temp : " + mpew.getTemperatureScore());
@@ -1423,6 +1449,10 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
         logger.info("oxyTher : " + mpew.getOxygenTherapyScore());
         logger.info("con : " + mpew.getConsciousnessScore());
         logger.info("total : " + mpew.getTotalScore());
+        logger.info("abnormal vitalsign : " + sepsis.getAbnormalVitalSign());
+        logger.info("sepsis result: " + sepsis.getSepsisResult());
+        logger.info("shock result: " + shock.getShockResult());
+
     }
 
     private void addUser() {
