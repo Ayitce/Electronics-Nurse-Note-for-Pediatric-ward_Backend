@@ -1,31 +1,26 @@
 package enp.enp_backend.entity;
 
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 import lombok.*;
+import org.springframework.data.annotation.Id;
 
-import java.util.Date;
-
+@Data
 @Builder
-@Setter
-@Getter
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-public class VitalSign {
+public class ADD {
     @jakarta.persistence.Id
-    @org.springframework.data.annotation.Id
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Exclude
     Long id;
 
-    int heartRate;
-    int respiratoryRate;
-    double temperature;
-    int oxygenSaturation;
-    int oxygenTherapy;
-
+    Boolean poor_feeding;
+    Boolean history_of_seizure;
+    Boolean generalize_seizure;
+    Boolean comoatose_stage_seizure;
+    int GCS;
 }

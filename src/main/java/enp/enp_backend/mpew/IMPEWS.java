@@ -1,11 +1,13 @@
 package enp.enp_backend.mpew;
 
+import java.text.ParseException;
+
 public interface IMPEWS {
-    int getHeartRateScore();
-    int getRespiratoryRateScore();
+    int getHeartRateScore() throws ParseException;
+    int getRespiratoryRateScore() throws ParseException;
     int getTemperatureScore();
     int getOxygenSaturationScore();
     int getOxygenTherapyScore();
     int getConsciousnessScore();
-    int getTotalScore();
+    int getTotalScore() throws ParseException;
 }

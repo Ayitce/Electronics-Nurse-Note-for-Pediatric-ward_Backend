@@ -1,13 +1,10 @@
 package enp.enp_backend.entity;
 
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 import lombok.*;
-
-import java.util.Date;
+import org.springframework.data.annotation.Id;
 
 @Builder
 @Setter
@@ -15,17 +12,16 @@ import java.util.Date;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-public class VitalSign {
+public class PhysicalExam {
     @jakarta.persistence.Id
-    @org.springframework.data.annotation.Id
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Exclude
     Long id;
 
-    int heartRate;
-    int respiratoryRate;
-    double temperature;
-    int oxygenSaturation;
-    int oxygenTherapy;
-
+    Boolean weak_pulse;
+    Boolean bounding_pulse;
+    Boolean cap_refill;
+    Boolean flash_cap;
+    Consciousness consciousness;
 }

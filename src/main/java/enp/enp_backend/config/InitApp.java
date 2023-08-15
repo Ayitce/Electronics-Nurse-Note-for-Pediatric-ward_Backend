@@ -31,6 +31,7 @@ import java.util.Locale;
 @Component
 public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
     private final Log logger = LogFactory.getLog(this.getClass());
+    SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH);
 
     @Autowired
     Nurse_PatientRepository nursePatientRepository;
@@ -1400,16 +1401,21 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
         nurseAdmitRepository.save(admit55);
         nurseAdmitRepository.save(admit56);
 
-        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH);
         VitalSign vitalSign = VitalSign.builder()
-                .dateOfBirth(formatter.parse("18-06-2023"))
+                //.dateOfBirth(formatter.parse("18-06-2023"))
                 .heartRate(85)
                 .respiratoryRate(26)
                 .temperature(36.5)
                 .oxygenSaturation(88)
                 .oxygenTherapy(3)
-                .consciousness(Consciousness.A).build();
-        MPEWBean mpew = new MPEWBean(vitalSign);
+              //  .consciousness(Consciousness.A)
+                .build();
+        Triage triage = Triage.builder().build();
+        PhysicalExam physicalExam = PhysicalExam.builder().consciousness(Consciousness.A).build();
+        triage.setAdmit(admit1);
+        triage.setPhysicalExam(physicalExam);
+        triage.setVitalSign(vitalSign);
+        MPEWBean mpew = new MPEWBean(triage);
         logger.info("heart rate : " + mpew.getHeartRateScore());
         logger.info("res : " + mpew.getRespiratoryRateScore());
         logger.info("temp : " + mpew.getTemperatureScore());

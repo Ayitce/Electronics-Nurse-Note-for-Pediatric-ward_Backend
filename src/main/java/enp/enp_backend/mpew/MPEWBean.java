@@ -1,18 +1,23 @@
 package enp.enp_backend.mpew;
 
 import enp.enp_backend.entity.Consciousness;
+import enp.enp_backend.entity.Triage;
 import enp.enp_backend.entity.VitalSign;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.Locale;
 
 public class MPEWBean implements IMPEWS {
-
+    SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH);
     private final Log logger = LogFactory.getLog(this.getClass());
-    VitalSign vitalSign;
+    Triage triage;
+   // VitalSign vitalSign;
     int heartRate[][] = {
             {4, 4, 4, 4, 4, 4, 4, 4, 2, 1, 1, 0, 0, 0, 0, 1, 1, 1, 2, 4, 4},
             {4, 4, 4, 4, 4, 4, 4, 2, 1, 1, 0, 0, 0, 0, 0, 1, 1, 2, 4, 4, 4},
@@ -37,11 +42,11 @@ public class MPEWBean implements IMPEWS {
             {4, 4, 4, 4, 4, 4, 4, 4, 4, 4},
     };
 
-    public MPEWBean(VitalSign vitalSign) {
-        this.vitalSign = vitalSign;
+    public MPEWBean(Triage triage) {
+        this.triage = triage;
     }
-    public int getMonthsFromBirthday() {
-        Date birth = vitalSign.getDateOfBirth();
+    public int getMonthsFromBirthday() throws ParseException {
+        Date birth = formatter.parse(triage.getAdmit().getPatient().getDateOfBirth());
         Date today = new Date();
 
         Calendar startCalendar = new GregorianCalendar();
@@ -54,61 +59,61 @@ public class MPEWBean implements IMPEWS {
         return ageMonth;
     }
     @Override
-    public int getHeartRateScore() {
+    public int getHeartRateScore() throws ParseException {
         int ageMonth = this.getMonthsFromBirthday();
 
         if (ageMonth <= 3) {
-            return heartRate[0][Math.round(vitalSign.getHeartRate() / 10)];
+            return heartRate[0][Math.round(triage.getVitalSign().getHeartRate() / 10)];
         } else if (ageMonth <= 12) {
-            return heartRate[1][Math.round(vitalSign.getHeartRate() / 10)];
+            return heartRate[1][Math.round(triage.getVitalSign().getHeartRate() / 10)];
         } else if (ageMonth <= 48) {
-            return heartRate[2][Math.round(vitalSign.getHeartRate() / 10)];
+            return heartRate[2][Math.round(triage.getVitalSign().getHeartRate() / 10)];
         } else if (ageMonth <= 144) {
-            return heartRate[3][Math.round(vitalSign.getHeartRate() / 10)];
+            return heartRate[3][Math.round(triage.getVitalSign().getHeartRate() / 10)];
         } else {
-            return heartRate[4][Math.round(vitalSign.getHeartRate() / 10)];
+            return heartRate[4][Math.round(triage.getVitalSign().getHeartRate() / 10)];
         }
 
     }
 
     @Override
-    public int getRespiratoryRateScore() {
+    public int getRespiratoryRateScore() throws ParseException {
         int ageMonth = this.getMonthsFromBirthday();
 
-        if (vitalSign.getRespiratoryRate() < 30) {
+        if (triage.getVitalSign().getRespiratoryRate() < 30) {
             if (ageMonth <= 3) {
-                return respiratoryRateLessThan30[0][vitalSign.getRespiratoryRate()];
+                return respiratoryRateLessThan30[0][triage.getVitalSign().getRespiratoryRate()];
             } else if (ageMonth <= 12) {
-                return respiratoryRateLessThan30[1][vitalSign.getRespiratoryRate()];
+                return respiratoryRateLessThan30[1][triage.getVitalSign().getRespiratoryRate()];
             } else if (ageMonth <= 48) {
-                return respiratoryRateLessThan30[2][vitalSign.getRespiratoryRate()];
+                return respiratoryRateLessThan30[2][triage.getVitalSign().getRespiratoryRate()];
             } else if (ageMonth <= 144) {
-                return respiratoryRateLessThan30[3][vitalSign.getRespiratoryRate()];
+                return respiratoryRateLessThan30[3][triage.getVitalSign().getRespiratoryRate()];
             } else {
-                return respiratoryRateLessThan30[4][vitalSign.getRespiratoryRate()];
+                return respiratoryRateLessThan30[4][triage.getVitalSign().getRespiratoryRate()];
             }
         } else {
             if (ageMonth <= 3) {
-                return respiratoryRateMoreThan30[0][Math.round(vitalSign.getRespiratoryRate() / 10)];
+                return respiratoryRateMoreThan30[0][Math.round(triage.getVitalSign().getRespiratoryRate() / 10)];
             } else if (ageMonth <= 12) {
-                return respiratoryRateMoreThan30[1][Math.round(vitalSign.getRespiratoryRate() / 10)];
+                return respiratoryRateMoreThan30[1][Math.round(triage.getVitalSign().getRespiratoryRate() / 10)];
             } else if (ageMonth <= 48) {
-                return respiratoryRateMoreThan30[2][Math.round(vitalSign.getRespiratoryRate() / 10)];
+                return respiratoryRateMoreThan30[2][Math.round(triage.getVitalSign().getRespiratoryRate() / 10)];
             } else if (ageMonth <= 144) {
-                return respiratoryRateMoreThan30[3][Math.round(vitalSign.getRespiratoryRate() / 10)];
+                return respiratoryRateMoreThan30[3][Math.round(triage.getVitalSign().getRespiratoryRate() / 10)];
             } else {
-                return respiratoryRateMoreThan30[4][Math.round(vitalSign.getRespiratoryRate() / 10)];
+                return respiratoryRateMoreThan30[4][Math.round(triage.getVitalSign().getRespiratoryRate() / 10)];
             }
         }
     }
 
     @Override
     public int getTemperatureScore() {
-        if (vitalSign.getTemperature() < 34 || vitalSign.getTemperature() >= 40) {
+        if (triage.getVitalSign().getTemperature() < 34 || triage.getVitalSign().getTemperature() >= 40) {
             return 4;
-        } else if (vitalSign.getTemperature() < 35 || vitalSign.getTemperature() >= 39) {
+        } else if (triage.getVitalSign().getTemperature() < 35 || triage.getVitalSign().getTemperature() >= 39) {
             return 2;
-        } else if (vitalSign.getTemperature() < 36 || vitalSign.getTemperature() >= 38) {
+        } else if (triage.getVitalSign().getTemperature() < 36 || triage.getVitalSign().getTemperature() >= 38) {
             return 1;
         } else {
             return 0;
@@ -118,11 +123,11 @@ public class MPEWBean implements IMPEWS {
 
     @Override
     public int getOxygenSaturationScore() {
-        if (vitalSign.getOxygenSaturation() < 85) {
+        if (triage.getVitalSign().getOxygenSaturation() < 85) {
             return 4;
-        } else if (vitalSign.getOxygenSaturation() < 90) {
+        } else if (triage.getVitalSign().getOxygenSaturation() < 90) {
             return 2;
-        } else if (vitalSign.getOxygenSaturation() < 95) {
+        } else if (triage.getVitalSign().getOxygenSaturation() < 95) {
             return 1;
         } else {
             return 0;
@@ -131,11 +136,11 @@ public class MPEWBean implements IMPEWS {
 
     @Override
     public int getOxygenTherapyScore() {
-        if (vitalSign.getOxygenTherapy() < 1) {
+        if (triage.getVitalSign().getOxygenTherapy() < 1) {
             return 0;
-        } else if (vitalSign.getOxygenTherapy() < 2) {
+        } else if (triage.getVitalSign().getOxygenTherapy() < 2) {
             return 1;
-        } else if (vitalSign.getOxygenTherapy() < 5) {
+        } else if (triage.getVitalSign().getOxygenTherapy() < 5) {
             return 2;
         } else {
             return 4;
@@ -144,9 +149,9 @@ public class MPEWBean implements IMPEWS {
 
     @Override
     public int getConsciousnessScore() {
-        if (vitalSign.getConsciousness() == Consciousness.A) {
+        if (triage.getPhysicalExam().getConsciousness() == Consciousness.A) {
             return 0;
-        } else if (vitalSign.getConsciousness() == Consciousness.V) {
+        } else if (triage.getPhysicalExam().getConsciousness() == Consciousness.V) {
             return 2;
         } else {
             return 4;
@@ -154,7 +159,7 @@ public class MPEWBean implements IMPEWS {
     }
 
     @Override
-    public int getTotalScore() {
+    public int getTotalScore() throws ParseException {
         return this.getHeartRateScore() +
                 this.getRespiratoryRateScore() +
                 this.getTemperatureScore() +
