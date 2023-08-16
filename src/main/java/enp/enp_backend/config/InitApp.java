@@ -1,6 +1,7 @@
 package enp.enp_backend.config;
 
 import enp.enp_backend.MedCalculator.IMedCalculator;
+import enp.enp_backend.MedCalculator.MedCalculator;
 import enp.enp_backend.MedUtils.*;
 import enp.enp_backend.domain.doctor.repository.jpa.DoctorRepository;
 import enp.enp_backend.domain.nurse.repository.jpa.*;
@@ -1453,23 +1454,19 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
         triage.setRiskFactor(riskFactor);
         triage.setPhysicalExam(physicalExam);
         triage.setVitalSign(vitalSign);
-        MPEWBean mpew = new MPEWBean(triage);
-        Sepsis sepsis = new Sepsis(triage);
-        Shock shock = new Shock(triage);
-        Press press = new Press(triage);
-        Seizure seizure = new Seizure(triage);
-        logger.info("heart rate : " + mpew.getHeartRateScore());
-        logger.info("res : " + mpew.getRespiratoryRateScore());
-        logger.info("temp : " + mpew.getTemperatureScore());
-        logger.info("oxySar : " + mpew.getOxygenSaturationScore());
-        logger.info("oxyTher : " + mpew.getOxygenTherapyScore());
-        logger.info("con : " + mpew.getConsciousnessScore());
-        logger.info("total : " + mpew.getTotalScore());
-        logger.info("abnormal vitalsign : " + sepsis.getAbnormalVitalSign());
-        logger.info("sepsis result: " + sepsis.getSepsisResult());
-        logger.info("shock result: " + shock.getShockResult());
-        logger.info("press result: " + press.getPressResult());
-        logger.info("seizure result: " + seizure.getSeizureResult());
+        MedCalculator medCalculator = new MedCalculator(triage);
+//        logger.info("heart rate : " + mpew.getHeartRateScore());
+//        logger.info("res : " + mpew.getRespiratoryRateScore());
+//        logger.info("temp : " + mpew.getTemperatureScore());
+//        logger.info("oxySar : " + mpew.getOxygenSaturationScore());
+//        logger.info("oxyTher : " + mpew.getOxygenTherapyScore());
+//        logger.info("con : " + mpew.getConsciousnessScore());
+        logger.info("mpew : " +  medCalculator.getMPEWS());
+      //  logger.info("abnormal vitalsign : " + sepsis.getAbnormalVitalSign());
+        logger.info("sepsis result: " +  medCalculator.getSepsis());
+        logger.info("shock result: " +  medCalculator.getShock());
+        logger.info("press result: " +  medCalculator.getPress());
+        logger.info("seizure result: " +  medCalculator.getSeisure());
     }
 
     private void addUser() {
