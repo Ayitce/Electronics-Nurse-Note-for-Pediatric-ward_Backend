@@ -53,6 +53,9 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
     @Autowired
     Nurse_AdmitRepository nurseAdmitRepository;
 
+    @Autowired
+    Nurse_TriageRepository nurseTriageRepository;
+
     User user1;
     User user2;
     User user3;
@@ -1399,8 +1402,11 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
         nurseAdmitRepository.save(admit55);
         nurseAdmitRepository.save(admit56);
 
-        VitalSign vitalSign = VitalSign.builder()
-                //.dateOfBirth(formatter.parse("18-06-2023"))
+        Triage triage = Triage.builder()
+                .respiratory(true)
+                .sepsis(true)
+                .shock(true)
+                .seizure(true)
                 .heartRate(80)
                 .respiratoryRate(20)
                 .temperature(36.5)
@@ -1408,20 +1414,13 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
                 .oxygenTherapy(3)
                 .systolic_blood_pressure(100)
                 .diastolic_blood_pressure(70)
-                //  .consciousness(Consciousness.A)
-                .build();
-        Triage triage = Triage.builder().build();
-        PhysicalExam physicalExam = PhysicalExam.builder()
-                .consciousness(Consciousness.A)
+                .consciousness(Consciousness.P)
                 .bounding_pulse(false)
                 .weak_pulse(false)
                 .cap_refill(false)
                 .flash_cap(false)
                 .airEntry(0)
                 .wheezing(1)
-                .consciousness(Consciousness.P)
-                .build();
-        RiskFactor riskFactor = RiskFactor.builder()
                 .organtranplantation(false)
                 .primary_immune_defencing(false)
                 .postSplenectomy_asplenia(false)
@@ -1429,19 +1428,18 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
                 .bedRidden_cerebralPulsy(false)
                 .center_iv_catheter(false)
                 .suspected_infection(true)
-                .build();
-        ADD add = ADD.builder()
+                .history_bone_marrow(false)
                 .poor_feeding(false)
                 .comoatose_stage_seizure(false)
                 .generalize_seizure(false)
                 .history_of_seizure(true)
                 .GCS(4)
-                .build();
-        InitialImpression initialImpression = InitialImpression.builder()
                 .nasal_flaring(true)
                 .scalene_muscle(false)
                 .subcostral_retraction(false)
                 .supersternal_retraction(false)
+                .grunting(true)
+                .pale_cyanosis(false)
                 .dehedration(false)
                 .motting_skin(false)
                 .petichea(false)
@@ -1449,11 +1447,7 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
                 .stupor_drownsiness(true)
                 .build();
         triage.setAdmit(admit1);
-        triage.setAdd(add);
-        triage.setInitialImpression(initialImpression);
-        triage.setRiskFactor(riskFactor);
-        triage.setPhysicalExam(physicalExam);
-        triage.setVitalSign(vitalSign);
+        nurseTriageRepository.save(triage);
         MedCalculator medCalculator = new MedCalculator(triage);
 //        logger.info("heart rate : " + mpew.getHeartRateScore());
 //        logger.info("res : " + mpew.getRespiratoryRateScore());
@@ -1461,12 +1455,12 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
 //        logger.info("oxySar : " + mpew.getOxygenSaturationScore());
 //        logger.info("oxyTher : " + mpew.getOxygenTherapyScore());
 //        logger.info("con : " + mpew.getConsciousnessScore());
-        logger.info("mpew : " +  medCalculator.getMPEWS());
-      //  logger.info("abnormal vitalsign : " + sepsis.getAbnormalVitalSign());
-        logger.info("sepsis result: " +  medCalculator.getSepsis());
-        logger.info("shock result: " +  medCalculator.getShock());
-        logger.info("press result: " +  medCalculator.getPress());
-        logger.info("seizure result: " +  medCalculator.getSeisure());
+        logger.info("mpew : " + medCalculator.getMPEWS());
+        //  logger.info("abnormal vitalsign : " + sepsis.getAbnormalVitalSign());
+        logger.info("sepsis result: " + medCalculator.getSepsis());
+        logger.info("shock result: " + medCalculator.getShock());
+        logger.info("press result: " + medCalculator.getPress());
+        logger.info("seizure result: " + medCalculator.getSeisure());
     }
 
     private void addUser() {

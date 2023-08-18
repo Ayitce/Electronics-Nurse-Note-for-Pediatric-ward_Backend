@@ -42,7 +42,7 @@ public class Press implements IPress {
         int ageMonth = getMonthsFromBirthday();
         for (int i = 0; i < respiratory.length; i++) {
             if (ageMonth >= respiratory[i][0] && ageMonth < respiratory[i][1]) {
-                if (triage.getVitalSign().getRespiratoryRate() > respiratory[i][2])
+                if (triage.getRespiratoryRate() > respiratory[i][2])
                     return true;
             }
         }
@@ -53,16 +53,16 @@ public class Press implements IPress {
         int score = 0;
         if (isAbnormalRes())
             score += 1;
-        if (triage.getPhysicalExam().getWheezing() > 0)
+        if (triage.getWheezing() > 0)
             score += 1;
-        if (triage.getInitialImpression().getNasal_flaring() ||
-                triage.getInitialImpression().getScalene_muscle() ||
-                triage.getInitialImpression().getSubcostral_retraction() ||
-                triage.getInitialImpression().getSupersternal_retraction())
+        if (triage.getNasal_flaring() ||
+                triage.getScalene_muscle() ||
+                triage.getSubcostral_retraction() ||
+                triage.getSupersternal_retraction())
             score += 1;
-        if (triage.getVitalSign().getOxygenSaturation() < 95)
+        if (triage.getOxygenSaturation() < 95)
             score += 1;
-        if (triage.getInitialImpression().getDehedration() || triage.getAdd().getPoor_feeding())
+        if (triage.getDehedration() || triage.getPoor_feeding())
             score += 1;
 
         return score;
@@ -70,14 +70,14 @@ public class Press implements IPress {
 
     public int getPramScore() {
         int score = 0;
-        score += triage.getPhysicalExam().getAirEntry() + triage.getPhysicalExam().getWheezing();
-        if (triage.getInitialImpression().getSupersternal_retraction())
+        score += triage.getAirEntry() + triage.getWheezing();
+        if (triage.getSupersternal_retraction())
             score += 2;
-        if (triage.getInitialImpression().getScalene_muscle())
+        if (triage.getScalene_muscle())
             score += 2;
-        if (triage.getVitalSign().getOxygenSaturation() >= 92 && triage.getVitalSign().getOxygenSaturation() <= 94)
+        if (triage.getOxygenSaturation() >= 92 && triage.getOxygenSaturation() <= 94)
             score += 1;
-        else if (triage.getVitalSign().getOxygenSaturation() < 92)
+        else if (triage.getOxygenSaturation() < 92)
             score += 2;
         return score;
     }
@@ -87,11 +87,11 @@ public class Press implements IPress {
         String resultText = "";
         resultText += "PRAM Score = " + getPramScore() + "\n";
         resultText += "Suspected Score = " + countScore() + "\n";
-        if (countScore() <= 1)
+        if (countScore() <= 1 && !triage.getGrunting())
             resultText += "Mild respiratory distress";
-        else if (countScore() <= 3)
+        else if (countScore() <= 3 && !triage.getGrunting())
             resultText += "Moderate respiratory distress";
-        else if (countScore() <= 5 || triage.getInitialImpression().getGrunting())
+        else if (countScore() <= 5 || triage.getGrunting())
             resultText += "Severe respiratory distress / Possible respiratory failure";
         return resultText;
     }

@@ -36,14 +36,14 @@ public class Seizure implements ISeizure {
 
     public int countScore() throws ParseException {
         int score = 0;
-        if (triage.getPhysicalExam().getConsciousness() == Consciousness.P ||
-                triage.getPhysicalExam().getConsciousness() == Consciousness.U)
+        if (triage.getConsciousness() == Consciousness.P ||
+                triage.getConsciousness() == Consciousness.U)
             score += 1;
-        if (triage.getAdd().getGeneralize_seizure())
+        if (triage.getGeneralize_seizure())
             score += 1;
-        if (triage.getAdd().getComoatose_stage_seizure() || triage.getAdd().getGCS() < 8)
+        if (triage.getComoatose_stage_seizure() || triage.getGCS() < 8)
             score += 2;
-        if (triage.getAdd().getHistory_of_seizure())
+        if (triage.getHistory_of_seizure())
             score += 2;
         if (getMonthsFromBirthday() < 24)
             score += 2;

@@ -37,16 +37,26 @@ public interface NurseService {
 
     //--------------Room------------------
     Room getRoom(Long id);
+
     List<Room> getAllRoom();
+
     Room save(Room room);
 
     //--------------Bed--------------------
     Bed getBed(Long id);
+
     Bed save(Bed bed);
 
     //--------------Doctor-------------------
 
     Doctor getDoctor(Long id);
+
     List<Doctor> getAllDoctor();
+
     Doctor save(Doctor doctor);
+
+    //Triage
+    Triage save(Triage triage);
+
+    List<Triage> getAllTriage();
 }

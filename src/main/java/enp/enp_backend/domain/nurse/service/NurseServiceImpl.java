@@ -30,6 +30,9 @@ public class NurseServiceImpl implements NurseService {
     @Autowired
     Nurse_DoctorRepository nurseDoctorRepository;
 
+    @Autowired
+    Nurse_TriageRepository nurseTriageRepository;
+
     //-----------------Nurse---------
 
     @Override
@@ -137,6 +140,16 @@ public class NurseServiceImpl implements NurseService {
     @Override
     public Doctor save(Doctor doctor) {
         return nurseDoctorRepository.save(doctor);
+    }
+
+    @Override
+    public Triage save(Triage triage) {
+        return nurseTriageRepository.save(triage);
+    }
+
+    @Override
+    public List<Triage> getAllTriage() {
+        return nurseTriageRepository.findAll(Pageable.unpaged()).getContent();
     }
 
 }

@@ -1,6 +1,8 @@
 package enp.enp_backend.MedUtils;
 
 import enp.enp_backend.entity.Triage;
+import org.apache.tomcat.util.buf.StringUtils;
+import org.mapstruct.ap.shaded.freemarker.template.utility.StringUtil;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -50,18 +52,18 @@ public class Shock implements IShock {
             if (ageMonth >= vitalSign[i][0] && ageMonth < vitalSign[i][1]) {
                 Boolean isAbnormalBP = false;
                 if (i >= 3 && i <= 6) {
-                    if (triage.getVitalSign().getSystolic_blood_pressure() < vitalSign[i][4] + (ageMonth / 12) * 2)
+                    if (triage.getSystolic_blood_pressure() < vitalSign[i][4] + (ageMonth / 12) * 2)
                         isAbnormalBP = true;
                 } else {
-                    if (triage.getVitalSign().getSystolic_blood_pressure() < vitalSign[i][4])
+                    if (triage.getSystolic_blood_pressure() < vitalSign[i][4])
                         isAbnormalBP = true;
                 }
 
-                if (triage.getVitalSign().getHeartRate() > vitalSign[i][2] || isAbnormalBP)
+                if (triage.getHeartRate() > vitalSign[i][2] || isAbnormalBP)
                     abnormalText = "abnormal vital sign with uncompensated/hypotensive";
-                else if (triage.getVitalSign().getRespiratoryRate() > vitalSign[i][3] ||
-                        triage.getVitalSign().getTemperature() < vitalSign[i][5] ||
-                        triage.getVitalSign().getTemperature() > vitalSign[i][6])
+                else if (triage.getRespiratoryRate() > vitalSign[i][3] ||
+                        triage.getTemperature() < vitalSign[i][5] ||
+                        triage.getTemperature() > vitalSign[i][6])
                     abnormalText = "abnormal vital sign";
             }
         }
@@ -69,28 +71,28 @@ public class Shock implements IShock {
     }
 
     public Boolean isNarrowPulse() {
-        if (triage.getVitalSign().getSystolic_blood_pressure() <= 20 ||
-                (triage.getVitalSign().getSystolic_blood_pressure() - triage.getVitalSign().getDiastolic_blood_pressure()) < 25)
+        if (triage.getSystolic_blood_pressure() <= 20 ||
+                (triage.getSystolic_blood_pressure() - triage.getDiastolic_blood_pressure()) < 25)
             return true;
         else
             return false;
     }
 
     public Boolean isWidePulse() {
-        if (triage.getVitalSign().getSystolic_blood_pressure() - triage.getVitalSign().getDiastolic_blood_pressure() > 30)
+        if (triage.getSystolic_blood_pressure() - triage.getDiastolic_blood_pressure() > 30)
             return true;
         else
             return false;
     }
 
     public Boolean checkSymptom() {
-        if (triage.getInitialImpression().getIrritable() ||
-                triage.getInitialImpression().getStupor_drownsiness() ||
-                triage.getInitialImpression().getMotting_skin() ||
-                triage.getPhysicalExam().getWeak_pulse() ||
-                triage.getPhysicalExam().getBounding_pulse() ||
-                triage.getPhysicalExam().getCap_refill() ||
-                triage.getPhysicalExam().getFlash_cap())
+        if (triage.getIrritable() ||
+                triage.getStupor_drownsiness() ||
+                triage.getMotting_skin() ||
+                triage.getWeak_pulse() ||
+                triage.getBounding_pulse() ||
+                triage.getCap_refill() ||
+                triage.getFlash_cap())
             return true;
         else
             return false;
@@ -99,12 +101,12 @@ public class Shock implements IShock {
     @Override
     public String getShockResult() throws ParseException {
         String resultText = "";
-        if (checkSymptom() && getAbnormalVitalSign() == "abnormal vital sign with uncompensated/hypotensive")
+        if (checkSymptom() && getAbnormalVitalSign().equals("abnormal vital sign with uncompensated/hypotensive"))
             resultText += "Uncompensated shock / Hypotensive shock" + "\n";
-        else if (checkSymptom() && getAbnormalVitalSign() == "abnormal vital sign")
+        else if (checkSymptom() && getAbnormalVitalSign().equals("abnormal vital sign"))
             resultText += "Compensated shock" + "\n";
 
-        if (resultText != "") {
+        if (!resultText.equals("")) {
             if (isNarrowPulse())
                 resultText += "Narrow pulse pressure";
             else if (isWidePulse())

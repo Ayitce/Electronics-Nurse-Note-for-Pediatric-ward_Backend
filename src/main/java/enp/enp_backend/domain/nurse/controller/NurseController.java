@@ -28,6 +28,7 @@ public class NurseController {
 
     @Autowired
     NurseService nurseService;
+
     //------------Image---------------
     @GetMapping("nurse/patients")
     public ResponseEntity<?> getPatientLists() {
@@ -145,7 +146,6 @@ public class NurseController {
         nurseService.save(bed);
 
 
-
         admit.setPatient(tempPatient);
         Admit output = nurseService.save(admit);
 
@@ -167,7 +167,7 @@ public class NurseController {
 
     @GetMapping("nurse/admits/search")
     public ResponseEntity<?> getSearchedAdmit(@RequestParam(value = "_search", required = false) String search) throws JSONException {
-        List<Admit> output = nurseService.getSearchedAdmit(search,search,search,search);
+        List<Admit> output = nurseService.getSearchedAdmit(search, search, search, search);
         logger.info(output);
         if (output != null) {
             return ResponseEntity.ok(LabMapper.INSTANCE.getAdmitDTO(output));
@@ -198,5 +198,9 @@ public class NurseController {
         return ResponseEntity.ok(LabMapper.INSTANCE.getDoctorDTO(nurseService.getAllDoctor()));
     }
 
-
+    //------------Triage--------------
+    @GetMapping("nurse/triages")
+    public ResponseEntity<?> getTriageLists() {
+        return ResponseEntity.ok(LabMapper.INSTANCE.getTriageDTO(nurseService.getAllTriage()));
+    }
 }

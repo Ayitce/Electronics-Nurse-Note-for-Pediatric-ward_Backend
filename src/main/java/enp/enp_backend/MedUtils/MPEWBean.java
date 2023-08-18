@@ -62,15 +62,15 @@ public class MPEWBean implements IMPEWS {
         int ageMonth = this.getMonthsFromBirthday();
 
         if (ageMonth <= 3) {
-            return heartRate[0][Math.round(triage.getVitalSign().getHeartRate() / 10)];
+            return heartRate[0][Math.round(triage.getHeartRate() / 10)];
         } else if (ageMonth <= 12) {
-            return heartRate[1][Math.round(triage.getVitalSign().getHeartRate() / 10)];
+            return heartRate[1][Math.round(triage.getHeartRate() / 10)];
         } else if (ageMonth <= 48) {
-            return heartRate[2][Math.round(triage.getVitalSign().getHeartRate() / 10)];
+            return heartRate[2][Math.round(triage.getHeartRate() / 10)];
         } else if (ageMonth <= 144) {
-            return heartRate[3][Math.round(triage.getVitalSign().getHeartRate() / 10)];
+            return heartRate[3][Math.round(triage.getHeartRate() / 10)];
         } else {
-            return heartRate[4][Math.round(triage.getVitalSign().getHeartRate() / 10)];
+            return heartRate[4][Math.round(triage.getHeartRate() / 10)];
         }
 
     }
@@ -79,40 +79,40 @@ public class MPEWBean implements IMPEWS {
     public int getRespiratoryRateScore() throws ParseException {
         int ageMonth = this.getMonthsFromBirthday();
 
-        if (triage.getVitalSign().getRespiratoryRate() < 30) {
+        if (triage.getRespiratoryRate() < 30) {
             if (ageMonth <= 3) {
-                return respiratoryRateLessThan30[0][triage.getVitalSign().getRespiratoryRate()];
+                return respiratoryRateLessThan30[0][triage.getRespiratoryRate()];
             } else if (ageMonth <= 12) {
-                return respiratoryRateLessThan30[1][triage.getVitalSign().getRespiratoryRate()];
+                return respiratoryRateLessThan30[1][triage.getRespiratoryRate()];
             } else if (ageMonth <= 48) {
-                return respiratoryRateLessThan30[2][triage.getVitalSign().getRespiratoryRate()];
+                return respiratoryRateLessThan30[2][triage.getRespiratoryRate()];
             } else if (ageMonth <= 144) {
-                return respiratoryRateLessThan30[3][triage.getVitalSign().getRespiratoryRate()];
+                return respiratoryRateLessThan30[3][triage.getRespiratoryRate()];
             } else {
-                return respiratoryRateLessThan30[4][triage.getVitalSign().getRespiratoryRate()];
+                return respiratoryRateLessThan30[4][triage.getRespiratoryRate()];
             }
         } else {
             if (ageMonth <= 3) {
-                return respiratoryRateMoreThan30[0][Math.round(triage.getVitalSign().getRespiratoryRate() / 10)];
+                return respiratoryRateMoreThan30[0][Math.round(triage.getRespiratoryRate() / 10)];
             } else if (ageMonth <= 12) {
-                return respiratoryRateMoreThan30[1][Math.round(triage.getVitalSign().getRespiratoryRate() / 10)];
+                return respiratoryRateMoreThan30[1][Math.round(triage.getRespiratoryRate() / 10)];
             } else if (ageMonth <= 48) {
-                return respiratoryRateMoreThan30[2][Math.round(triage.getVitalSign().getRespiratoryRate() / 10)];
+                return respiratoryRateMoreThan30[2][Math.round(triage.getRespiratoryRate() / 10)];
             } else if (ageMonth <= 144) {
-                return respiratoryRateMoreThan30[3][Math.round(triage.getVitalSign().getRespiratoryRate() / 10)];
+                return respiratoryRateMoreThan30[3][Math.round(triage.getRespiratoryRate() / 10)];
             } else {
-                return respiratoryRateMoreThan30[4][Math.round(triage.getVitalSign().getRespiratoryRate() / 10)];
+                return respiratoryRateMoreThan30[4][Math.round(triage.getRespiratoryRate() / 10)];
             }
         }
     }
 
     @Override
     public int getTemperatureScore() {
-        if (triage.getVitalSign().getTemperature() < 34 || triage.getVitalSign().getTemperature() >= 40) {
+        if (triage.getTemperature() < 34 || triage.getTemperature() >= 40) {
             return 4;
-        } else if (triage.getVitalSign().getTemperature() < 35 || triage.getVitalSign().getTemperature() >= 39) {
+        } else if (triage.getTemperature() < 35 || triage.getTemperature() >= 39) {
             return 2;
-        } else if (triage.getVitalSign().getTemperature() < 36 || triage.getVitalSign().getTemperature() >= 38) {
+        } else if (triage.getTemperature() < 36 || triage.getTemperature() >= 38) {
             return 1;
         } else {
             return 0;
@@ -122,11 +122,11 @@ public class MPEWBean implements IMPEWS {
 
     @Override
     public int getOxygenSaturationScore() {
-        if (triage.getVitalSign().getOxygenSaturation() < 85) {
+        if (triage.getOxygenSaturation() < 85) {
             return 4;
-        } else if (triage.getVitalSign().getOxygenSaturation() < 90) {
+        } else if (triage.getOxygenSaturation() < 90) {
             return 2;
-        } else if (triage.getVitalSign().getOxygenSaturation() < 95) {
+        } else if (triage.getOxygenSaturation() < 95) {
             return 1;
         } else {
             return 0;
@@ -135,11 +135,11 @@ public class MPEWBean implements IMPEWS {
 
     @Override
     public int getOxygenTherapyScore() {
-        if (triage.getVitalSign().getOxygenTherapy() < 1) {
+        if (triage.getOxygenTherapy() < 1) {
             return 0;
-        } else if (triage.getVitalSign().getOxygenTherapy() < 2) {
+        } else if (triage.getOxygenTherapy() < 2) {
             return 1;
-        } else if (triage.getVitalSign().getOxygenTherapy() < 5) {
+        } else if (triage.getOxygenTherapy() < 5) {
             return 2;
         } else {
             return 4;
@@ -148,9 +148,9 @@ public class MPEWBean implements IMPEWS {
 
     @Override
     public int getConsciousnessScore() {
-        if (triage.getPhysicalExam().getConsciousness() == Consciousness.A) {
+        if (triage.getConsciousness() == Consciousness.A) {
             return 0;
-        } else if (triage.getPhysicalExam().getConsciousness() == Consciousness.V) {
+        } else if (triage.getConsciousness() == Consciousness.V) {
             return 2;
         } else {
             return 4;

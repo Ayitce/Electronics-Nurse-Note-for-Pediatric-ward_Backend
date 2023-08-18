@@ -49,19 +49,19 @@ public class Sepsis implements ISepsis {
         String abnormalText = "";
         for (int i = 0; i < vitalSign.length; i++) {
             if (ageMonth >= vitalSign[i][0] && ageMonth < vitalSign[i][1]) {
-                if (triage.getVitalSign().getHeartRate() > vitalSign[i][2])
-                    abnormalText += "ABNORMAL Heart Rate = " + triage.getVitalSign().getHeartRate() + "\n";
-                if (triage.getVitalSign().getRespiratoryRate() > vitalSign[i][3])
-                    abnormalText += "ABNORMAL Respiratory Rate = " + triage.getVitalSign().getRespiratoryRate() + "\n";
+                if (triage.getHeartRate() > vitalSign[i][2])
+                    abnormalText += "ABNORMAL Heart Rate = " + triage.getHeartRate() + "\n";
+                if (triage.getRespiratoryRate() > vitalSign[i][3])
+                    abnormalText += "ABNORMAL Respiratory Rate = " + triage.getRespiratoryRate() + "\n";
                 if (i >= 3 && i <= 6) {
-                    if (triage.getVitalSign().getSystolic_blood_pressure() < vitalSign[i][4] + (ageMonth / 12) * 2)
-                        abnormalText += "ABNORMAL Systolic Blood Pressure = " + triage.getVitalSign().getSystolic_blood_pressure() + "\n";
+                    if (triage.getSystolic_blood_pressure() < vitalSign[i][4] + (ageMonth / 12) * 2)
+                        abnormalText += "ABNORMAL Systolic Blood Pressure = " + triage.getSystolic_blood_pressure() + "\n";
                 } else {
-                    if (triage.getVitalSign().getSystolic_blood_pressure() < vitalSign[i][4])
-                        abnormalText += "ABNORMAL Systolic Blood Pressure = " + triage.getVitalSign().getSystolic_blood_pressure() + "\n";
+                    if (triage.getSystolic_blood_pressure() < vitalSign[i][4])
+                        abnormalText += "ABNORMAL Systolic Blood Pressure = " + triage.getSystolic_blood_pressure() + "\n";
                 }
-                if (triage.getVitalSign().getTemperature() < vitalSign[i][5] || triage.getVitalSign().getTemperature() > vitalSign[i][6])
-                    abnormalText += "ABNORMAL Body Temp = " + triage.getVitalSign().getTemperature() + "\n";
+                if (triage.getTemperature() < vitalSign[i][5] || triage.getTemperature() > vitalSign[i][6])
+                    abnormalText += "ABNORMAL Body Temp = " + triage.getTemperature() + "\n";
 
             }
         }
@@ -69,17 +69,17 @@ public class Sepsis implements ISepsis {
     }
 
     private Boolean isCheckedRiskFactor() {
-        if (triage.getRiskFactor().getOrgantranplantation())
+        if (triage.getOrgantranplantation())
             return true;
-        else if (triage.getRiskFactor().getPrimary_immune_defencing())
+        else if (triage.getPrimary_immune_defencing())
             return true;
-        else if (triage.getRiskFactor().getPostSplenectomy_asplenia())
+        else if (triage.getPostSplenectomy_asplenia())
             return true;
-        else if (triage.getRiskFactor().getMalignancy())
+        else if (triage.getMalignancy())
             return true;
-        else if (triage.getRiskFactor().getBedRidden_cerebralPulsy())
+        else if (triage.getBedRidden_cerebralPulsy())
             return true;
-        else if (triage.getRiskFactor().getCenter_iv_catheter())
+        else if (triage.getCenter_iv_catheter())
             return true;
         else
             return false;
@@ -89,21 +89,21 @@ public class Sepsis implements ISepsis {
         int count = 0;
         if (getAbnormalVitalSign() != "")
             count += 1;
-        if (triage.getPhysicalExam().getWeak_pulse())
+        if (triage.getWeak_pulse())
             count += 1;
-        if (triage.getPhysicalExam().getBounding_pulse())
+        if (triage.getBounding_pulse())
             count += 1;
-        if (triage.getPhysicalExam().getCap_refill())
+        if (triage.getCap_refill())
             count += 1;
-        if (triage.getPhysicalExam().getFlash_cap())
+        if (triage.getFlash_cap())
             count += 1;
-        if (triage.getInitialImpression().getMotting_skin())
+        if (triage.getMotting_skin())
             count += 1;
-        if (triage.getInitialImpression().getPetichea())
+        if (triage.getPetichea())
             count += 1;
-        if (triage.getInitialImpression().getIrritable())
+        if (triage.getIrritable())
             count += 1;
-        if (triage.getInitialImpression().getStupor_drownsiness())
+        if (triage.getStupor_drownsiness())
             count += 1;
 
         return count;
@@ -111,7 +111,7 @@ public class Sepsis implements ISepsis {
 
     @Override
     public Boolean isSepticShock() throws ParseException {
-        if (triage.getRiskFactor().getSuspected_infection() && isCheckedRiskFactor() && countSymptom() >= 2)
+        if (triage.getSuspected_infection() && isCheckedRiskFactor() && countSymptom() >= 2)
             return true;
         else
             return false;
@@ -119,7 +119,7 @@ public class Sepsis implements ISepsis {
 
     @Override
     public Boolean isSepsis() throws ParseException {
-        if (triage.getRiskFactor().getSuspected_infection() && !isCheckedRiskFactor() && countSymptom() >= 3)
+        if (triage.getSuspected_infection() && !isCheckedRiskFactor() && countSymptom() >= 3)
             return true;
         else
             return false;
