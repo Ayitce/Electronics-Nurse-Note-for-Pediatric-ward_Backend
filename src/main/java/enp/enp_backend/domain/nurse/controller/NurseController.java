@@ -274,10 +274,14 @@ public class NurseController {
 
         MedCalculator medCalculator = new MedCalculator(triage);
         triage.setMpew(medCalculator.getMPEWS());
-        triage.setResult_respiratory(medCalculator.getPress());
-        triage.setResult_sepsis(medCalculator.getSepsis());
-        triage.setResult_shock(medCalculator.getShock());
-        triage.setResult_seizure(medCalculator.getSeisure());
+        if (jsonObject.getJSONObject("indicator").getBoolean("respiratory"))
+            triage.setResult_respiratory(medCalculator.getPress());
+        if (jsonObject.getJSONObject("indicator").getBoolean("sepsis"))
+            triage.setResult_sepsis(medCalculator.getSepsis());
+        if (jsonObject.getJSONObject("indicator").getBoolean("shock"))
+            triage.setResult_shock(medCalculator.getShock());
+        if (jsonObject.getJSONObject("indicator").getBoolean("seizure"))
+            triage.setResult_seizure(medCalculator.getSeisure());
 
 
         nurseService.save(triage);

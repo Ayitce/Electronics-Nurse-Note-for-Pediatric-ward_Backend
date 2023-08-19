@@ -25,6 +25,6 @@ public class TriageDTO {
     InitialImpressionDTO initialImpression;
     RiskFactorDTO riskFactor;
     PhysicalExamDTO physicalExam;
-    TriageResultDTO triageResultDTO;
+    TriageResultDTO triageResult;
 
 }
