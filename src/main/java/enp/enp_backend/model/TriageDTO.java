@@ -8,6 +8,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
+
 @Data
 @Builder
 @NoArgsConstructor
@@ -15,14 +17,14 @@ import lombok.NoArgsConstructor;
 public class TriageDTO {
     Long id;
 
-    AdmitDTO admit;
-
+    // AdmitDTO admit;
+    String date;
     IndicatorDTO indicator;
     VitalSignDTO vitalSign;
     ADDDTO add;
     InitialImpressionDTO initialImpression;
     RiskFactorDTO riskFactor;
     PhysicalExamDTO physicalExam;
-
+    TriageResultDTO triageResultDTO;
 
 }

@@ -1,5 +1,6 @@
 package enp.enp_backend.domain.nurse.controller;
 
+import enp.enp_backend.MedCalculator.MedCalculator;
 import enp.enp_backend.domain.nurse.service.NurseService;
 import enp.enp_backend.entity.*;
 import enp.enp_backend.util.CloudStorageHelper;
@@ -11,6 +12,7 @@ import org.springframework.boot.configurationprocessor.json.JSONException;
 import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -18,6 +20,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import javax.servlet.ServletException;
 import java.io.IOException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -199,8 +202,90 @@ public class NurseController {
     }
 
     //------------Triage--------------
-    @GetMapping("nurse/triages")
-    public ResponseEntity<?> getTriageLists() {
-        return ResponseEntity.ok(LabMapper.INSTANCE.getTriageDTO(nurseService.getAllTriage()));
+    @GetMapping("nurse/admits/AN/{an}/triages")
+    public ResponseEntity<?> getTriageLists(@PathVariable("an") String an) {
+        Admit output = nurseService.getAdmitByAn(an);
+        if (output != null) {
+            return ResponseEntity.ok(LabMapper.INSTANCE.getTriageDTO(output.getTriages()));
+        } else {
+            logger.info("The given AN is not found");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "The given AN is not found");
+        }
     }
+
+    @PostMapping("nurse/admits/AN/{an}/triages")
+    public ResponseEntity<?> addTriage(@RequestBody String json, @PathVariable("an") String an) throws JSONException, ParseException {
+        JSONObject jsonObject = new JSONObject(json);
+        Date date = new Date();
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+        Triage triage = Triage.builder()
+                .date(formatter.format(date))
+                //indicator
+                .respiratory(jsonObject.getJSONObject("indicator").getBoolean("respiratory"))
+                .sepsis(jsonObject.getJSONObject("indicator").getBoolean("sepsis"))
+                .shock(jsonObject.getJSONObject("indicator").getBoolean("shock"))
+                .seizure(jsonObject.getJSONObject("indicator").getBoolean("seizure"))
+                //vitalsign
+                .heartRate(jsonObject.getJSONObject("vitalSign").getInt("heartRate"))
+                .respiratoryRate(jsonObject.getJSONObject("vitalSign").getInt("respiratoryRate"))
+                .temperature(jsonObject.getJSONObject("vitalSign").getDouble("temperature"))
+                .oxygenSaturation(jsonObject.getJSONObject("vitalSign").getInt("oxygenSaturation"))
+                .oxygenTherapy(jsonObject.getJSONObject("vitalSign").getInt("oxygenTherapy"))
+                .systolic_blood_pressure(jsonObject.getJSONObject("vitalSign").getInt("systolic_blood_pressure"))
+                .diastolic_blood_pressure(jsonObject.getJSONObject("vitalSign").getInt("diastolic_blood_pressure"))
+                //add
+                .poor_feeding(jsonObject.getJSONObject("add").getBoolean("poor_feeding"))
+                .history_of_seizure(jsonObject.getJSONObject("add").getBoolean("history_of_seizure"))
+                .generalize_seizure(jsonObject.getJSONObject("add").getBoolean("generalize_seizure"))
+                .comoatose_stage_seizure(jsonObject.getJSONObject("add").getBoolean("comoatose_stage_seizure"))
+                .GCS(jsonObject.getJSONObject("add").getInt("gcs"))
+                //initial impression
+                .scalene_muscle(jsonObject.getJSONObject("initialImpression").getBoolean("scalene_muscle"))
+                .irritable(jsonObject.getJSONObject("initialImpression").getBoolean("irritable"))
+                .stupor_drownsiness(jsonObject.getJSONObject("initialImpression").getBoolean("stupor_drownsiness"))
+                .dehedration(jsonObject.getJSONObject("initialImpression").getBoolean("dehedration"))
+                .nasal_flaring(jsonObject.getJSONObject("initialImpression").getBoolean("nasal_flaring"))
+                .subcostral_retraction(jsonObject.getJSONObject("initialImpression").getBoolean("subcostral_retraction"))
+                .supersternal_retraction(jsonObject.getJSONObject("initialImpression").getBoolean("supersternal_retraction"))
+                .grunting(jsonObject.getJSONObject("initialImpression").getBoolean("grunting"))
+                .pale_cyanosis(jsonObject.getJSONObject("initialImpression").getBoolean("pale_cyanosis"))
+                .motting_skin(jsonObject.getJSONObject("initialImpression").getBoolean("motting_skin"))
+                .petichea(jsonObject.getJSONObject("initialImpression").getBoolean("petichea"))
+                //risk factor
+                .suspected_infection(jsonObject.getJSONObject("riskFactor").getBoolean("suspected_infection"))
+                .organtranplantation(jsonObject.getJSONObject("riskFactor").getBoolean("organtranplantation"))
+                .history_bone_marrow(jsonObject.getJSONObject("riskFactor").getBoolean("history_bone_marrow"))
+                .primary_immune_defencing(jsonObject.getJSONObject("riskFactor").getBoolean("primary_immune_defencing"))
+                .postSplenectomy_asplenia(jsonObject.getJSONObject("riskFactor").getBoolean("postSplenectomy_asplenia"))
+                .malignancy(jsonObject.getJSONObject("riskFactor").getBoolean("malignancy"))
+                .bedRidden_cerebralPulsy(jsonObject.getJSONObject("riskFactor").getBoolean("bedRidden_cerebralPulsy"))
+                .center_iv_catheter(jsonObject.getJSONObject("riskFactor").getBoolean("center_iv_catheter"))
+                //physical exam
+                .weak_pulse(jsonObject.getJSONObject("physicalExam").getBoolean("weak_pulse"))
+                .bounding_pulse(jsonObject.getJSONObject("physicalExam").getBoolean("bounding_pulse"))
+                .cap_refill(jsonObject.getJSONObject("physicalExam").getBoolean("cap_refill"))
+                .flash_cap(jsonObject.getJSONObject("physicalExam").getBoolean("flash_cap"))
+                .consciousness(Consciousness.valueOf(jsonObject.getJSONObject("physicalExam").getString("consciousness")))
+                .airEntry(jsonObject.getJSONObject("physicalExam").getInt("airEntry"))
+                .wheezing(jsonObject.getJSONObject("physicalExam").getInt("wheezing"))
+                .build();
+        Admit admit = nurseService.getAdmitByAn(an);
+        triage.setAdmit(admit);
+
+        MedCalculator medCalculator = new MedCalculator(triage);
+        triage.setMpew(medCalculator.getMPEWS());
+        triage.setResult_respiratory(medCalculator.getPress());
+        triage.setResult_sepsis(medCalculator.getSepsis());
+        triage.setResult_shock(medCalculator.getShock());
+        triage.setResult_seizure(medCalculator.getSeisure());
+
+
+        nurseService.save(triage);
+        admit.getTriages().add(triage);
+        nurseService.save(admit);
+        //nurseService.save(triage);
+
+        return ResponseEntity.ok(LabMapper.INSTANCE.getTriageDTO(triage));
+    }
+
 }

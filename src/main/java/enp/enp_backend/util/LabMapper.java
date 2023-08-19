@@ -85,6 +85,11 @@ public interface LabMapper {
     @Mapping(source = "malignancy", target = "riskFactor.malignancy")
     @Mapping(source = "bedRidden_cerebralPulsy", target = "riskFactor.bedRidden_cerebralPulsy")
     @Mapping(source = "center_iv_catheter", target = "riskFactor.center_iv_catheter")
+    @Mapping(source = "mpew", target = "triageResultDTO.mpew")
+    @Mapping(source = "result_respiratory", target = "triageResultDTO.result_respiratory")
+    @Mapping(source = "result_sepsis", target = "triageResultDTO.result_sepsis")
+    @Mapping(source = "result_shock", target = "triageResultDTO.result_shock")
+    @Mapping(source = "result_seizure", target = "triageResultDTO.result_seizure")
     TriageDTO getTriageDTO(Triage triage);
 
     List<TriageDTO> getTriageDTO(List<Triage> triage);

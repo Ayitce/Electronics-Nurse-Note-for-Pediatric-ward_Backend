@@ -4,6 +4,9 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.Id;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Builder
 @Setter
 @Getter
@@ -30,4 +33,8 @@ public class Admit {
     String dischargeDate;
     String age;
     String an;
+
+    @Builder.Default
+    @OneToMany
+    List<Triage> triages = new ArrayList<>();
 }

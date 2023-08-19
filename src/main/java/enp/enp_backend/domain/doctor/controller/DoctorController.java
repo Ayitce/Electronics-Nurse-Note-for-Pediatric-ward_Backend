@@ -49,4 +49,14 @@ public class DoctorController {
         }
     }
 
+    @GetMapping("doctor/admits/AN/{an}/triages")
+    public ResponseEntity<?> getTriageLists(@PathVariable("an") String an) {
+        Admit output = doctorService.getAdmitByAn(an);
+        if (output != null) {
+            return ResponseEntity.ok(LabMapper.INSTANCE.getTriageDTO(output.getTriages()));
+        } else {
+            //logger.info("The given AN is not found");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "The given AN is not found");
+        }
+    }
 }

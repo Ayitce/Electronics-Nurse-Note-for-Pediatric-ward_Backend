@@ -59,4 +59,5 @@ public interface NurseService {
     Triage save(Triage triage);
 
     List<Triage> getAllTriage();
+
 }

@@ -1446,8 +1446,11 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
                 .irritable(true)
                 .stupor_drownsiness(true)
                 .build();
+
+        admit1.getTriages().add(triage);
         triage.setAdmit(admit1);
         nurseTriageRepository.save(triage);
+        nurseAdmitRepository.save(admit1);
         MedCalculator medCalculator = new MedCalculator(triage);
 //        logger.info("heart rate : " + mpew.getHeartRateScore());
 //        logger.info("res : " + mpew.getRespiratoryRateScore());

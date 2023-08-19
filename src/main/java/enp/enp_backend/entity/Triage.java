@@ -3,6 +3,8 @@ package enp.enp_backend.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.Date;
+
 @Builder
 @Setter
 @Getter
@@ -18,6 +20,8 @@ public class Triage {
 
     @ManyToOne
     Admit admit;
+
+    String date;
 
     //    @OneToOne
 //    Indicator indicator;
@@ -84,4 +88,11 @@ public class Triage {
     Consciousness consciousness;
     int airEntry;
     int wheezing;
+
+    //result
+    int mpew;
+    String result_respiratory;
+    String result_sepsis;
+    String result_shock;
+    String result_seizure;
 }
