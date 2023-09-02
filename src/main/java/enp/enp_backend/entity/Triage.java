@@ -23,6 +23,8 @@ public class Triage {
 
     String date;
 
+    String nurseName;
+
     //    @OneToOne
 //    Indicator indicator;
     Boolean respiratory;
@@ -50,6 +52,9 @@ public class Triage {
     Boolean generalize_seizure;
     Boolean comoatose_stage_seizure;
     int GCS;
+    int e;
+    int v;
+    int m;
 //
 //    @OneToOne
 //    InitialImpression initialImpression;
@@ -91,6 +96,7 @@ public class Triage {
 
     //result
     int mpew;
+    int severity;
     String result_respiratory;
     String result_sepsis;
     String result_shock;

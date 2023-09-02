@@ -10,4 +10,5 @@ public interface IMPEWS {
     int getOxygenTherapyScore();
     int getConsciousnessScore();
     int getTotalScore() throws ParseException;
+    int getSeverityScore() throws ParseException;
 }

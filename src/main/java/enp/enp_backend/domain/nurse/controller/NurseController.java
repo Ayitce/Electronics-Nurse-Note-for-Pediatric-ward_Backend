@@ -167,6 +167,17 @@ public class NurseController {
         }
     }
 
+    @GetMapping("nurse/patient/AN/{an}")
+    public ResponseEntity<?> getPatientByAN(@PathVariable("an") String an) {
+        Patient output = nurseService.getAdmitByAn(an).getPatient();
+        if (output != null) {
+            return ResponseEntity.ok(LabMapper.INSTANCE.getPatientDTO(output));
+        } else {
+            logger.info("The given AN is not found");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "The given AN is not found");
+        }
+    }
+
 
     @GetMapping("nurse/admits/search")
     public ResponseEntity<?> getSearchedAdmit(@RequestParam(value = "_search", required = false) String search) throws JSONException {
@@ -239,6 +250,9 @@ public class NurseController {
                 .generalize_seizure(jsonObject.getJSONObject("add").getBoolean("generalize_seizure"))
                 .comoatose_stage_seizure(jsonObject.getJSONObject("add").getBoolean("comoatose_stage_seizure"))
                 .GCS(jsonObject.getJSONObject("add").getInt("gcs"))
+                .e(jsonObject.getJSONObject("add").getInt("e"))
+                .v(jsonObject.getJSONObject("add").getInt("v"))
+                .m(jsonObject.getJSONObject("add").getInt("m"))
                 //initial impression
                 .scalene_muscle(jsonObject.getJSONObject("initialImpression").getBoolean("scalene_muscle"))
                 .irritable(jsonObject.getJSONObject("initialImpression").getBoolean("irritable"))
@@ -268,12 +282,14 @@ public class NurseController {
                 .consciousness(Consciousness.valueOf(jsonObject.getJSONObject("physicalExam").getString("consciousness")))
                 .airEntry(jsonObject.getJSONObject("physicalExam").getInt("airEntry"))
                 .wheezing(jsonObject.getJSONObject("physicalExam").getInt("wheezing"))
+                .nurseName(jsonObject.getString("nurseName"))
                 .build();
         Admit admit = nurseService.getAdmitByAn(an);
         triage.setAdmit(admit);
 
         MedCalculator medCalculator = new MedCalculator(triage);
         triage.setMpew(medCalculator.getMPEWS());
+        triage.setSeverity(medCalculator.getSeverity());
         if (jsonObject.getJSONObject("indicator").getBoolean("respiratory"))
             triage.setResult_respiratory(medCalculator.getPress());
         if (jsonObject.getJSONObject("indicator").getBoolean("sepsis"))

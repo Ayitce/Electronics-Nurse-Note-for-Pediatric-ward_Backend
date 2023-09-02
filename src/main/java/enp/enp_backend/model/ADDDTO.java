@@ -16,4 +16,7 @@ public class ADDDTO {
     Boolean generalize_seizure;
     Boolean comoatose_stage_seizure;
     int GCS;
+    int e;
+    int v;
+    int m;
 }

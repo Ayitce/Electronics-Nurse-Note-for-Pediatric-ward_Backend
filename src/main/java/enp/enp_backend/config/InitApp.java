@@ -1408,33 +1408,110 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
                 .shock(true)
                 .seizure(true)
                 .heartRate(80)
-                .respiratoryRate(20)
+                .respiratoryRate(13)
                 .temperature(36.5)
-                .oxygenSaturation(88)
-                .oxygenTherapy(3)
+                .oxygenSaturation(100)
+                .oxygenTherapy(0)
                 .systolic_blood_pressure(100)
                 .diastolic_blood_pressure(70)
-                .consciousness(Consciousness.P)
+                .consciousness(Consciousness.A)
                 .bounding_pulse(false)
                 .weak_pulse(false)
                 .cap_refill(false)
                 .flash_cap(false)
                 .airEntry(0)
-                .wheezing(1)
+                .wheezing(0)
                 .organtranplantation(false)
                 .primary_immune_defencing(false)
                 .postSplenectomy_asplenia(false)
                 .malignancy(false)
                 .bedRidden_cerebralPulsy(false)
                 .center_iv_catheter(false)
-                .suspected_infection(true)
+                .suspected_infection(false)
                 .history_bone_marrow(false)
                 .poor_feeding(false)
                 .comoatose_stage_seizure(false)
                 .generalize_seizure(false)
-                .history_of_seizure(true)
-                .GCS(4)
-                .nasal_flaring(true)
+                .history_of_seizure(false)
+                .GCS(15)
+                .nasal_flaring(false)
+                .scalene_muscle(false)
+                .subcostral_retraction(false)
+                .supersternal_retraction(false)
+                .grunting(false)
+                .pale_cyanosis(false)
+                .dehedration(false)
+                .motting_skin(false)
+                .petichea(false)
+                .irritable(false)
+                .stupor_drownsiness(false)
+                .nurseName("Vanida Gowan")
+                .e(4)
+                .v(5)
+                .m(6)
+                .date("29-8-2023 11:23:05")
+                .build();
+
+        admit1.getTriages().add(triage);
+        triage.setAdmit(admit1);
+        nurseTriageRepository.save(triage);
+        MedCalculator medCalculator = new MedCalculator(triage);
+        triage.setSeverity(medCalculator.getSeverity());
+        triage.setMpew(medCalculator.getMPEWS());
+        triage.setResult_seizure(medCalculator.getSeisure());
+        triage.setResult_shock(medCalculator.getShock());
+        triage.setResult_sepsis(medCalculator.getSepsis());
+        triage.setResult_respiratory(medCalculator.getPress());
+        nurseTriageRepository.save(triage);
+
+//        logger.info("heart rate : " + mpew.getHeartRateScore());
+//        logger.info("res : " + mpew.getRespiratoryRateScore());
+//        logger.info("temp : " + mpew.getTemperatureScore());
+//        logger.info("oxySar : " + mpew.getOxygenSaturationScore());
+//        logger.info("oxyTher : " + mpew.getOxygenTherapyScore());
+//        logger.info("con : " + mpew.getConsciousnessScore());
+        logger.info("age : " + triage.getAdmit().getPatient().getDateOfBirth());
+        logger.info("mpew : " + medCalculator.getMPEWS());
+        //  logger.info("abnormal vitalsign : " + sepsis.getAbnormalVitalSign());
+        logger.info("sepsis result: " + medCalculator.getSepsis());
+        logger.info("shock result: " + medCalculator.getShock());
+        logger.info("press result: " + medCalculator.getPress());
+        logger.info("seizure result: " + medCalculator.getSeisure());
+
+
+        Triage triage2 = Triage.builder()
+                .respiratory(true)
+                .sepsis(true)
+                .shock(true)
+                .seizure(true)
+                .heartRate(120)
+                .respiratoryRate(13)
+                .temperature(36.5)
+                .oxygenSaturation(100)
+                .oxygenTherapy(0)
+                .systolic_blood_pressure(100)
+                .diastolic_blood_pressure(70)
+                .consciousness(Consciousness.A)
+                .bounding_pulse(false)
+                .weak_pulse(true)
+                .cap_refill(false)
+                .flash_cap(false)
+                .airEntry(0)
+                .wheezing(0)
+                .organtranplantation(false)
+                .primary_immune_defencing(false)
+                .postSplenectomy_asplenia(false)
+                .malignancy(false)
+                .bedRidden_cerebralPulsy(false)
+                .center_iv_catheter(false)
+                .suspected_infection(false)
+                .history_bone_marrow(false)
+                .poor_feeding(false)
+                .comoatose_stage_seizure(false)
+                .generalize_seizure(false)
+                .history_of_seizure(false)
+                .GCS(15)
+                .nasal_flaring(false)
                 .scalene_muscle(false)
                 .subcostral_retraction(false)
                 .supersternal_retraction(false)
@@ -1443,27 +1520,27 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
                 .dehedration(false)
                 .motting_skin(false)
                 .petichea(false)
-                .irritable(true)
-                .stupor_drownsiness(true)
+                .irritable(false)
+                .stupor_drownsiness(false)
+                .nurseName("Vanida Gowan")
+                .e(4)
+                .v(5)
+                .m(6)
+                .date("30-8-2023 11:23:05")
                 .build();
 
-        admit1.getTriages().add(triage);
-        triage.setAdmit(admit1);
-        nurseTriageRepository.save(triage);
+        admit1.getTriages().add(triage2);
+        triage2.setAdmit(admit1);
+        nurseTriageRepository.save(triage2);
         nurseAdmitRepository.save(admit1);
-        MedCalculator medCalculator = new MedCalculator(triage);
-//        logger.info("heart rate : " + mpew.getHeartRateScore());
-//        logger.info("res : " + mpew.getRespiratoryRateScore());
-//        logger.info("temp : " + mpew.getTemperatureScore());
-//        logger.info("oxySar : " + mpew.getOxygenSaturationScore());
-//        logger.info("oxyTher : " + mpew.getOxygenTherapyScore());
-//        logger.info("con : " + mpew.getConsciousnessScore());
-        logger.info("mpew : " + medCalculator.getMPEWS());
-        //  logger.info("abnormal vitalsign : " + sepsis.getAbnormalVitalSign());
-        logger.info("sepsis result: " + medCalculator.getSepsis());
-        logger.info("shock result: " + medCalculator.getShock());
-        logger.info("press result: " + medCalculator.getPress());
-        logger.info("seizure result: " + medCalculator.getSeisure());
+        MedCalculator medCalculator2 = new MedCalculator(triage2);
+        triage2.setSeverity(medCalculator2.getSeverity());
+        triage2.setMpew(medCalculator2.getMPEWS());
+        triage2.setResult_seizure(medCalculator2.getSeisure());
+        triage2.setResult_shock(medCalculator2.getShock());
+        triage2.setResult_sepsis(medCalculator2.getSepsis());
+        triage2.setResult_respiratory(medCalculator2.getPress());
+        nurseTriageRepository.save(triage2);
     }
 
     private void addUser() {

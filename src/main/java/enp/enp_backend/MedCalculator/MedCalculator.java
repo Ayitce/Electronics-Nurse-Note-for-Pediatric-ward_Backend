@@ -29,6 +29,10 @@ public class MedCalculator implements IMedCalculator {
     }
 
     @Override
+    public int getSeverity()  throws ParseException{
+        return mpewBean.getSeverityScore();
+    }
+    @Override
     public String getSepsis() throws ParseException {
         return sepsis.getSepsisResult();
     }

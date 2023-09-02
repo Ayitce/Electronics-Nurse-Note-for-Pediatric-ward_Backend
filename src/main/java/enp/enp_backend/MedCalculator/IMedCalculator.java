@@ -4,6 +4,7 @@ import java.text.ParseException;
 
 public interface IMedCalculator  {
     int getMPEWS() throws ParseException;
+    int getSeverity()  throws ParseException;
     String getSepsis() throws ParseException;
     String getPress() throws ParseException;
     String getShock() throws ParseException;

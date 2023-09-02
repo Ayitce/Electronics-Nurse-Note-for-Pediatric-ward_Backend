@@ -34,11 +34,11 @@ public class MPEWBean implements IMPEWS {
 
     //-------index 0-2 have no value------
     int respiratoryRateMoreThan30[][] = {
-            {4, 4, 4, 0, 0, 0, 1, 1, 2, 4},
-            {4, 4, 4, 0, 0, 1, 1, 2, 4, 4},
-            {4, 4, 4, 0, 1, 1, 2, 4, 4, 4},
-            {4, 4, 4, 1, 2, 4, 4, 4, 4, 4},
-            {4, 4, 4, 4, 4, 4, 4, 4, 4, 4},
+            {4, 4, 4, 0, 0, 0, 1, 1, 2, 4,4},
+            {4, 4, 4, 0, 0, 1, 1, 2, 4, 4,4},
+            {4, 4, 4, 0, 1, 1, 2, 4, 4, 4,4},
+            {4, 4, 4, 1, 2, 4, 4, 4, 4, 4,4},
+            {4, 4, 4, 4, 4, 4, 4, 4, 4, 4,4},
     };
 
     public MPEWBean(Triage triage) {
@@ -166,4 +166,23 @@ public class MPEWBean implements IMPEWS {
                 this.getOxygenTherapyScore() +
                 this.getConsciousnessScore();
     }
+
+    @Override
+    public int getSeverityScore() throws ParseException {
+        int severity = 0;
+        if(this.getHeartRateScore() > severity)
+            severity = this.getHeartRateScore();
+        if(this.getRespiratoryRateScore() > severity)
+            severity = this.getRespiratoryRateScore();
+        if(this.getTemperatureScore() > severity)
+            severity = this.getTemperatureScore();
+        if(this.getOxygenSaturationScore() > severity)
+            severity = this.getOxygenSaturationScore();
+        if(this.getOxygenTherapyScore() > severity)
+            severity = this.getOxygenTherapyScore();
+        if(this.getConsciousnessScore() > severity)
+            severity = this.getConsciousnessScore();
+        return severity;
+    }
+
 }

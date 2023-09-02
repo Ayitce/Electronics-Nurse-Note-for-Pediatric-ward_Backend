@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class TriageResultDTO {
     int mpew;
+    int severity;
     String result_respiratory;
     String result_sepsis;
     String result_shock;

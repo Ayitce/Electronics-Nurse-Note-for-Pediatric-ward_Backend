@@ -59,4 +59,15 @@ public class DoctorController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "The given AN is not found");
         }
     }
+
+    @GetMapping("doctor/patient/AN/{an}")
+    public ResponseEntity<?> getPatientByAN(@PathVariable("an") String an) {
+        Patient output = doctorService.getAdmitByAn(an).getPatient();
+        if (output != null) {
+            return ResponseEntity.ok(LabMapper.INSTANCE.getPatientDTO(output));
+        } else {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "The given AN is not found");
+        }
+    }
+
 }

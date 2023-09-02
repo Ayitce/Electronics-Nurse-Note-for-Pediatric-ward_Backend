@@ -102,9 +102,9 @@ public class Shock implements IShock {
     public String getShockResult() throws ParseException {
         String resultText = "";
         if (checkSymptom() && getAbnormalVitalSign().equals("abnormal vital sign with uncompensated/hypotensive"))
-            resultText += "Uncompensated shock / Hypotensive shock" + "\n";
+            resultText += "Uncompensated shock / Hypotensive shock" + "<br/>";
         else if (checkSymptom() && getAbnormalVitalSign().equals("abnormal vital sign"))
-            resultText += "Compensated shock" + "\n";
+            resultText += "Compensated shock" + "<br/>";
 
         if (!resultText.equals("")) {
             if (isNarrowPulse())

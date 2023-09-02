@@ -19,6 +19,8 @@ public class TriageDTO {
 
     // AdmitDTO admit;
     String date;
+    String nurseName;
+
     IndicatorDTO indicator;
     VitalSignDTO vitalSign;
     ADDDTO add;

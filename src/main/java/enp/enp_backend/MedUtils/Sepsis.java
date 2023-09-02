@@ -129,9 +129,9 @@ public class Sepsis implements ISepsis {
     public String getSepsisResult() throws ParseException {
         String result = "";
         if(isSepticShock())
-            result+= "Suspected Septic Shock "+ "\n" + "Risk Factors >= 1" + "\n" + getAbnormalVitalSign();
+            result+= "Suspected Septic Shock "+ "<br/>" + "Risk Factors >= 1" + "<br/>" + getAbnormalVitalSign();
         else if(isSepsis())
-            result+= "Suspected Sepsis "+ "\n" + "Risk Factors >= 1" + "\n" + getAbnormalVitalSign();
+            result+= "Suspected Sepsis "+ "<br/>" + "Risk Factors >= 1" + "<br/>" + getAbnormalVitalSign();
         return result;
     }
 }

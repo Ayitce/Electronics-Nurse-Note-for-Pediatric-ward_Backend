@@ -85,8 +85,8 @@ public class Press implements IPress {
     @Override
     public String getPressResult() throws ParseException {
         String resultText = "";
-        resultText += "PRAM Score = " + getPramScore() + "\n";
-        resultText += "Suspected Score = " + countScore() + "\n";
+        resultText += "PRAM Score = " + getPramScore() + "<br/>";
+        resultText += "Suspected Score = " + countScore() + "<br/>";
         if (countScore() <= 1 && !triage.getGrunting())
             resultText += "Mild respiratory distress";
         else if (countScore() <= 3 && !triage.getGrunting())
