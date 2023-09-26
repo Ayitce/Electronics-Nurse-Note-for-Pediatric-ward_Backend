@@ -1,4 +1,4 @@
-package enp.enp_backend.entity;
+package enp.enp_backend.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,10 +12,14 @@ import lombok.NoArgsConstructor;
 public class DoctorDTO {
 
     Long id;
+
     String name;
     String surname;
-    String doctorID;
+    String phoneNumber;
+    String medicalID;
     String gender;
-    String dateOfBirth;
+   // String dateOfBirth;
+   String speciality;
+
 
 }

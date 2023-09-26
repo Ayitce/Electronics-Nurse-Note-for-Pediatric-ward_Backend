@@ -1,7 +1,6 @@
 package enp.enp_backend.entity;
 
 
-import enp.enp_backend.security.entity.User;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -24,9 +23,11 @@ public class Doctor {
     String name;
     String surname;
     String phoneNumber;
-    String doctorID;
+    String medicalID;
     String gender;
-    String dateOfBirth;
+    String speciality;
+  //  String dateOfBirth;
+
 
     @OneToOne
     User user;
