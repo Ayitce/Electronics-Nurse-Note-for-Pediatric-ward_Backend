@@ -2,7 +2,7 @@ package enp.enp_backend.security.util;
 
 import enp.enp_backend.security.entity.Authority;
 import enp.enp_backend.security.entity.JwtUser;
-import enp.enp_backend.security.entity.User;
+import enp.enp_backend.entity.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
@@ -18,7 +18,7 @@ public final class JwtUserFactory {
         return new JwtUser(
                 user.getId(),
                 user.getUsername(),
-                user.getEmail(),
+              //  user.getEmail(),
                 user.getPassword(),
                 mapToGrantedAuthorities(user.getAuthorities()),
                 user.getEnabled(),

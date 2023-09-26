@@ -1,29 +1,19 @@
 package enp.enp_backend.security.controller;
 
 
-import com.fasterxml.jackson.databind.util.JSONPObject;
-import enp.enp_backend.entity.Doctor;
-import enp.enp_backend.entity.Nurse;
-import enp.enp_backend.repository.DoctorRepository;
-import enp.enp_backend.repository.NurseRepository;
-import enp.enp_backend.security.entity.Authority;
-import enp.enp_backend.security.entity.AuthorityName;
+import enp.enp_backend.domain.doctor.service.DoctorService;
+import enp.enp_backend.domain.nurse.service.NurseService;
 import enp.enp_backend.security.entity.JwtUser;
-import enp.enp_backend.security.entity.User;
+import enp.enp_backend.entity.User;
 import enp.enp_backend.security.repository.AuthorityRepository;
-import enp.enp_backend.security.repository.UserRepository;
-import enp.enp_backend.security.service.UserService;
+import enp.enp_backend.domain.user.repository.jpa.UserRepository;
+import enp.enp_backend.domain.user.service.UserService;
 import enp.enp_backend.security.util.JwtTokenUtil;
-import enp.enp_backend.service.DoctorService;
-import enp.enp_backend.service.NurseService;
 import enp.enp_backend.util.LabMapper;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.configurationprocessor.json.JSONException;
-import org.springframework.boot.configurationprocessor.json.JSONObject;
-import org.springframework.data.domain.Page;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -32,32 +22,18 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
-import javax.servlet.http.HttpServletRequest;
-import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 @RestController
 @CrossOrigin
 public class AuthenticationRestController {
+    private final Log logger = LogFactory.getLog(this.getClass());
 
     @Autowired
     UserRepository userRepository;
-    @Autowired
-    UserService userService;
-    @Autowired
-    AuthorityRepository authorityRepository;
-    @Autowired
-    NurseService nurseService;
-    @Autowired
-    DoctorService doctorService;
     @Value("${jwt.header}")
     private String tokenHeader;
     @Autowired
@@ -96,7 +72,7 @@ public class AuthenticationRestController {
         return ResponseEntity.ok(result);
     }
 
-
+/*
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@RequestBody User user) throws AuthenticationException {
         PasswordEncoder encoder = new BCryptPasswordEncoder();
@@ -116,8 +92,9 @@ public class AuthenticationRestController {
 
         userService.save(regUser);
         return ResponseEntity.ok(LabMapper.INSTANCE.getUserDTO(regUser));
-    }
+    }*/
 
+/*
 
     @PostMapping("/register/nurse")
     public ResponseEntity<?> registerNurse(@RequestBody String json) throws AuthenticationException, JSONException {
@@ -199,19 +176,46 @@ public class AuthenticationRestController {
 
         return ResponseEntity.ok(LabMapper.INSTANCE.getUserDTO(regUser));
     }
-
-    @GetMapping(value = "${jwt.route.authentication.refresh}")
+*/
+/*
+    @GetMapping("/auth/refresh")
     public ResponseEntity<?> refreshAndGetAuthenticationToken(HttpServletRequest request) {
         String token = request.getHeader(tokenHeader);
-        String username = jwtTokenUtil.getUsernameFromToken(token);
+        logger.info("token :" + token);
+        String[] parts = token.split(" ");
+        //logger.info("parts :" + parts[1]);
+        String finalToken = parts[1];
+        logger.info("finalToken :" + finalToken);
+        String username = jwtTokenUtil.getUsernameFromToken(finalToken);
+
+        logger.info("user :" + username);
+
         JwtUser user = (JwtUser) userDetailsService.loadUserByUsername(username);
 
-        if (jwtTokenUtil.canTokenBeRefreshed(token, user.getLastPasswordResetDate())) {
-            String refreshedToken = jwtTokenUtil.refreshToken(token);
+        if (jwtTokenUtil.canTokenBeRefreshed(finalToken, user.getLastPasswordResetDate())) {
+            String refreshedToken = jwtTokenUtil.refreshToken(finalToken);
             return ResponseEntity.ok(new JwtAuthenticationResponse(refreshedToken));
         } else {
             return ResponseEntity.badRequest().body(null);
         }
+    }*/
+/*
+
+    @GetMapping("currentUser")
+    public ResponseEntity<?> getCurrentUser(HttpServletRequest request) {
+        String token = request.getHeader(tokenHeader);
+        String[] parts = token.split(" ");
+        //logger.info("parts :" + parts[1]);
+        String finalToken = parts[1];
+        logger.info("token :" +finalToken);
+        String username = jwtTokenUtil.getUsernameFromToken(finalToken);
+        logger.info("user :" + username);
+        JwtUser user = (JwtUser) userDetailsService.loadUserByUsername(username);
+
+        User user2 = userRepository.findById((user).getId()).orElse(null);
+
+
+        return ResponseEntity.ok(LabMapper.INSTANCE.getUserDTO(user2));
     }
 
     @GetMapping("user")
@@ -238,5 +242,6 @@ public class AuthenticationRestController {
         }
     }
 
+*/
 
 }

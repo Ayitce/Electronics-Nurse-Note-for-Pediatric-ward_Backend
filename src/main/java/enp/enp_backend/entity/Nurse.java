@@ -1,7 +1,6 @@
 package enp.enp_backend.entity;
 
 
-import enp.enp_backend.security.entity.User;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -24,9 +23,9 @@ public class Nurse {
     String name;
     String surname;
     String phoneNumber;
-    String nurseID;
+    String medicalID;
     String gender;
-    String dateOfBirth;
+  //  String dateOfBirth;
 
 
     @OneToOne

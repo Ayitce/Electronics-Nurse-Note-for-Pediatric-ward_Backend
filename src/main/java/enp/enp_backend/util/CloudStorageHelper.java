@@ -21,13 +21,14 @@ import java.util.Date;
 @Component
 public class CloudStorageHelper {
     private static Storage storage = null;
+
     static {
         InputStream serviceAccount = null;
         try {
             serviceAccount = new ClassPathResource("patientimage.json").getInputStream();
             storage = StorageOptions.newBuilder().setCredentials(GoogleCredentials.fromStream(serviceAccount))
                     .setProjectId("patientimage-53dc6").build().getService();
-        } catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
@@ -39,7 +40,7 @@ public class CloudStorageHelper {
         InputStream is = filePart.getInputStream();
         ByteArrayOutputStream os = new ByteArrayOutputStream();
         byte[] readBuf = new byte[4096];
-        while(is.available() > 0) {
+        while (is.available() > 0) {
             int bytesRead = is.read(readBuf);
             os.write(readBuf, 0, bytesRead);
         }
@@ -55,11 +56,11 @@ public class CloudStorageHelper {
     public String getImageUrl(MultipartFile file, final String bucket) throws IOException, ServletException {
         final String fileName = file.getOriginalFilename();
         //check extension of file
-        if(fileName != null && !fileName.isEmpty() && fileName.contains(".")) {
+        if (fileName != null && !fileName.isEmpty() && fileName.contains(".")) {
             final String extension = fileName.substring(fileName.lastIndexOf('.') + 1);
-            String[] alllowedExt = {"jpg","jpeg","png","gif"};
-            for(String s : alllowedExt) {
-                if(extension.equals(s)) {
+            String[] alllowedExt = {"jpg", "jpeg", "png", "gif"};
+            for (String s : alllowedExt) {
+                if (extension.equals(s)) {
                     return this.uploadFile(file, bucket);
                 }
             }

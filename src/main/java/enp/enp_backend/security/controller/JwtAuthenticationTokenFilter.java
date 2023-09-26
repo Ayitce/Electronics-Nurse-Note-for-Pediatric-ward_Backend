@@ -41,10 +41,10 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws IOException, ServletException {
 
-        try{
+        try {
             String authToken = request.getHeader(this.tokenHeader);
 
-            if(authToken != null && authToken.startsWith("Bearer ")){
+            if (authToken != null && authToken.startsWith("Bearer ")) {
                 authToken = authToken.substring(7);
             }
 
@@ -60,11 +60,11 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
                     SecurityContextHolder.getContext().setAuthentication(authentication);
                 }
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             logger.error("Cannot set user authentication: {}", e);
         }
 
-        filterChain.doFilter(request,response);
+        filterChain.doFilter(request, response);
     }
 
    /* @Override
