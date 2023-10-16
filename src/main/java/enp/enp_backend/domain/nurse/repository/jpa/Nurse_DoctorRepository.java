@@ -10,5 +10,4 @@ import java.util.List;
 @Profile("db")
 @Repository
 public interface Nurse_DoctorRepository extends JpaRepository<Doctor, Long> {
-    //List<Doctor> findAll();
 }

@@ -41,35 +41,19 @@ public class NurseServiceImpl implements NurseService {
     }
 
     //------------Patient-----------
-   /* @Override
-    public Patient getPatient(Long id) {
-        return nursePatientRepository.findById(id).orElse(null);
-    }
-*/
+
     @Override
     public Patient save(Patient patient) {
         return nursePatientRepository.save(patient);
     }
 
-    ;
+
 
     @Override
     public List<Patient> getAllpatient() {
         return nursePatientRepository.findAll(Pageable.unpaged()).getContent();
     }
 
-    ;
-
-
-    /*@Override
-    public Patient getPatientByHn(String hn) {
-        return nursePatientRepository.findPatientByHn(hn);
-    }
-*/
-    /*@Override
-    public List<Patient> getSearchedPatient(String name, String surname, String hn) {
-        return nursePatientRepository.findByNameIgnoreCaseContainingOrSurnameIgnoreCaseContainingOrHnIgnoreCaseContaining(name, surname, hn);
-    }*/
 
     //--------------Admit----------------
 
@@ -146,11 +130,6 @@ public class NurseServiceImpl implements NurseService {
     @Override
     public Triage save(Triage triage) {
         return nurseTriageRepository.save(triage);
-    }
-
-    @Override
-    public List<Triage> getAllTriage() {
-        return nurseTriageRepository.findAll(Pageable.unpaged()).getContent();
     }
 
 }

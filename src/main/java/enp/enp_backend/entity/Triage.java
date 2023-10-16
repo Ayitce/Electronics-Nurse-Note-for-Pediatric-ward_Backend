@@ -25,15 +25,13 @@ public class Triage {
 
     String nurseName;
 
-    //    @OneToOne
-//    Indicator indicator;
+//    Indicator
     Boolean respiratory;
     Boolean sepsis;
     Boolean shock;
     Boolean seizure;
 
-//    @OneToOne
-//    VitalSign vitalSign;
+//    VitalSign
 
     int heartRate;
     int respiratoryRate;
@@ -43,9 +41,7 @@ public class Triage {
     int systolic_blood_pressure;
     int diastolic_blood_pressure;
 
-//
-//    @OneToOne
-//    ADD add;
+//    ADD
 
     Boolean poor_feeding;
     Boolean history_of_seizure;
@@ -55,9 +51,8 @@ public class Triage {
     int e;
     int v;
     int m;
-//
-//    @OneToOne
-//    InitialImpression initialImpression;
+
+//    InitialImpression
 
     Boolean scalene_muscle;
     Boolean irritable;
@@ -70,9 +65,8 @@ public class Triage {
     Boolean pale_cyanosis;
     Boolean motting_skin;
     Boolean petichea;
-//
-//    @OneToOne
-//    RiskFactor riskFactor;
+
+//    RiskFactor
 
     Boolean suspected_infection;
     Boolean organtranplantation;
@@ -82,9 +76,8 @@ public class Triage {
     Boolean malignancy;
     Boolean bedRidden_cerebralPulsy;
     Boolean center_iv_catheter;
-//
-//    @OneToOne
-//    PhysicalExam physicalExam;
+
+//    PhysicalExam;
 
     Boolean weak_pulse;
     Boolean bounding_pulse;

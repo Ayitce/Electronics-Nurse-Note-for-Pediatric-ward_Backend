@@ -55,7 +55,6 @@ public class DoctorController {
         if (output != null) {
             return ResponseEntity.ok(LabMapper.INSTANCE.getTriageDTO(output.getTriages()));
         } else {
-            //logger.info("The given AN is not found");
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "The given AN is not found");
         }
     }

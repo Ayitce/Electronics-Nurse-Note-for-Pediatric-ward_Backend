@@ -47,7 +47,6 @@ public class WebSecurityConfig {
                         .requestMatchers("/doctor/**").hasRole("DOCTOR")
                         .requestMatchers("/admin/**").hasRole("ADMIN")
 
-                        //  .requestMatchers(HttpMethod.GET,"/**").hasRole("DOCTOR")
                         .anyRequest().authenticated()
                 );
         http.addFilterBefore(tokenFilter, UsernamePasswordAuthenticationFilter.class);

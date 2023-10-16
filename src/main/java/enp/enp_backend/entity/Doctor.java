@@ -26,7 +26,6 @@ public class Doctor {
     String medicalID;
     String gender;
     String speciality;
-  //  String dateOfBirth;
 
 
     @OneToOne

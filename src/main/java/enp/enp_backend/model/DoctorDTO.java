@@ -18,7 +18,6 @@ public class DoctorDTO {
     String phoneNumber;
     String medicalID;
     String gender;
-   // String dateOfBirth;
    String speciality;
 
 

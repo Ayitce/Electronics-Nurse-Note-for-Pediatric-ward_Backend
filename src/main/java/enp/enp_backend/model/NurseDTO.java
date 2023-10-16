@@ -17,7 +17,5 @@ public class NurseDTO {
     String phoneNumber;
     String medicalID;
     String gender;
-    //String dateOfBirth;
-
 
 }

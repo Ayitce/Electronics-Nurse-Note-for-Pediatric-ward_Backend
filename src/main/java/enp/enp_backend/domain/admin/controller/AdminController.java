@@ -64,18 +64,6 @@ public class AdminController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "The given AN is not found");
         }
     }
-/*
-
-    @GetMapping("admin/users/doctors")
-    public ResponseEntity<?> getDoctorUserLists() {
-        return ResponseEntity.ok(LabMapper.INSTANCE.getUserDTO(adminService.getDoctorUser()));
-    }
-
-    @GetMapping("admin/users/nurses")
-    public ResponseEntity<?> getNurseUserLists() {
-        return ResponseEntity.ok(LabMapper.INSTANCE.getUserDTO(adminService.getNurseUser()));
-    }
-*/
 
     @PostMapping("/admin/register/nurse")
     public ResponseEntity<?> registerNurse(@RequestBody String json) throws AuthenticationException, JSONException {
@@ -85,7 +73,6 @@ public class AdminController {
         JSONObject jsonObject = new JSONObject(json);
         User regUser = User.builder()
                 .enabled(true)
-                // .email(jsonObject.get("email").toString())
                 .username(jsonObject.get("email").toString())
                 .password(encoder.encode(jsonObject.get("password").toString()))
                 .lastPasswordResetDate(Date.from(LocalDate.of(2021, 01, 01)
@@ -123,7 +110,6 @@ public class AdminController {
         JSONObject jsonObject = new JSONObject(json);
         User regUser = User.builder()
                 .enabled(true)
-                // .email(jsonObject.get("email").toString())
                 .username(jsonObject.get("email").toString())
                 .password(encoder.encode(jsonObject.get("password").toString()))
                 .lastPasswordResetDate(Date.from(LocalDate.of(2021, 01, 01)
@@ -142,14 +128,12 @@ public class AdminController {
                 .build();
 
         adminService.save(regDoctor);
-        //userRepository.save(regUser);
         adminService.save(regUser);
 
         regUser.setDoctor(regDoctor);
         regDoctor.setUser(regUser);
 
         adminService.save(regDoctor);
-        //userRepository.save(regUser);
         adminService.save(regUser);
 
 

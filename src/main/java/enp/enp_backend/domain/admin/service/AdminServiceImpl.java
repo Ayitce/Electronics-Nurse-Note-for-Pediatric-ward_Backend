@@ -46,18 +46,6 @@ public class AdminServiceImpl implements AdminService{
     public Nurse save(Nurse nurse) {
         return admin_nurseRepository.save(nurse);
     }
-/*
-
-    @Override
-    public List<User> getNurseUser(){
-        return admin_userRepository.findAllByAuthoritiesName(AuthorityName.ROLE_NURSE);
-    }
-
-    @Override
-    public List<User> getDoctorUser(){
-        return admin_userRepository.findAllByAuthoritiesName(AuthorityName.ROLE_DOCTOR);
-    }
-*/
 
 
     @Override

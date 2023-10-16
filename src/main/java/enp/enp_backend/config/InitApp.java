@@ -30,7 +30,6 @@ import java.util.Locale;
 @Component
 public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
     private final Log logger = LogFactory.getLog(this.getClass());
-    SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH);
 
     @Autowired
     Nurse_PatientRepository nursePatientRepository;
@@ -1456,7 +1455,7 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
         admit1.getTriages().add(triage);
         triage.setAdmit(admit1);
         nurseTriageRepository.save(triage);
-        MedCalculator medCalculator = new MedCalculator(triage);
+        IMedCalculator medCalculator = new MedCalculator(triage);
         triage.setSeverity(medCalculator.getSeverity());
         triage.setMpew(medCalculator.getMPEWS());
         triage.setResult_seizure(medCalculator.getSeisure());
@@ -1465,15 +1464,8 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
         triage.setResult_respiratory(medCalculator.getPress());
         nurseTriageRepository.save(triage);
 
-//        logger.info("heart rate : " + mpew.getHeartRateScore());
-//        logger.info("res : " + mpew.getRespiratoryRateScore());
-//        logger.info("temp : " + mpew.getTemperatureScore());
-//        logger.info("oxySar : " + mpew.getOxygenSaturationScore());
-//        logger.info("oxyTher : " + mpew.getOxygenTherapyScore());
-//        logger.info("con : " + mpew.getConsciousnessScore());
         logger.info("age : " + triage.getAdmit().getPatient().getDateOfBirth());
         logger.info("mpew : " + medCalculator.getMPEWS());
-        //  logger.info("abnormal vitalsign : " + sepsis.getAbnormalVitalSign());
         logger.info("sepsis result: " + medCalculator.getSepsis());
         logger.info("shock result: " + medCalculator.getShock());
         logger.info("press result: " + medCalculator.getPress());
@@ -1550,7 +1542,6 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
         user1 = User.builder()
                 .username("nurse@gmail.com")
                 .password(encoder.encode("nurse"))
-                //.email("admin@admin.com")
                 .enabled(true)
                 .lastPasswordResetDate(Date.from(LocalDate.of(2021, 01, 22).atStartOfDay(ZoneId.systemDefault()).toInstant()))
                 .build();
@@ -1563,7 +1554,6 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
         user2 = User.builder()
                 .username("doctor@gmail.com")
                 .password(encoder.encode("doctor"))
-                //.email("admin@admin.com")
                 .enabled(true)
                 .lastPasswordResetDate(Date.from(LocalDate.of(2021, 01, 22).atStartOfDay(ZoneId.systemDefault()).toInstant()))
                 .build();
@@ -1576,7 +1566,6 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
         user3 = User.builder()
                 .username("admin@gmail.com")
                 .password(encoder.encode("admin"))
-                //.email("admin@admin.com")
                 .enabled(true)
                 .lastPasswordResetDate(Date.from(LocalDate.of(2021, 01, 22).atStartOfDay(ZoneId.systemDefault()).toInstant()))
                 .build();

@@ -15,9 +15,7 @@ import java.util.Objects;
 public class UserDTO {
     Long id;
     String username;
-   // String email;
     String password;
-   // String phoneNumber;
     Boolean enabled;
 
     List<String> authorities;

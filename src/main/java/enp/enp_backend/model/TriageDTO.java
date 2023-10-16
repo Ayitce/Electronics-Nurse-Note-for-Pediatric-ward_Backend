@@ -17,7 +17,6 @@ import java.util.Date;
 public class TriageDTO {
     Long id;
 
-    // AdmitDTO admit;
     String date;
     String nurseName;
 

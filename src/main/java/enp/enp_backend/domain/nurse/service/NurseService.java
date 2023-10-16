@@ -12,16 +12,9 @@ public interface NurseService {
 
     //---------------Patient----------------
 
-
-    /*Patient getPatient(Long id);*/
-
     Patient save(Patient patient);
 
     List<Patient> getAllpatient();
-
-//    Patient getPatientByHn(String hn);
-//
-//    List<Patient> getSearchedPatient(String name,String surname, String hn);
 
     //--------------Admit------------------
 
@@ -55,9 +48,9 @@ public interface NurseService {
 
     Doctor save(Doctor doctor);
 
-    //Triage
+    //----------------Triage----------------
+
     Triage save(Triage triage);
 
-    List<Triage> getAllTriage();
 
 }

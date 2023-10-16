@@ -14,7 +14,6 @@ import java.util.Locale;
 
 public class MPEWBean implements IMPEWS {
     SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH);
-    private final Log logger = LogFactory.getLog(this.getClass());
     Triage triage;
    // VitalSign vitalSign;
     int heartRate[][] = {

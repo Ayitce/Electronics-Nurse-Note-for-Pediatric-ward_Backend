@@ -9,11 +9,12 @@ import java.text.ParseException;
 public class MedCalculator implements IMedCalculator {
 
     Triage triage;
-    MPEWBean mpewBean;
-    Sepsis sepsis;
-    Shock shock;
-    Seizure seizure;
-    Press press;
+    IMPEWS mpewBean;
+    ISepsis sepsis;
+    IShock shock;
+    ISeizure seizure;
+    IPress press;
+
     public MedCalculator(Triage triage) {
         this.triage = triage;
         sepsis = new Sepsis(triage);

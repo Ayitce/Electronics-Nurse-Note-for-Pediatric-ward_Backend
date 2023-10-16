@@ -25,7 +25,6 @@ public class Nurse {
     String phoneNumber;
     String medicalID;
     String gender;
-  //  String dateOfBirth;
 
 
     @OneToOne

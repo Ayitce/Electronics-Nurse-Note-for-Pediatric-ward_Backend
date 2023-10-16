@@ -50,84 +50,6 @@ public class UserController {
     private JwtTokenUtil jwtTokenUtil;
     @Autowired
     private UserDetailsService userDetailsService;
-/*
-    @PostMapping("/register/nurse")
-    public ResponseEntity<?> registerNurse(@RequestBody String json) throws AuthenticationException, JSONException {
-        PasswordEncoder encoder = new BCryptPasswordEncoder();
-        Authority authNurse = Authority.builder().name(AuthorityName.ROLE_NURSE).build();
-        authorityRepository.save(authNurse);
-        JSONObject jsonObject = new JSONObject(json);
-        User regUser = User.builder()
-                .enabled(true)
-                // .email(jsonObject.get("email").toString())
-                .username(jsonObject.get("email").toString())
-                .password(encoder.encode(jsonObject.get("password").toString()))
-                .lastPasswordResetDate(Date.from(LocalDate.of(2021, 01, 01)
-                        .atStartOfDay(ZoneId.systemDefault()).toInstant()))
-                .build();
-
-        regUser.getAuthorities().add(authNurse);
-
-        Nurse regNurse = Nurse.builder()
-                .name(jsonObject.get("name").toString())
-                .surname(jsonObject.get("surname").toString())
-                .phoneNumber(jsonObject.get("phoneNumber").toString())
-                .medicalID(jsonObject.get("medicalID").toString())
-                .gender(jsonObject.get("gender").toString())
-                .build();
-
-        nurseService.save(regNurse);
-        userService.save(regUser);
-
-        regUser.setNurse(regNurse);
-        regNurse.setUser(regUser);
-
-        nurseService.save(regNurse);
-        userService.save(regUser);
-
-        return ResponseEntity.ok(LabMapper.INSTANCE.getUserDTO(regUser));
-    }
-
-
-    @PostMapping("/register/doctor")
-    public ResponseEntity<?> registerDoctor(@RequestBody String json) throws AuthenticationException, JSONException {
-        PasswordEncoder encoder = new BCryptPasswordEncoder();
-        Authority authDoctor = Authority.builder().name(AuthorityName.ROLE_DOCTOR).build();
-        authorityRepository.save(authDoctor);
-        JSONObject jsonObject = new JSONObject(json);
-        User regUser = User.builder()
-                .enabled(true)
-                // .email(jsonObject.get("email").toString())
-                .username(jsonObject.get("email").toString())
-                .password(encoder.encode(jsonObject.get("password").toString()))
-                .lastPasswordResetDate(Date.from(LocalDate.of(2021, 01, 01)
-                        .atStartOfDay(ZoneId.systemDefault()).toInstant()))
-                .build();
-
-        regUser.getAuthorities().add(authDoctor);
-
-        Doctor regDoctor = Doctor.builder()
-                .name(jsonObject.get("name").toString())
-                .surname(jsonObject.get("surname").toString())
-                .phoneNumber(jsonObject.get("phoneNumber").toString())
-                .medicalID(jsonObject.get("medicalID").toString())
-                .gender(jsonObject.get("gender").toString())
-                .build();
-
-        doctorService.save(regDoctor);
-        //userRepository.save(regUser);
-        userService.save(regUser);
-
-        regUser.setDoctor(regDoctor);
-        regDoctor.setUser(regUser);
-
-        doctorService.save(regDoctor);
-        //userRepository.save(regUser);
-        userService.save(regUser);
-
-
-        return ResponseEntity.ok(LabMapper.INSTANCE.getUserDTO(regUser));
-    }*/
 
     @GetMapping("currentUser")
     public ResponseEntity<?> getCurrentUser(HttpServletRequest request) {
@@ -145,31 +67,5 @@ public class UserController {
 
         return ResponseEntity.ok(LabMapper.INSTANCE.getUserDTO(output));
     }
-/*
-
-    @GetMapping("user")
-    public ResponseEntity<?> getUserLists(@RequestParam(value = "_limit", required = false) Integer perPage
-            , @RequestParam(value = "_page", required = false) Integer page) {
-        perPage = perPage == null ? 3 : perPage;
-        page = page == null ? 1 : page;
-        Page<User> pageOutput;
-        pageOutput = userService.getUsers(perPage, page);
-        HttpHeaders responseHeader = new HttpHeaders();
-
-        responseHeader.set("x-total-count", String.valueOf(pageOutput.getTotalElements()));
-        return new ResponseEntity<>(LabMapper.INSTANCE.getUserDTO(pageOutput.getContent()), responseHeader, HttpStatus.OK);
-    }
-*/
-
-/*
-    @GetMapping("user/{id}")
-    public ResponseEntity<?> getUser(@PathVariable("id") Long id) {
-        User output = userService.getUser(id);
-        if (output != null) {
-            return ResponseEntity.ok(LabMapper.INSTANCE.getUserDTO(output));
-        } else {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "The given id is not found");
-        }
-    }*/
 
 }
